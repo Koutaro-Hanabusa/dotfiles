@@ -1,0 +1,18 @@
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias sail="bash vendor/bin/sail"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/mysql@8.3/bin:$PATH"
+
+# Git公式のgit-prompt.shを使用してブランチ名を表示
+source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
+setopt PROMPT_SUBST
+PROMPT='%n@%m %~ %F{208}$(__git_ps1 "(%s)")%f%# '
+
+# コマンド補完候補を薄い文字で表示
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Claude Code - 常にMCP設定を読み込む
+alias claude='claude --mcp-config ~/.claude/mcp.json'
+
