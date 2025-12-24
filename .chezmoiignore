@@ -1,0 +1,5 @@
+.zsh_tunneling
+
+# nvim内の.gitディレクトリを除外（chezmoi applyで適用しない）
+.config/nvim/.git
+.config/nvim/.git/**
