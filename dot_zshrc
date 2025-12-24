@@ -25,6 +25,9 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Claude Code - 常にMCP設定を読み込む
 alias claude='claude --mcp-config ~/.claude/mcp.json'
 
+# トンネリング設定（環境固有）
+[ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
+
 # ls の色設定（ディレクトリを緑に）
 export LSCOLORS=cxfxcxdxbxegedabagacad
 alias ls="ls -G"
