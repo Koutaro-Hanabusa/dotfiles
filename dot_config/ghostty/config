@@ -23,7 +23,7 @@ palette = 12=#7fb4ca
 palette = 13=#938aa9
 palette = 14=#7aa89f
 palette = 15=#c5c9c5
-font-size = 20
+font-size = 16
 
 background-opacity = 0.85
 fullscreen=true

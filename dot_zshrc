@@ -1,6 +1,3 @@
-# mise - Voltaより優先
-eval "$(mise activate zsh)"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -10,14 +7,8 @@ export PATH="/usr/local/opt/mysql@8.3/bin:$PATH"
 
 # Git公式のgit-prompt.shを使用してブランチ名を表示
 source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
-
-# 変更状態を表示する設定
-export GIT_PS1_SHOWDIRTYSTATE=1        # *=変更あり, +=ステージング済み
-export GIT_PS1_SHOWUNTRACKEDFILES=1    # %=未追跡ファイルあり
-export GIT_PS1_SHOWSTASHSTATE=1        # $=stashあり
-
 setopt PROMPT_SUBST
-PROMPT='%n@%m %F{blue}%~%f %F{208}$(__git_ps1 "(%s)")%f%# '
+PROMPT='%n@%m %~ %F{208}$(__git_ps1 "(%s)")%f%# '
 
 # コマンド補完候補を薄い文字で表示
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -25,10 +16,5 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Claude Code - 常にMCP設定を読み込む
 alias claude='claude --mcp-config ~/.claude/mcp.json'
 
-# トンネリング設定（環境固有）
-[ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
-
-# ls の色設定（ディレクトリを緑に）
-export LSCOLORS=cxfxcxdxbxegedabagacad
-alias ls="ls -G"
-
+# vimコマンドでneovimを起動できるようにする
+alias vim='nvim'

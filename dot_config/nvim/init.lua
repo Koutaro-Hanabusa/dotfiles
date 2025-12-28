@@ -97,10 +97,42 @@ vim.api.nvim_create_autocmd("VimEnter", {
         -- Move to the main window (not nvim-tree)
         vim.cmd("wincmd l")
         -- Open terminal at the bottom with smaller height
-        vim.cmd("ToggleTerm size=15 direction=horizontal")
+        vim.cmd("ToggleTerm size=10 direction=horizontal")
         -- Move focus back to editor
         vim.cmd("wincmd k")
       end, 100)
     end
   end,
 })
+
+-- :q で全てのウィンドウを閉じて終了
+vim.api.nvim_create_user_command("Q", "qa", {})
+vim.keymap.set("c", "q<CR>", function()
+  -- 現在のバッファが通常のファイルバッファかチェック
+  local buftype = vim.bo.buftype
+  local filetype = vim.bo.filetype
+
+  -- NvimTreeやToggleTermなど特殊バッファの場合は全終了
+  if filetype == "NvimTree" or buftype == "terminal" then
+    vim.cmd("qa")
+  else
+    -- 通常バッファの数をカウント
+    local normal_bufs = 0
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_loaded(buf) then
+        local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+        local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+        if bt == "" and ft ~= "NvimTree" then
+          normal_bufs = normal_bufs + 1
+        end
+      end
+    end
+
+    -- 通常バッファが1つ以下なら全終了、それ以上なら通常の:q
+    if normal_bufs <= 1 then
+      vim.cmd("qa")
+    else
+      vim.cmd("q")
+    end
+  end
+end, { noremap = true })

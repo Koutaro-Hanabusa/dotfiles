@@ -3,12 +3,12 @@ return {
   version = "*",
   config = function()
     require("toggleterm").setup({
-      size = 15, -- Smaller terminal height
+      size = 10, -- Smaller terminal height
       open_mapping = [[<c-\>]],
       hide_numbers = true,
       shade_terminals = true,
       shading_factor = 2,
-      start_in_insert = true,
+      start_in_insert = false, -- ノーマルモードで開始（誤入力防止）
       insert_mappings = true,
       terminal_mappings = true,
       persist_size = true,
