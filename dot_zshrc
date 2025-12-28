@@ -18,3 +18,9 @@ alias claude='claude --mcp-config ~/.claude/mcp.json'
 
 # vimコマンドでneovimを起動できるようにする
 alias vim='nvim'
+
+# Chrome alias - open new window
+alias chrome='open -na "Google Chrome" --args --new-window'
+
+#fuckコマンドでタイポしたときに修正してもらう
+eval $(thefuck --alias)

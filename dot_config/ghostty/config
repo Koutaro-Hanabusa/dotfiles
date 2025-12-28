@@ -25,7 +25,5 @@ palette = 14=#7aa89f
 palette = 15=#c5c9c5
 font-size = 16
 
-background-opacity = 0.85
-fullscreen=true
 # Shift+Enter で改行
 keybind = shift+enter=text:\n
