@@ -1,5 +1,8 @@
 # Ghostty Config
 
+# ログインシェルとして起動（環境変数を正しく読み込むため）
+command = /bin/zsh --login
+
 theme = Kanagawa Dragon
 background = #181616
 foreground = #c8c093
@@ -23,7 +26,9 @@ palette = 12=#7fb4ca
 palette = 13=#938aa9
 palette = 14=#7aa89f
 palette = 15=#c5c9c5
-font-size = 16
+font-size = 20
 
+background-opacity = 0.85
+fullscreen=true
 # Shift+Enter で改行
 keybind = shift+enter=text:\n
