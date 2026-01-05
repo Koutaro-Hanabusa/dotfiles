@@ -8,7 +8,7 @@ return {
       hide_numbers = true,
       shade_terminals = true,
       shading_factor = 2,
-      start_in_insert = false, -- ノーマルモードで開始（誤入力防止）
+      start_in_insert = false, -- ノーマルモードで開始
       insert_mappings = true,
       terminal_mappings = true,
       persist_size = true,
