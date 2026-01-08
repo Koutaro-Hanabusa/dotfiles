@@ -32,8 +32,31 @@ alias claude='command claude --mcp-config ~/.claude/mcp.json'
 export LSCOLORS=cxfxcxdxbxegedabagacad
 alias ls="ls -G"
 
-# vimコマンドでneovimを起動
-alias vim='nvim'
+# nvim + Claude Code を左右分割で起動
+# tmux内なら普通にnvim、外ならtmuxで分割起動
+nvc() {
+  local target="${1:-.}"
+  # 既にtmux内にいる場合は普通にnvimを起動
+  if [[ -n "$TMUX" ]]; then
+    command nvim "$target"
+    return
+  fi
+  # 既存のnvcセッションがあれば削除
+  tmux kill-session -t nvc 2>/dev/null
+  tmux new-session -d -s nvc -c "$(pwd)"
+  tmux send-keys -t nvc "nvim $target; tmux kill-session -t nvc" Enter
+  tmux split-window -h -t nvc -c "$(pwd)" -p 33
+  tmux send-keys -t nvc "claude" Enter
+  tmux select-pane -t nvc:0.0
+  tmux attach-session -t nvc
+}
+
+# vim/code は全部nvc経由（矯正用）
+alias vim='nvc'
+alias code='nvc'
+
+# 純粋なnvimが必要なとき用
+alias nvim-raw='command nvim'
 
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
