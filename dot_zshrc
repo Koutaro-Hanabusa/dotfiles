@@ -45,7 +45,7 @@ nvc() {
   tmux kill-session -t nvc 2>/dev/null
   tmux new-session -d -s nvc -c "$(pwd)"
   tmux send-keys -t nvc "nvim $target; tmux kill-session -t nvc" Enter
-  tmux split-window -h -t nvc -c "$(pwd)" -p 33
+  tmux split-window -h -t nvc -c "$(pwd)" -p 25
   tmux send-keys -t nvc "claude" Enter
   tmux select-pane -t nvc:0.0
   tmux attach-session -t nvc
