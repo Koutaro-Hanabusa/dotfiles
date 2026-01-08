@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claude-code --tool mcp__slack__slack_post_message --channel C096Y4WQUDN --text '<@Hanabusa-Kotaro> 許可が必要な操作があります。確認をお願いします。'"
+          }
+        ]
+      }
+    ]
+  },
+  "alwaysThinkingEnabled": true,
+  "bash_patterns_to_allow": [
+    "find *",
+    "mkdir *",
+    "gh *",
+    "curl *",
+    "git *",
+    "grep *",
+    "sed *",
+    "mcp__time__get_current_time"
+  ],
+  "feedbackSurveyState": {
+    "lastShownTime": 1754061737891
+  }
+}
