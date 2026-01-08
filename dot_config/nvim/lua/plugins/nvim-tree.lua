@@ -6,6 +6,11 @@ return {
     vim.g.loaded_netrwPlugin = 1
 
     require("nvim-tree").setup({
+      sync_root_with_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_root = false,
+      },
       view = {
         width = 35, -- File tree width
         side = "left",
@@ -23,6 +28,6 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+    vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer" })
   end,
 }
