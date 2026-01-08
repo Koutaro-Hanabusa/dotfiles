@@ -28,9 +28,13 @@ alias claude='command claude --mcp-config ~/.claude/mcp.json'
 # トンネリング設定（環境固有）
 [ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
 
-# ls の色設定（ディレクトリを緑に）
-export LSCOLORS=cxfxcxdxbxegedabagacad
-alias ls="ls -G"
+# モダンCLIツールのエイリアス
+alias cat="bat"
+alias ls="eza --icons --git"
+alias ll="eza -la --icons --git"
+alias la="eza -a --icons --git"
+alias tree="eza --tree --icons"
+alias grep="rg"
 
 # nvim + Claude Code を左右分割で起動
 nvc() {
