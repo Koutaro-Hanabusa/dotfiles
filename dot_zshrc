@@ -45,8 +45,9 @@ nvc() {
   # ユニークなセッション名（PID + ランダム）
   local session_name="nvc-$$-$RANDOM"
 
-  # セッション作成してアタッチ
-  tmux new-session -d -s "$session_name" -c "$(pwd)" "nvim $target"
+  # セッション作成してアタッチ（nvim終了でセッション全体を閉じる）
+  tmux new-session -d -s "$session_name" -c "$(pwd)"
+  tmux send-keys -t "$session_name" "nvim $target; tmux kill-session -t $session_name" Enter
   tmux split-window -h -t "$session_name" -c "$(pwd)" -p 25 "claude"
   tmux select-pane -t "$session_name:0.0"
   tmux attach-session -t "$session_name"
