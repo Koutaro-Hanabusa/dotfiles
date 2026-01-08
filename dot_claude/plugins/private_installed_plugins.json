@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "plugins": {
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hanabusa.kotaro/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-08T04:46:42.189Z",
+        "lastUpdated": "2026-01-08T04:46:42.189Z"
+      }
+    ],
+    "pr-review-toolkit@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hanabusa.kotaro/.claude/plugins/cache/claude-plugins-official/pr-review-toolkit/113b335d11ae",
+        "version": "113b335d11ae",
+        "installedAt": "2026-01-08T04:47:00.214Z",
+        "lastUpdated": "2026-01-08T04:50:22.439Z"
+      }
+    ],
+    "figma@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hanabusa.kotaro/.claude/plugins/cache/claude-plugins-official/figma/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-08T04:47:38.949Z",
+        "lastUpdated": "2026-01-08T04:47:38.949Z",
+        "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
+      }
+    ]
+  }
+}
