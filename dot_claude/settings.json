@@ -13,6 +13,11 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "figma@claude-plugins-official": true
+  },
   "alwaysThinkingEnabled": true,
   "bash_patterns_to_allow": [
     "find *",
