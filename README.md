@@ -14,6 +14,78 @@ chezmoi init --apply Koutaro-Hanabusa
 
 ---
 
+## chezmoiの使い方
+
+### 基本コマンド
+
+| コマンド | 動作 |
+|----------|------|
+| `chezmoi cd` | ソースディレクトリに移動 |
+| `chezmoi status` | 変更があるファイルを確認 |
+| `chezmoi diff` | 適用される変更の差分を表示 |
+| `chezmoi apply` | 変更をホームディレクトリに適用 |
+| `chezmoi apply -v` | 適用内容を表示しながら適用 |
+
+### ファイルの追加・編集
+
+| コマンド | 動作 |
+|----------|------|
+| `chezmoi add ~/.zshrc` | ファイルをchezmoi管理下に追加 |
+| `chezmoi add --template ~/.zshrc` | テンプレートとして追加 |
+| `chezmoi edit ~/.zshrc` | 管理ファイルを編集 |
+| `chezmoi forget ~/.zshrc` | 管理から除外（実ファイルは残る） |
+
+### 同期
+
+| コマンド | 動作 |
+|----------|------|
+| `chezmoi update` | リモートから取得して適用 |
+| `chezmoi git pull` | ソースリポジトリをpull |
+| `chezmoi git push` | ソースリポジトリをpush |
+| `chezmoi git status` | ソースリポジトリの状態確認 |
+
+### 確認・デバッグ
+
+| コマンド | 動作 |
+|----------|------|
+| `chezmoi data` | テンプレートで使える変数を表示 |
+| `chezmoi cat ~/.zshrc` | 適用後の内容をプレビュー |
+| `chezmoi source-path ~/.zshrc` | ソースファイルのパスを表示 |
+| `chezmoi managed` | 管理中のファイル一覧 |
+
+### 典型的なワークフロー
+
+```bash
+# 1. 設定ファイルを編集
+chezmoi edit ~/.zshrc
+
+# 2. 差分を確認
+chezmoi diff
+
+# 3. 変更を適用
+chezmoi apply
+
+# 4. 変更をコミット・プッシュ
+chezmoi cd
+git add -A && git commit -m "update zshrc" && git push
+```
+
+### ファイル名の規則
+
+chezmoiはソースディレクトリで特殊なプレフィックスを使用：
+
+| プレフィックス | 意味 |
+|----------------|------|
+| `dot_` | `.`に変換（例: `dot_zshrc` → `.zshrc`） |
+| `private_` | パーミッション600で作成 |
+| `executable_` | 実行権限を付与 |
+| `readonly_` | 読み取り専用 |
+| `create_` | 存在しない場合のみ作成 |
+| `modify_` | 既存ファイルを修正するスクリプト |
+| `run_` | 適用時に実行されるスクリプト |
+
+---
+
 ## nvim + Claude Code 統合環境
 
 `vim`や`code`コマンドでnvimとClaude Codeが左右分割で起動する。
