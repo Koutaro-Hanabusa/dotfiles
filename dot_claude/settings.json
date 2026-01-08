@@ -11,17 +11,6 @@
           }
         ]
       }
-    ],
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "claude-code --tool mcp__slack__slack_post_message --channel C096Y4WQUDN --text '<@Hanabusa-Kotaro> 許可が必要な操作があります。確認をお願いします。'"
-          }
-        ]
-      }
     ]
   },
   "alwaysThinkingEnabled": true,
