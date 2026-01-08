@@ -58,6 +58,9 @@ alias code='nvc'
 # 純粋なnvimが必要なとき用
 alias nvim-raw='command nvim'
 
+# dotfilesのヘルプを表示
+alias dothelp='less ~/.local/share/chezmoi/README.md'
+
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
 
