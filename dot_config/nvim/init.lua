@@ -1,3 +1,10 @@
+-- MDXをmarkdownとして扱う
+vim.filetype.add({
+  extension = {
+    mdx = "markdown",
+  },
+})
+
 -- Basic settings
 vim.opt.number = true
 vim.opt.clipboard = "unnamedplus"  -- yank時にシステムクリップボードにもコピー
