@@ -5,1119 +5,477 @@
                 "rules": [
                     {
                         "available_since": "13.6.0",
-                        "description": "Mouse Keys Mode v4 (rev 3) with Selection Mode",
+                        "description": "Mouse Keys Mode v4 - カーソル移動 (hjkl)",
                         "manipulators": [
                             {
+                                "description": "j: 下スクロール (スクロールモード時)",
                                 "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_mode_v4_scroll",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_mode_v4_scroll", "type": "variable_if", "value": 1 }
                                 ],
-                                "from": {
-                                    "key_code": "j",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "from": { "key_code": "j", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "vertical_wheel": 32 } }],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "j",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "j: カーソル下移動",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "j", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "y": 1536 } }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+j: モード起動 + カーソル下移動",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "j" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "j" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "mouse_key": { "y": 1536 } }
                                 ],
                                 "type": "basic"
                             },
                             {
+                                "description": "k: 上スクロール (スクロールモード時)",
                                 "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_mode_v4_scroll",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_mode_v4_scroll", "type": "variable_if", "value": 1 }
                                 ],
-                                "from": {
-                                    "key_code": "k",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "from": { "key_code": "k", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "vertical_wheel": -32 } }],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "k",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "k: カーソル上移動",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "k", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "y": -1536 } }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+k: モード起動 + カーソル上移動",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "k" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "k" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "mouse_key": { "y": -1536 } }
                                 ],
                                 "type": "basic"
                             },
                             {
+                                "description": "h: 左スクロール (スクロールモード時)",
                                 "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_mode_v4_scroll",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_mode_v4_scroll", "type": "variable_if", "value": 1 }
                                 ],
-                                "from": {
-                                    "key_code": "h",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "from": { "key_code": "h", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "horizontal_wheel": 32 } }],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "h",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "h: カーソル左移動",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "h", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "x": -1536 } }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+h: モード起動 + カーソル左移動",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "h" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "h" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "mouse_key": { "x": -1536 } }
                                 ],
                                 "type": "basic"
                             },
                             {
+                                "description": "l: 右スクロール (スクロールモード時)",
                                 "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_mode_v4_scroll",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_mode_v4_scroll", "type": "variable_if", "value": 1 }
                                 ],
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "from": { "key_code": "l", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "horizontal_wheel": -32 } }],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "l: カーソル右移動",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "l", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "mouse_key": { "x": 1536 } }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+l: モード起動 + カーソル右移動",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "l" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "l" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "mouse_key": { "x": 1536 } }
                                 ],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Mouse Keys Mode v4 - クリック (uio)",
+                        "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_screen_index",
-                                        "type": "variable_if",
-                                        "value": 0
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "v",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_screen_index",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "screen": 1,
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_screen_index",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "v",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_screen_index",
-                                            "value": 2
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "screen": 2,
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    },
-                                    {
-                                        "name": "mouse_keys_screen_index",
-                                        "type": "variable_if",
-                                        "value": 2
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "v",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_screen_index",
-                                            "value": 0
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "screen": 0,
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "v",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_screen_index",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "screen": 1,
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "v" }
-                                    ],
-                                    "simultaneous_options": {
-                                        "key_down_order": "strict",
-                                        "key_up_order": "strict_inverse",
-                                        "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_screen_index",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "screen": 1,
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "n",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "n" }
-                                    ],
-                                    "simultaneous_options": {
-                                        "key_down_order": "strict",
-                                        "key_up_order": "strict_inverse",
-                                        "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
-                                    {
-                                        "software_function": {
-                                            "set_mouse_cursor_position": {
-                                                "x": "50%",
-                                                "y": "50%"
-                                            }
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "s",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4_scroll",
-                                            "value": 1
-                                        }
-                                    }
-                                ],
-                                "to_after_key_up": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4_scroll",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "s" }
-                                    ],
-                                    "simultaneous_options": {
-                                        "key_down_order": "strict",
-                                        "key_up_order": "strict_inverse",
-                                        "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4_scroll",
-                                            "value": 1
-                                        }
-                                    }
-                                ],
-                                "to_after_key_up": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4_scroll",
-                                            "value": 0
-                                        }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "f",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "mouse_key": { "speed_multiplier": 2 } }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "f" }
-                                    ],
-                                    "simultaneous_options": {
-                                        "key_down_order": "strict",
-                                        "key_up_order": "strict_inverse",
-                                        "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
-                                    { "mouse_key": { "speed_multiplier": 2 } }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "g",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "mouse_key": { "speed_multiplier": 0.5 } }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "g" }
-                                    ],
-                                    "simultaneous_options": {
-                                        "key_down_order": "strict",
-                                        "key_up_order": "strict_inverse",
-                                        "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
-                                "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
-                                    { "mouse_key": { "speed_multiplier": 0.5 } }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "u",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "u: 左クリック",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "u", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "pointing_button": "button1" }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+u: モード起動 + 左クリック",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "u" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "u" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "pointing_button": "button1" }
                                 ],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "i",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "i: 中クリック",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "i", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "pointing_button": "button3" }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+i: モード起動 + 中クリック",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "i" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "i" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "pointing_button": "button3" }
                                 ],
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "name": "mouse_keys_mode_v4",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "o",
-                                    "modifiers": { "optional": ["any"] }
-                                },
+                                "description": "o: 右クリック",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "o", "modifiers": { "optional": ["any"] } },
                                 "to": [{ "pointing_button": "button2" }],
                                 "type": "basic"
                             },
                             {
+                                "description": "d+o: モード起動 + 右クリック",
                                 "from": {
                                     "modifiers": { "optional": ["any"] },
-                                    "simultaneous": [
-                                        { "key_code": "d" },
-                                        { "key_code": "o" }
-                                    ],
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "o" }],
                                     "simultaneous_options": {
                                         "key_down_order": "strict",
                                         "key_up_order": "strict_inverse",
                                         "to_after_key_up": [
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_scroll",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_variable": {
-                                                    "name": "mouse_keys_mode_v4_selection",
-                                                    "value": 0
-                                                }
-                                            },
-                                            {
-                                                "set_notification_message": {
-                                                    "id": "mouse_keys_mode_v4",
-                                                    "text": ""
-                                                }
-                                            }
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
                                         ]
                                     }
                                 },
                                 "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
                                 "to": [
-                                    {
-                                        "set_variable": {
-                                            "name": "mouse_keys_mode_v4",
-                                            "value": 1
-                                        }
-                                    },
-                                    {
-                                        "set_notification_message": {
-                                            "id": "mouse_keys_mode_v4",
-                                            "text": "Mouse Keys Mode v4"
-                                        }
-                                    },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
                                     { "pointing_button": "button2" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Mouse Keys Mode v4 - 画面移動 (v: サイクル, n: ウィンドウ中央)",
+                        "manipulators": [
+                            {
+                                "description": "v: 画面0→1へ移動",
+                                "conditions": [
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_screen_index", "type": "variable_if", "value": 0 }
+                                ],
+                                "from": { "key_code": "v", "modifiers": { "optional": ["any"] } },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_screen_index", "value": 1 } },
+                                    { "software_function": { "set_mouse_cursor_position": { "screen": 1, "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "v: 画面1→2へ移動",
+                                "conditions": [
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_screen_index", "type": "variable_if", "value": 1 }
+                                ],
+                                "from": { "key_code": "v", "modifiers": { "optional": ["any"] } },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_screen_index", "value": 2 } },
+                                    { "software_function": { "set_mouse_cursor_position": { "screen": 2, "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "v: 画面2→0へ移動 (サイクル)",
+                                "conditions": [
+                                    { "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 },
+                                    { "name": "mouse_keys_screen_index", "type": "variable_if", "value": 2 }
+                                ],
+                                "from": { "key_code": "v", "modifiers": { "optional": ["any"] } },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_screen_index", "value": 0 } },
+                                    { "software_function": { "set_mouse_cursor_position": { "screen": 0, "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "v: 画面サイクル (初期状態→画面1)",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "v", "modifiers": { "optional": ["any"] } },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_screen_index", "value": 1 } },
+                                    { "software_function": { "set_mouse_cursor_position": { "screen": 1, "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "d+v: モード起動 + 画面1へ移動",
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "v" }],
+                                    "simultaneous_options": {
+                                        "key_down_order": "strict",
+                                        "key_up_order": "strict_inverse",
+                                        "to_after_key_up": [
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
+                                        ]
+                                    }
+                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
+                                    { "set_variable": { "name": "mouse_keys_screen_index", "value": 1 } },
+                                    { "software_function": { "set_mouse_cursor_position": { "screen": 1, "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "n: ウィンドウ中央へ移動",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "n", "modifiers": { "optional": ["any"] } },
+                                "to": [{ "software_function": { "set_mouse_cursor_position": { "x": "50%", "y": "50%" } } }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "d+n: モード起動 + ウィンドウ中央へ移動",
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "n" }],
+                                    "simultaneous_options": {
+                                        "key_down_order": "strict",
+                                        "key_up_order": "strict_inverse",
+                                        "to_after_key_up": [
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
+                                        ]
+                                    }
+                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
+                                    { "software_function": { "set_mouse_cursor_position": { "x": "50%", "y": "50%" } } }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Mouse Keys Mode v4 - スクロールモード (s) / 速度調整 (f: 2倍, g: 0.5倍)",
+                        "manipulators": [
+                            {
+                                "description": "s: スクロールモード ON (押している間)",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "s", "modifiers": { "optional": ["any"] } },
+                                "to": [{ "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 1 } }],
+                                "to_after_key_up": [{ "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "d+s: モード起動 + スクロールモード ON",
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "s" }],
+                                    "simultaneous_options": {
+                                        "key_down_order": "strict",
+                                        "key_up_order": "strict_inverse",
+                                        "to_after_key_up": [
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
+                                        ]
+                                    }
+                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
+                                    { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 1 } }
+                                ],
+                                "to_after_key_up": [{ "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "f: 速度2倍 (押している間)",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "f", "modifiers": { "optional": ["any"] } },
+                                "to": [{ "mouse_key": { "speed_multiplier": 2 } }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "d+f: モード起動 + 速度2倍",
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "f" }],
+                                    "simultaneous_options": {
+                                        "key_down_order": "strict",
+                                        "key_up_order": "strict_inverse",
+                                        "to_after_key_up": [
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
+                                        ]
+                                    }
+                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
+                                    { "mouse_key": { "speed_multiplier": 2 } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "g: 速度0.5倍 (押している間)",
+                                "conditions": [{ "name": "mouse_keys_mode_v4", "type": "variable_if", "value": 1 }],
+                                "from": { "key_code": "g", "modifiers": { "optional": ["any"] } },
+                                "to": [{ "mouse_key": { "speed_multiplier": 0.5 } }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "d+g: モード起動 + 速度0.5倍",
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "simultaneous": [{ "key_code": "d" }, { "key_code": "g" }],
+                                    "simultaneous_options": {
+                                        "key_down_order": "strict",
+                                        "key_up_order": "strict_inverse",
+                                        "to_after_key_up": [
+                                            { "set_variable": { "name": "mouse_keys_mode_v4", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_scroll", "value": 0 } },
+                                            { "set_variable": { "name": "mouse_keys_mode_v4_selection", "value": 0 } },
+                                            { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "" } }
+                                        ]
+                                    }
+                                },
+                                "parameters": { "basic.simultaneous_threshold_milliseconds": 500 },
+                                "to": [
+                                    { "set_variable": { "name": "mouse_keys_mode_v4", "value": 1 } },
+                                    { "set_notification_message": { "id": "mouse_keys_mode_v4", "text": "Mouse Keys Mode v4" } },
+                                    { "mouse_key": { "speed_multiplier": 0.5 } }
                                 ],
                                 "type": "basic"
                             }
