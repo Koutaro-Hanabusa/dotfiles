@@ -13,10 +13,10 @@
     "pr-review-toolkit@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hanabusa.kotaro/.claude/plugins/cache/claude-plugins-official/pr-review-toolkit/f1be96f0fb58",
-        "version": "f1be96f0fb58",
+        "installPath": "/Users/hanabusa.kotaro/.claude/plugins/cache/claude-plugins-official/pr-review-toolkit/f70b65538da0",
+        "version": "f70b65538da0",
         "installedAt": "2026-01-08T04:47:00.214Z",
-        "lastUpdated": "2026-01-09T02:10:53.868Z"
+        "lastUpdated": "2026-01-13T00:05:36.150Z"
       }
     ],
     "figma@claude-plugins-official": [
