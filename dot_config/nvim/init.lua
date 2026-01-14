@@ -71,6 +71,11 @@ vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Decrease window 
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
+-- Tmux pane zoom toggle
+vim.keymap.set("n", "<leader>z", function()
+  vim.fn.system("tmux resize-pane -Z")
+end, { desc = "Toggle tmux pane zoom" })
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
