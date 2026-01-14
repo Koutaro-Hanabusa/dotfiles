@@ -97,6 +97,15 @@ require("lazy").setup("plugins", {
   },
 })
 
+-- ターミナルが開いたらノーマルモードにする
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    vim.defer_fn(function()
+      vim.cmd([[stopinsert]])
+    end, 10)
+  end,
+})
+
 -- Auto-open layout on startup
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -109,11 +118,15 @@ vim.api.nvim_create_autocmd("VimEnter", {
       vim.defer_fn(function()
         -- Move to the main window (not nvim-tree)
         vim.cmd("wincmd l")
+        -- Remember the editor window
+        local editor_win = vim.api.nvim_get_current_win()
         -- Open terminal at the bottom with smaller height
         vim.cmd("ToggleTerm size=10 direction=horizontal")
-        -- Move focus back to editor and ensure normal mode
-        vim.cmd("stopinsert")
-        vim.cmd("wincmd k")
+        -- Wait for terminal to fully open, then move back
+        vim.defer_fn(function()
+          -- Focus editor window
+          vim.api.nvim_set_current_win(editor_win)
+        end, 200)
       end, 100)
     end
   end,
