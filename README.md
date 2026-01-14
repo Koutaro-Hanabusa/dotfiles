@@ -131,6 +131,94 @@ prefixキーは `Ctrl+a`
 
 ---
 
+## 自動フォーマット
+
+`:w`（保存）時に自動でフォーマットされる（[conform.nvim](https://github.com/stevearc/conform.nvim)使用）
+
+### 対応フォーマッター
+
+| ファイルタイプ | フォーマッター | インストール |
+|---------------|---------------|-------------|
+| JavaScript (`.js`) | prettier | `npm install -g prettier` |
+| TypeScript (`.ts`) | prettier | `npm install -g prettier` |
+| TypeScript React (`.tsx`) | prettier | `npm install -g prettier` |
+| JavaScript React (`.jsx`) | prettier | `npm install -g prettier` |
+| JSON (`.json`) | prettier | `npm install -g prettier` |
+| CSS (`.css`) | prettier | `npm install -g prettier` |
+| HTML (`.html`) | prettier | `npm install -g prettier` |
+| Markdown (`.md`) | prettier | `npm install -g prettier` |
+| Lua (`.lua`) | stylua | `brew install stylua` |
+| Python (`.py`) | black | `pip install black` |
+| Go (`.go`) | gofmt | Go に同梱 |
+| PHP (`.php`) | pint | `composer global require laravel/pint` |
+
+### 手動フォーマット
+
+`<Space>f` で現在のバッファを手動フォーマット
+
+---
+
+## Vim 基本操作
+
+### モード
+
+| モード | 説明 | 入り方 |
+|-------|------|-------|
+| Normal | 通常モード（コマンド実行） | `Esc` または `jj` |
+| Insert | 入力モード | `i`, `a`, `o` など |
+| Visual | 選択モード | `v`, `V`, `Ctrl+v` |
+| Command | コマンドラインモード | `:` |
+
+### カーソル移動
+
+| キー | 動作 |
+|-----|------|
+| `h` | 左 |
+| `j` | 下 |
+| `k` | 上 |
+| `l` | 右 |
+| `w` | 次の単語の先頭 |
+| `b` | 前の単語の先頭 |
+| `e` | 単語の末尾 |
+| `0` | 行頭 |
+| `$` | 行末 |
+| `gg` | ファイル先頭 |
+| `G` | ファイル末尾 |
+| `Ctrl+d` | 半ページ下 |
+| `Ctrl+u` | 半ページ上 |
+
+### 編集
+
+| キー | 動作 |
+|-----|------|
+| `i` | カーソル位置で挿入 |
+| `a` | カーソルの後ろで挿入 |
+| `o` | 下に新しい行を作って挿入 |
+| `O` | 上に新しい行を作って挿入 |
+| `x` | 1文字削除 |
+| `dd` | 行削除（カット） |
+| `yy` | 行コピー（ヤンク） |
+| `p` | ペースト（下/後ろ） |
+| `P` | ペースト（上/前） |
+| `u` | Undo |
+| `Ctrl+r` | Redo |
+| `ciw` | 単語を削除して挿入モード |
+| `ci"` | `"..."` の中身を削除して挿入 |
+| `di(` | `(...)` の中身を削除 |
+
+### 検索・置換
+
+| キー | 動作 |
+|-----|------|
+| `/検索語` | 前方検索 |
+| `?検索語` | 後方検索 |
+| `n` | 次の検索結果 |
+| `N` | 前の検索結果 |
+| `:%s/old/new/g` | 全置換 |
+| `:%s/old/new/gc` | 確認しながら全置換 |
+
+---
+
 ## nvim操作
 
 Leaderキーは `Space`

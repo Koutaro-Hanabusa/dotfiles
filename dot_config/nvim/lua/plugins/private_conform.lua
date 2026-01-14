@@ -14,6 +14,7 @@ return {
         lua = { "stylua" },
         python = { "black" },
         go = { "gofmt" },
+        php = { "pint" },
       },
       format_on_save = {
         timeout_ms = 500,
