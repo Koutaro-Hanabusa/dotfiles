@@ -39,5 +39,29 @@ return {
     keymap("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", opts)
     keymap("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", opts)
     keymap("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", opts)
+
+    -- gh-dash用のカスタムターミナル
+    local Terminal = require("toggleterm.terminal").Terminal
+    local ghdash = Terminal:new({
+      cmd = "gh dash",
+      dir = "git_dir",
+      direction = "float",
+      float_opts = {
+        border = "curved",
+      },
+      on_open = function(term)
+        vim.cmd("startinsert!")
+        vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+      end,
+      on_close = function(_)
+        vim.cmd("startinsert!")
+      end,
+    })
+
+    local function ghdash_toggle()
+      ghdash:toggle()
+    end
+
+    keymap("n", "<leader>gh", ghdash_toggle, { desc = "Open gh-dash" })
   end,
 }
