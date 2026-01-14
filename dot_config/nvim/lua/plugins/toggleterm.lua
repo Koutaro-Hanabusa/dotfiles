@@ -54,7 +54,6 @@ return {
         vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
       end,
       on_close = function(_)
-        vim.cmd("startinsert!")
       end,
     })
 

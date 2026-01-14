@@ -283,6 +283,32 @@ Leaderキーは `Space`
 | `Space` `tf` | フロートターミナル |
 | `Esc` or `jj` | ターミナルでノーマルモードへ |
 
+### gh-dash（GitHub Dashboard）
+
+`Space` `gh` でGitHub PR/Issueダッシュボードを起動。
+
+| キー | 動作 |
+|------|------|
+| `Space` `gh` | gh-dash起動 |
+
+#### gh-dash内の操作
+
+| キー | 動作 |
+|------|------|
+| `j/k` | 上下移動 |
+| `Tab` | 次のセクションへ |
+| `Enter` | プレビュー表示 |
+| `o` | ブラウザで開く |
+| `d` | Diff表示 |
+| `C` | ブランチをチェックアウト |
+| `a` | PRを承認 |
+| `m` | PRをマージ |
+| `c` | コメント |
+| `?` | ヘルプ表示 |
+| `q` | 終了 |
+
+インストール: `gh extension install dlvhdr/gh-dash`
+
 ### LSP（コード支援）
 
 | キー | 動作 |

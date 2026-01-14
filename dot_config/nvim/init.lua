@@ -106,7 +106,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
         vim.cmd("wincmd l")
         -- Open terminal at the bottom with smaller height
         vim.cmd("ToggleTerm size=10 direction=horizontal")
-        -- Move focus back to editor
+        -- Move focus back to editor and ensure normal mode
+        vim.cmd("stopinsert")
         vim.cmd("wincmd k")
       end, 100)
     end
