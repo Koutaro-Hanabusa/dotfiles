@@ -1,5 +1,6 @@
 return {
   "mikavilpas/yazi.nvim",
+  enabled = false,
   lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
