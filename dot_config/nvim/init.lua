@@ -7,6 +7,7 @@ vim.filetype.add({
 
 -- Basic settings
 vim.opt.number = true
+vim.opt.autoread = true
 vim.opt.clipboard = "unnamedplus"  -- yank時にシステムクリップボードにもコピー
 vim.opt.relativenumber = true
 vim.opt.tabstop = 2
@@ -100,6 +101,22 @@ require("lazy").setup("plugins", {
   change_detection = {
     notify = false,
   },
+})
+
+-- 外部でファイルが変更されたら自動で再読み込み
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+-- ファイル変更時に通知
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  callback = function()
+    vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
+  end,
 })
 
 -- ターミナルが開いたらノーマルモードにする（lazygitは除外）
