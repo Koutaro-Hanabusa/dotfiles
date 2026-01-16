@@ -8,7 +8,9 @@ return {
     vim.api.nvim_create_autocmd("TermOpen", {
       pattern = "*lazygit*",
       callback = function()
-        vim.cmd("startinsert")
+        vim.defer_fn(function()
+          vim.cmd("startinsert")
+        end, 20)
       end,
     })
 

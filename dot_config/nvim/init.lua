@@ -59,6 +59,11 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally"
 vim.keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 vim.keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
+-- New buffer keymaps
+vim.keymap.set("n", "<leader>bn", "<cmd>enew<CR>", { desc = "New empty buffer" })
+vim.keymap.set("n", "<leader>bv", "<cmd>vnew<CR>", { desc = "New buffer in vertical split" })
+vim.keymap.set("n", "<leader>bh", "<cmd>new<CR>", { desc = "New buffer in horizontal split" })
+
 -- Window navigation keymaps
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
@@ -97,9 +102,13 @@ require("lazy").setup("plugins", {
   },
 })
 
--- ターミナルが開いたらノーマルモードにする
+-- ターミナルが開いたらノーマルモードにする（lazygitは除外）
 vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname:match("lazygit") then
+      return
+    end
     vim.defer_fn(function()
       vim.cmd([[stopinsert]])
     end, 10)

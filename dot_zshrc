@@ -59,8 +59,16 @@ nvc() {
 
 alias vim='nvc'
 
-# dotfilesのヘルプを表示
-alias dothelp='less ~/.local/share/chezmoi/README.md'
+# ヘルプ表示（glowがあれば使う、なければless）
+_show_md() {
+  if command -v glow &> /dev/null; then
+    glow -p "$1"
+  else
+    less "$1"
+  fi
+}
+alias dothelp='_show_md ~/.local/share/chezmoi/README.md'
+alias vimhelp='_show_md ~/.config/nvim/doc/README.md'
 
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
