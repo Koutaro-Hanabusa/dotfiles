@@ -3,12 +3,12 @@ return {
   config = function()
     require("conform").setup({
       formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        typescriptreact = { "prettier" },
-        javascriptreact = { "prettier" },
-        json = { "prettier" },
-        css = { "prettier" },
+        javascript = { "biome", "prettier", stop_after_first = true },
+        typescript = { "biome", "prettier", stop_after_first = true },
+        typescriptreact = { "biome", "prettier", stop_after_first = true },
+        javascriptreact = { "biome", "prettier", stop_after_first = true },
+        json = { "biome", "prettier", stop_after_first = true },
+        css = { "biome", "prettier", stop_after_first = true },
         html = { "prettier" },
         markdown = { "prettier" },
         lua = { "stylua" },
