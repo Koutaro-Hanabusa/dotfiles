@@ -34,6 +34,18 @@ vim.g.maplocalleader = " "
 -- Key mappings for mode switching
 vim.keymap.set("i", "jj", "<ESC>")
 
+-- InsertモードからNormalモードに戻る時に英数入力に切り替え（macOS）
+if vim.fn.has("mac") == 1 then
+  local im_select_cmd = "im-select"
+  local default_im = "com.apple.keylayout.ABC" -- 英数
+
+  vim.api.nvim_create_autocmd("InsertLeave", {
+    callback = function()
+      vim.fn.jobstart({ im_select_cmd, default_im }, { detach = true })
+    end,
+  })
+end
+
 -- File path copy keymaps
 vim.keymap.set("n", "<leader>yp", function()
   vim.fn.setreg("+", vim.fn.expand("%"))
