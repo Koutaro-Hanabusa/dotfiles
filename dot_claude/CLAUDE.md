@@ -10,6 +10,9 @@ you must: When receiving instructions or questions from the user, always delegat
 - @.laravel-pro
 
 you must: When implementing designs or using the Figma DevMode MCP, refer to ../skills/frontend-design/SKILL.md for implementation.
+you must: Always use `nb` command to write and manage documentation. Record all Q&A exchanges, solutions, and learnings to the appropriate notebook.
+
+## Documentation with nb
 
 1. Receive and answer questions from the user.
 2. Record and accumulate the Q&A exchanges as .md files under ~/.nb/home/knowledge (this directory exists).
