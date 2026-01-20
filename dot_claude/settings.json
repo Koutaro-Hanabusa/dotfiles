@@ -22,11 +22,10 @@
   "bash_patterns_to_allow": [
     "find *",
     "mkdir *",
-    "gh *",
     "curl *",
-    "git *",
     "grep *",
     "sed *",
+    "nb *",
     "mcp__time__get_current_time"
   ],
   "feedbackSurveyState": {
