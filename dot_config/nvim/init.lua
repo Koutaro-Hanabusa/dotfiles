@@ -146,20 +146,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
     if vim.fn.argc() == 0 then
       -- Open nvim-tree
       vim.cmd("NvimTreeOpen")
-
-      -- Wait a bit for nvim-tree to open, then open terminal
+      -- Move to the main window (not nvim-tree)
       vim.defer_fn(function()
-        -- Move to the main window (not nvim-tree)
         vim.cmd("wincmd l")
-        -- Remember the editor window
-        local editor_win = vim.api.nvim_get_current_win()
-        -- Open terminal at the bottom with smaller height
-        vim.cmd("ToggleTerm size=10 direction=horizontal")
-        -- Wait for terminal to fully open, then move back
-        vim.defer_fn(function()
-          -- Focus editor window
-          vim.api.nvim_set_current_win(editor_win)
-        end, 200)
       end, 100)
     end
   end,

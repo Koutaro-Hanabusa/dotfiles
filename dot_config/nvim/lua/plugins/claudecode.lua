@@ -13,6 +13,15 @@ return {
       },
       git_repo_cwd = true,
     })
+
+    -- ClaudeCodeターミナルにフォーカス時にinsertモードに切り替え
+    vim.api.nvim_create_autocmd("BufEnter", {
+      pattern = "term://*claude*",
+      callback = function()
+        vim.cmd("startinsert")
+      end,
+    })
+
     -- 起動時に自動でClaudeCodeを開く
     vim.defer_fn(function()
       vim.cmd("ClaudeCode")
