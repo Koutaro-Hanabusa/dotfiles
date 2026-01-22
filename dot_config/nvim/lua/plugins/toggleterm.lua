@@ -1,6 +1,15 @@
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
+  lazy = true, -- 起動時に読み込まない
+  keys = {
+    { "<c-\\>", desc = "Toggle terminal" },
+    { "<leader>t", desc = "Toggle terminal" },
+    { "<leader>th", desc = "Horizontal terminal" },
+    { "<leader>tv", desc = "Vertical terminal" },
+    { "<leader>tf", desc = "Float terminal" },
+    { "<leader>gh", desc = "Open gh-dash" },
+  },
   config = function()
     require("toggleterm").setup({
       size = 10, -- Smaller terminal height
