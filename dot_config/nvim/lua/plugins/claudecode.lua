@@ -22,9 +22,13 @@ return {
       end,
     })
 
-    -- 起動時に自動でClaudeCodeを開く
+    -- 起動時に自動でClaudeCodeを開く（エディタにフォーカスを残す）
     vim.defer_fn(function()
       vim.cmd("ClaudeCode")
+      -- ClaudeCodeが開いた後、エディタに戻る
+      vim.defer_fn(function()
+        vim.cmd("wincmd h")
+      end, 100)
     end, 100)
   end,
   keys = {
