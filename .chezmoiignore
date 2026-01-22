@@ -3,6 +3,6 @@
 # nvim内の.gitディレクトリを除外（chezmoi applyで適用しない）
 .config/nvim/.git
 .config/nvim/.git/**
-
+.config/nvim/lazy-lock.json
 # gh-dashの設定ファイル（環境固有のため）
 .config/gh-dash/*.yml
