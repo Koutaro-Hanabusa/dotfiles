@@ -132,16 +132,10 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
   end,
 })
 
--- ターミナルが開いたらノーマルモードにする（lazygitは除外）
+-- ターミナルが開いたらinsertモードにする
 vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
-    local bufname = vim.api.nvim_buf_get_name(0)
-    if bufname:match("lazygit") then
-      return
-    end
-    vim.defer_fn(function()
-      vim.cmd([[stopinsert]])
-    end, 10)
+    vim.cmd([[startinsert]])
   end,
 })
 
