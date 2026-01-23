@@ -113,6 +113,16 @@ chezmoiはソースディレクトリで特殊なプレフィックスを使用�
 
 nvimで`:q`すればtmuxセッションごと終了する。
 
+### Claude Code連携キーバインド
+
+nvim内でClaude Codeと連携するためのキーバインド。
+
+| キー | 動作 |
+|------|------|
+| `Space` `ac` | Claude Codeパネルのトグル |
+| `Space` `as` | 選択範囲をClaudeに送信（Visual mode） |
+| `Space` `aa` | 現在のファイルをClaudeに追加 |
+
 ---
 
 ## tmux操作
@@ -128,6 +138,45 @@ prefixキーは `Ctrl+a`
 | `Ctrl+a` `d` | デタッチ（セッション維持） |
 | `tmux attach` | セッションに再接続 |
 | マウス | ペイン選択・リサイズ可 |
+
+---
+
+## Git関連ツール
+
+### Diffview（差分表示）
+
+| キー | 動作 |
+|------|------|
+| `Space` `dv` | Diffviewを開く（現在の変更を表示） |
+| `Space` `dc` | Diffviewを閉じる |
+| `Space` `dh` | 現在ファイルの履歴 |
+| `Space` `dH` | 全ファイルの履歴 |
+
+Diffview内でのコンフリクト解決:
+
+| キー | 動作 |
+|------|------|
+| `Space` `co` | oursを選択 |
+| `Space` `ct` | theirsを選択 |
+| `Space` `cb` | baseを選択 |
+| `Space` `ca` | allを選択 |
+
+### Octo（GitHub連携）
+
+nvim内でGitHubのPR/Issueを操作。
+
+| キー | 動作 |
+|------|------|
+| `Space` `ol` | PR一覧 |
+| `Space` `oi` | Issue一覧 |
+| `Space` `os` | 検索 |
+| `Space` `on` | 通知一覧 |
+
+コマンド例:
+- `:Octo pr create` - PRを作成
+- `:Octo pr checkout <number>` - PRをチェックアウト
+- `:Octo issue create` - Issueを作成
+- `:Octo review start` - PRレビューを開始
 
 ---
 
@@ -220,6 +269,71 @@ vimhelp
 
 ---
 
+## Claude Code 設定
+
+`.claude/` ディレクトリでClaude Codeをカスタマイズ。
+
+### カスタムエージェント
+
+タスクに応じて専門のサブエージェントに委譲される。
+
+| エージェント | 役割 |
+|-------------|------|
+| `@.react-pro` | React専門 |
+| `@.frotend-developer` | フロントエンド全般 |
+| `@.golang-pro` | Go言語専門 |
+| `@.backend-developer` | バックエンド全般 |
+| `@.laravel-pro` | Laravel専門 |
+| `@.qa-expert` | QA・テスト専門 |
+| `@.task-distributor` | タスク分配 |
+
+### カスタムコマンド
+
+| コマンド | 説明 |
+|---------|------|
+| `/fetch_today` | 今日の情報を取得 |
+| `/issue-child` | 子Issue作成 |
+| `/review` | PRレビュー |
+
+### インストール済みプラグイン
+
+| プラグイン | 機能 |
+|-----------|------|
+| `typescript-lsp` | TypeScript言語サーバー連携 |
+| `pr-review-toolkit` | PRレビュー支援 |
+| `figma` | Figma DevMode連携 |
+
+### その他の設定
+
+- **常時Thinking有効** - 思考プロセスを常に表示
+- **完了時サウンド** - タスク完了時にドラクエのレベルアップ音
+- **日本語応答** - 常に日本語で応答
+
+---
+
+## nb（ナレッジ管理）
+
+[nb](https://github.com/xwmx/nb)でQ&Aや学びをノートブックに蓄積。
+
+### 基本操作
+
+| コマンド | 動作 |
+|---------|------|
+| `nb list` | ノート一覧 |
+| `nb add` | 新規ノート作成 |
+| `nb edit <id>` | ノートを編集 |
+| `nb search <query>` | ノートを検索 |
+| `nb show <id>` | ノートを表示 |
+
+### ノートブック構成
+
+- `home:knowledge/` - 個人PCのナレッジ
+- `work:knowledge/` - 仕事PCのナレッジ（`.is_work_pc`で判定）
+
+Claude Codeとの連携で、Q&Aのやり取りが自動的にナレッジとして蓄積される。
+
+---
+
 ## 含まれる設定ファイル
 
 - `.zshrc` - シェル設定
@@ -227,3 +341,5 @@ vimhelp
 - `.config/nvim/` - Neovim設定
 - `.config/ghostty/` - Ghostty設定
 - `.config/karabiner/` - Karabiner設定
+- `.claude/` - Claude Code設定（エージェント、コマンド、プラグイン）
+- `.nbrc` - nb（ノートブック）設定
