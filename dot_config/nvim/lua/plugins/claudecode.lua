@@ -1,12 +1,13 @@
 return {
   "coder/claudecode.nvim",
-  event = "VeryLazy", -- 起動時に読み込む
+  event = "VeryLazy",
   config = function()
     require("claudecode").setup({
+      auto_start = true, -- プラグイン側で自動起動を制御
       terminal = {
         split_side = "right",
         split_width_percentage = 0.40,
-        provider = "native", -- snacks.nvimが不要
+        provider = "native",
       },
       diff_opts = {
         auto_close_on_accept = true,
@@ -21,15 +22,6 @@ return {
         vim.cmd("startinsert")
       end,
     })
-
-    -- 起動時に自動でClaudeCodeを開く（エディタにフォーカスを残す）
-    vim.defer_fn(function()
-      vim.cmd("ClaudeCode")
-      -- ClaudeCodeが開いた後、エディタに戻る
-      vim.defer_fn(function()
-        vim.cmd("wincmd h")
-      end, 100)
-    end, 100)
   end,
   keys = {
     { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude Code" },
