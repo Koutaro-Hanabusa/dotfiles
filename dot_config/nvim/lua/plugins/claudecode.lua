@@ -26,6 +26,9 @@ return {
         vim.cmd("startinsert")
       end,
     })
+
+    -- ターミナルモードで Ctrl+v でクリップボードからペースト
+    vim.keymap.set("t", "<C-v>", '<C-\\><C-n>"+pi', { desc = "Paste in terminal" })
   end,
   keys = {
     { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude Code" },
