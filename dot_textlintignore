@@ -1,0 +1,23 @@
+# ドキュメント系
+README.md
+README*.md
+**/README.md
+CLAUDE.md
+**/CLAUDE.md
+CHANGELOG.md
+**/CHANGELOG.md
+LICENSE*
+
+# テストファイル
+*.test.ts
+*.test.tsx
+*.test.js
+*.test.jsx
+*.spec.ts
+*.spec.tsx
+*.spec.js
+*.spec.jsx
+**/__tests__/**
+**/__mocks__/**
+**/test/**
+**/tests/**

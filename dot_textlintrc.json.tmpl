@@ -1,6 +1,10 @@
 {
   "filters": {},
-  "plugins": ["jsx"],
+  "plugins": {
+    "jsx": {
+      "extensions": [".jsx", ".tsx", ".ts"]
+    }
+  },
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": {
@@ -28,6 +32,10 @@
       "strict": false,
       "allow": ["か", "が", "に"]
     },
-    "@textlint-ja/preset-ai-writing": true
+    "@textlint-ja/preset-ai-writing": true,
+    "{{ .chezmoi.homeDir }}/.textlint-rules/str-ja-no-mixed-period": {
+      "periodMark": "。",
+      "allowPeriodMarks": [".", "．"]
+    }
   }
 }

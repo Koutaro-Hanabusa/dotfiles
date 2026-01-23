@@ -8,7 +8,7 @@ return {
     lint.linters.textlint = {
       cmd = "textlint",
       stdin = false,
-      args = { "--format", "json", "--no-color" },
+      args = { "--format", "json", "--no-color", "--ignore-path", vim.fn.expand("~/.textlintignore") },
       ignore_exitcode = true,
       parser = function(output, bufnr)
         local diagnostics = {}
@@ -61,13 +61,13 @@ return {
     -- 現在のファイルをtextlintで自動修正
     vim.keymap.set("n", "<leader>lf", function()
       local file = vim.fn.expand("%:p")
-      vim.cmd("!textlint --fix " .. vim.fn.shellescape(file))
+      vim.cmd("!textlint --fix --ignore-path ~/.textlintignore " .. vim.fn.shellescape(file))
       vim.cmd("edit!")
     end, { desc = "Textlint fix current file" })
 
     -- リポジトリ全体のmd,ts,tsx,js,jsxファイルをチェック (quickfixに出力)
     vim.keymap.set("n", "<leader>la", function()
-      local result = vim.fn.system('textlint --format unix "**/*.md" "**/*.ts" "**/*.tsx" "**/*.js" "**/*.jsx" 2>/dev/null')
+      local result = vim.fn.system('textlint --format unix --ignore-path ~/.textlintignore "**/*.md" "**/*.ts" "**/*.tsx" "**/*.js" "**/*.jsx" 2>/dev/null')
       vim.fn.setqflist({}, "r", { lines = vim.split(result, "\n"), title = "Textlint" })
       vim.cmd("copen")
     end, { desc = "Textlint all files" })
