@@ -4,9 +4,43 @@ return {
   config = function()
     local lint = require("lint")
 
+    -- textlintのカスタムリンター定義
+    lint.linters.textlint = {
+      cmd = "textlint",
+      stdin = false,
+      args = { "--format", "json", "--no-color" },
+      ignore_exitcode = true,
+      parser = function(output, bufnr)
+        local diagnostics = {}
+        if output == "" then
+          return diagnostics
+        end
+        local ok, results = pcall(vim.json.decode, output)
+        if not ok or not results or #results == 0 then
+          return diagnostics
+        end
+        for _, file_result in ipairs(results) do
+          for _, msg in ipairs(file_result.messages or {}) do
+            table.insert(diagnostics, {
+              lnum = (msg.line or 1) - 1,
+              col = (msg.column or 1) - 1,
+              end_lnum = (msg.line or 1) - 1,
+              end_col = (msg.column or 1) - 1,
+              severity = msg.severity == 2 and vim.diagnostic.severity.ERROR or vim.diagnostic.severity.WARN,
+              message = msg.message,
+              source = "textlint",
+            })
+          end
+        end
+        return diagnostics
+      end,
+    }
+
     lint.linters_by_ft = {
       markdown = { "textlint" },
       text = { "textlint" },
+      javascript = { "textlint" },
+      typescript = { "textlint" },
       javascriptreact = { "textlint" },
       typescriptreact = { "textlint" },
     }
@@ -31,10 +65,11 @@ return {
       vim.cmd("edit!")
     end, { desc = "Textlint fix current file" })
 
-    -- リポジトリ全体のmdファイルをチェック (quickfixに出力)
+    -- リポジトリ全体のmd,ts,tsx,js,jsxファイルをチェック (quickfixに出力)
     vim.keymap.set("n", "<leader>la", function()
-      vim.cmd('cexpr system("textlint --format unix \"**/*.md\" 2>/dev/null")')
+      local result = vim.fn.system('textlint --format unix "**/*.md" "**/*.ts" "**/*.tsx" "**/*.js" "**/*.jsx" 2>/dev/null')
+      vim.fn.setqflist({}, "r", { lines = vim.split(result, "\n"), title = "Textlint" })
       vim.cmd("copen")
-    end, { desc = "Textlint all md files" })
+    end, { desc = "Textlint all files" })
   end,
 }

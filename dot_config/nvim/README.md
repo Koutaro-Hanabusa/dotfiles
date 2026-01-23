@@ -47,6 +47,7 @@
 | toggleterm | ターミナル統合 |
 | trouble.nvim | Diagnostics一覧 |
 | conform.nvim | フォーマッター |
+| nvim-lint | Linter（textlint連携） |
 | Comment.nvim | コメントトグル |
 
 ---
@@ -160,6 +161,35 @@ Leader key: `<Space>`
 | `<leader>cl` | LSP定義/参照一覧 |
 | `<leader>xL` | Location List |
 | `<leader>xQ` | Quickfix List |
+
+### Lint (nvim-lint + textlint)
+
+| キー | 説明 |
+|------|------|
+| `<leader>ll` | 現在のファイルをLint |
+| `<leader>lf` | 現在のファイルをtextlintで自動修正 |
+| `<leader>la` | リポジトリ全体のmd/ts/tsx/js/jsxをチェック（quickfixに出力） |
+
+**対応ファイル:** Markdown (.md), TypeScript (.ts/.tsx), JavaScript (.js/.jsx), Text (.txt)
+
+#### 結果の見方
+
+**Diagnostics表示:**
+- ファイルを開くと自動でLintが実行され、問題箇所に波線が表示される
+- `K` でカーソル位置のエラー詳細を確認
+- `[d` / `]d` で前後のDiagnosticsへジャンプ
+
+**Quickfix表示 (`<leader>la` 実行後):**
+- quickfixウィンドウに全ファイルのエラー一覧が表示される
+- `<CR>` で該当箇所へジャンプ
+- `:cnext` / `:cprev` で次/前のエラーへ移動
+- `:cclose` でquickfixを閉じる
+
+**Trouble.nvim連携:**
+- `<leader>xx` でDiagnostics一覧をTroubleで表示
+- `<leader>xQ` でQuickfixをTroubleで表示
+
+---
 
 ### フォーマット (conform.nvim)
 
