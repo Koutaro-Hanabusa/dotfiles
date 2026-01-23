@@ -1,0 +1,32 @@
+{
+  "filters": {},
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": {
+        "max": 150
+      },
+      "max-comma": {
+        "max": 4
+      },
+      "max-ten": {
+        "max": 3
+      },
+      "no-exclamation-question-mark": false,
+      "ja-no-weak-phrase": true,
+      "ja-no-mixed-period": {
+        "periodMark": "。",
+        "allowPeriodMarks": [".", "．"]
+      },
+      "no-doubled-joshi": {
+        "strict": false,
+        "allow": ["か", "が", "に"]
+      }
+    },
+    "preset-japanese": true,
+    "no-doubled-joshi": {
+      "strict": false,
+      "allow": ["か", "が", "に"]
+    },
+    "@textlint-ja/preset-ai-writing": true
+  }
+}
