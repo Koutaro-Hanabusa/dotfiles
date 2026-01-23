@@ -1,6 +1,10 @@
 return {
   "coder/claudecode.nvim",
-  event = "VeryLazy",
+  lazy = false, -- Claude Codeとの接続を即座に確立
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "folke/snacks.nvim",
+  },
   config = function()
     require("claudecode").setup({
       auto_start = true, -- プラグイン側で自動起動を制御
