@@ -1,5 +1,6 @@
 {
   "filters": {},
+  "plugins": ["jsx"],
   "rules": {
     "preset-ja-technical-writing": {
       "sentence-length": {
