@@ -39,11 +39,14 @@ if vim.fn.has("mac") == 1 then
   local im_select_cmd = "im-select"
   local default_im = "com.apple.keylayout.ABC" -- 英数
 
-  vim.api.nvim_create_autocmd("InsertLeave", {
-    callback = function()
-      vim.fn.jobstart({ im_select_cmd, default_im }, { detach = true })
-    end,
-  })
+  -- im-selectがインストールされている場合のみ有効化
+  if vim.fn.executable(im_select_cmd) == 1 then
+    vim.api.nvim_create_autocmd("InsertLeave", {
+      callback = function()
+        vim.fn.jobstart({ im_select_cmd, default_im }, { detach = true })
+      end,
+    })
+  end
 end
 
 -- File path copy keymaps
