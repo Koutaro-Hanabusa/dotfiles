@@ -37,28 +37,28 @@ alias tree="eza --tree --icons"
 alias grep="rg"
 
 # nvim + Claude Code を左右分割で起動（tmux版 - 一旦無効化）
-# nvc() {
-#   local target="${1:-.}"
+nvc() {
+  local target="${1:-.}"
 #
 #   # 既にtmux内にいる場合は普通にnvimを起動
-#   if [[ -n "$TMUX" ]]; then
-#     command nvim "$target"
-#     return
-#   fi
+  if [[ -n "$TMUX" ]]; then
+    command nvim "$target"
+    return
+  fi
 #
 #   # ユニークなセッション名（PID + ランダム）
-#   local session_name="nvc-$$-$RANDOM"
+  local session_name="nvc-$$-$RANDOM"
 #
 #   # セッション作成してアタッチ（nvim終了でセッション全体を閉じる）
-#   tmux new-session -d -s "$session_name" -c "$(pwd)"
-#   tmux send-keys -t "$session_name" "nvim $target; tmux kill-session -t $session_name" Enter
-#   tmux split-window -h -t "$session_name" -c "$(pwd)" -p 25
-#   tmux select-pane -t "$session_name:1.1"
-#   tmux attach-session -t "$session_name"
-# }
-# alias vim='nvc'
+  tmux new-session -d -s "$session_name" -c "$(pwd)"
+  tmux send-keys -t "$session_name" "nvim $target; tmux kill-session -t $session_name" Enter
+  tmux split-window -h -t "$session_name" -c "$(pwd)" -p 25
+  tmux select-pane -t "$session_name:1.1"
+  tmux attach-session -t "$session_name"
+}
+alias vim='nvc'
 
-alias vim='nvim'
+# alias vim='nvim'
 
 # ヘルプ表示（glowがあれば使う、なければless）
 _show_md() {
