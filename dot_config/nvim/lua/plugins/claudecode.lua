@@ -28,10 +28,22 @@ return {
     })
 
     -- ターミナルモードで Ctrl+v でクリップボードからペースト
-    vim.keymap.set("t", "<C-v>", '<C-\\><C-n>"+pi', { desc = "Paste in terminal" })
+    -- 注: Cmd+V（macOS標準）の方が確実。これはfallback用
+    vim.keymap.set("t", "<C-v>", function()
+      local clipboard = vim.fn.getreg("+")
+      if clipboard == "" then return end
+      -- ブラケットペーストモードで送信
+      local bracketed = "\x1b[200~" .. clipboard .. "\x1b[201~"
+      local job_id = vim.b.terminal_job_id
+      if job_id then
+        vim.fn.chansend(job_id, bracketed)
+      end
+    end, { desc = "Paste in terminal" })
   end,
   keys = {
     { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude Code" },
+    { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume session (picker)" },
+    { "<leader>ao", "<cmd>ClaudeCode --continue<cr>", desc = "Continue last session" },
     { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection to Claude" },
     { "<leader>aa", ":ClaudeCodeAdd %<cr>", desc = "Add current file to Claude" },
   },

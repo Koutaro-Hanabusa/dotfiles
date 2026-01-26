@@ -32,3 +32,5 @@ background-opacity = 0.85
 fullscreen=true
 # Shift+Enter で改行
 keybind = shift+enter=text:\n
+
+keybind = super+v=paste_from_clipboard
