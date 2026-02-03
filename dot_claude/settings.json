@@ -30,5 +30,9 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.cwd'); user=$(whoami); host=$(hostname -s); display_dir=\"${cwd/#$HOME/~}\"; git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" --no-optional-locks branch --show-current 2>/dev/null || echo \"\"); if [ -n \"$branch\" ]; then dirty=\"\"; staged=\"\"; untracked=\"\"; if ! git -C \"$cwd\" --no-optional-locks diff --quiet 2>/dev/null; then dirty=\"*\"; fi; if ! git -C \"$cwd\" --no-optional-locks diff --cached --quiet 2>/dev/null; then staged=\"+\"; fi; if [ -n \"$(git -C \"$cwd\" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)\" ]; then untracked=\"%\"; fi; git_info=\" $(printf '\\033[38;5;208m')($branch$dirty$staged$untracked)$(printf '\\033[0m')\"; fi; fi; printf \"%s@%s $(printf '\\033[34m')%s$(printf '\\033[0m')%s \" \"$user\" \"$host\" \"$display_dir\" \"$git_info\""
   }
 }

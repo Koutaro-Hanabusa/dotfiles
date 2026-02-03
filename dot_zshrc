@@ -52,7 +52,7 @@ nvc() {
 #   # セッション作成してアタッチ（nvim終了でセッション全体を閉じる）
   tmux new-session -d -s "$session_name" -c "$(pwd)"
   tmux send-keys -t "$session_name" "nvim $target; tmux kill-session -t $session_name" Enter
-  tmux split-window -h -t "$session_name" -c "$(pwd)" -p 20
+  tmux split-window -h -t "$session_name" -c "$(pwd)" -p 10
   tmux select-pane -t "$session_name:1.1"
   tmux attach-session -t "$session_name"
 }
