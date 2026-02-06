@@ -14,6 +14,7 @@ return {
           "ts_ls",
           "pyright",
           "gopls",
+          "intelephense",
         },
         automatic_installation = true,
       })
@@ -72,8 +73,36 @@ return {
         },
       }
 
+      -- PHP (Laravel)
+      vim.lsp.config.intelephense = {
+        cmd = { "intelephense", "--stdio" },
+        filetypes = { "php" },
+        root_markers = { "composer.json", ".git" },
+        capabilities = capabilities,
+        settings = {
+          intelephense = {
+            stubs = {
+              "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype",
+              "curl", "date", "dba", "dom", "enchant", "exif", "FFI", "fileinfo",
+              "filter", "fpm", "ftp", "gd", "gettext", "gmp", "hash", "iconv", "imap",
+              "intl", "json", "ldap", "libxml", "mbstring", "meta", "mysqli", "oci8",
+              "odbc", "openssl", "pcntl", "pcre", "PDO", "pdo_ibm", "pdo_mysql",
+              "pdo_pgsql", "pdo_sqlite", "pgsql", "Phar", "posix", "pspell", "readline",
+              "Reflection", "session", "shmop", "SimpleXML", "snmp", "soap", "sockets",
+              "sodium", "SPL", "sqlite3", "standard", "superglobals", "sysvmsg",
+              "sysvsem", "sysvshm", "tidy", "tokenizer", "xml", "xmlreader", "xmlrpc",
+              "xmlwriter", "xsl", "Zend OPcache", "zip", "zlib",
+              "wordpress", "laravel",
+            },
+            files = {
+              maxSize = 5000000,
+            },
+          },
+        },
+      }
+
       -- Enable LSPs
-      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls" })
+      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense" })
 
       -- Key mappings
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
