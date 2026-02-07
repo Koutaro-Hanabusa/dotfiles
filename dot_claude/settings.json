@@ -46,6 +46,9 @@
     "nb env *",
     "mcp__time__get_current_time"
   ],
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
   },
