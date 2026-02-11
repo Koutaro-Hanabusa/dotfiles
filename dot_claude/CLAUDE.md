@@ -3,7 +3,7 @@ you must: Always use the time MCP server when retrieving dates.
 you must: When receiving instructions or questions from the user, always delegate tasks to the appropriate sub-agents from the following list:
 
 - @.react-pro
-- @.frotend-developer
+- @.frontend-developer
 - @.golang-pro
 - @.qa-expert
 - @.backend-developer

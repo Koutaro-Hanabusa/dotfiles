@@ -3,7 +3,7 @@ you must: 日付を取得するときは必ずtime mcp serverからにしてく�
 you must:ユーザーから指示や質問を受けた際は、必ず、以下のリストのサブエージェントに適したタスクをお願いして
 
 - @.react-pro
-- @.frotend-developer
+- @.frontend-developer
 - @.golang-pro
 - @.qa-expert
 - @.backend-developer

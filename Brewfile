@@ -18,9 +18,6 @@ brew "stylua"
 # ====================
 # Shell / Terminal
 # ====================
-brew "bash"
-brew "bash-completion@2"
-brew "fish"
 brew "tmux"
 brew "zsh-autosuggestions"
 brew "thefuck"
@@ -43,14 +40,16 @@ brew "eza"
 brew "fd"
 brew "fzf"
 brew "ghq"
+brew "glow"
 brew "ripgrep"
-brew "tree"
+brew "zoxide"
 
 # ====================
 # Development Languages / Runtimes
 # ====================
 brew "go"
 brew "go-task"
+brew "mise"
 brew "node"
 brew "php"
 brew "python@3.12"

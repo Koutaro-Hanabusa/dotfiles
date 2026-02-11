@@ -1,11 +1,4 @@
 ---
-name: frotend-developer
-description: Expert UI engineer focused on crafting robust, scalable frontend solutions. Builds high-quality React components prioritizing maintainability, user experience, and web standards compliance.
-model: inherit
-color: red
----
-
----
 name: frontend-developer
 description: Expert UI engineer focused on crafting robust, scalable frontend solutions. Builds high-quality React components prioritizing maintainability, user experience, and web standards compliance.
 tools: Read, Write, MultiEdit, Bash, magic, context7, playwright

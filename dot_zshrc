@@ -1,12 +1,7 @@
-# mise - Voltaより優先
+# mise - ランタイムバージョン管理（node, python, go等）
 eval "$(mise activate zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 alias sail="bash vendor/bin/sail"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-export PATH="/usr/local/opt/mysql@8.3/bin:$PATH"
 
 # Git公式のgit-prompt.shを使用してブランチ名を表示
 source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
@@ -20,7 +15,7 @@ setopt PROMPT_SUBST
 PROMPT='%n@%m %F{blue}%~%f %F{208}$(__git_ps1 "(%s)")%f%# '
 
 # コマンド補完候補を薄い文字で表示
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Claude Code - 常にMCP設定を読み込む
 alias claude='command claude --mcp-config ~/.claude/mcp.json'
@@ -65,20 +60,14 @@ ghq-get-cd() {
 }
 alias gg='ghq-get-cd'
 
-# nvim + Claude Code を左右分割で起動（tmux版 - 一旦無効化）
+# nvim + tmux: tmux外ならセッション作成して左右分割で起動
 nvc() {
   local target="${1:-.}"
-#
-#   # 既にtmux内にいる場合は普通にnvimを起動
   if [[ -n "$TMUX" ]]; then
     command nvim "$target"
     return
   fi
-#
-#   # ユニークなセッション名（PID + ランダム）
   local session_name="nvc-$$-$RANDOM"
-#
-#   # セッション作成してアタッチ（nvim終了でセッション全体を閉じる）
   tmux new-session -d -s "$session_name" -c "$(pwd)"
   tmux send-keys -t "$session_name" "nvim $target; tmux kill-session -t $session_name" Enter
   tmux split-window -h -t "$session_name" -c "$(pwd)" -p 10
@@ -86,8 +75,6 @@ nvc() {
   tmux attach-session -t "$session_name"
 }
 alias vim='nvc'
-
-# alias vim='nvim'
 
 # ヘルプ表示（glowがあれば使う、なければless）
 _show_md() {
@@ -103,5 +90,12 @@ alias vimhelp='_show_md ~/.config/nvim/doc/README.md'
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
 
-# タイポ修正
-eval $(thefuck --alias)
+# タイポ修正（遅延ロード: 初回呼び出し時にのみ読み込み）
+fuck() {
+  unfunction fuck
+  eval $(thefuck --alias)
+  fuck "$@"
+}
+
+# zoxide - スマートcd（cdを置換、cdiでインタラクティブ選択）
+eval "$(zoxide init zsh --cmd cd)"
