@@ -36,6 +36,35 @@ alias la="eza -a --icons --git"
 alias tree="eza --tree --icons"
 alias grep="rg"
 
+# fzf 初期化・キーバインド（Ctrl+R: 履歴検索, Ctrl+T: ファイル検索）
+source <(fzf --zsh)
+
+# fzf デフォルトオプション（fdを使用、隠しファイル含む、.gitは除外）
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --style=numbers --color=always --line-range :300 {}" --preview-window=right:50%'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+# ghq + fzf: リポジトリ選択してcd（Ctrl+Gで起動）
+ghq-fzf() {
+  local repo
+  repo=$(ghq list -p | fzf --preview "eza --icons --git -la {}")
+  if [[ -n "$repo" ]]; then
+    cd "$repo"
+    zle accept-line
+  else
+    zle reset-prompt
+  fi
+}
+zle -N ghq-fzf
+bindkey '^G' ghq-fzf
+
+# ghqで取得してすぐcdするショートカット
+ghq-get-cd() {
+  ghq get "$@" && cd "$(ghq list -p | fzf --query "${@##*/}" --select-1)"
+}
+alias gg='ghq-get-cd'
+
 # nvim + Claude Code を左右分割で起動（tmux版 - 一旦無効化）
 nvc() {
   local target="${1:-.}"

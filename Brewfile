@@ -41,6 +41,8 @@ brew "chezmoi"
 brew "bat"
 brew "eza"
 brew "fd"
+brew "fzf"
+brew "ghq"
 brew "ripgrep"
 brew "tree"
 
