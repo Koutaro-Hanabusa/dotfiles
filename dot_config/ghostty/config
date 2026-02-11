@@ -1,7 +1,7 @@
 # Ghostty Config
 
-# ログインシェルとして起動（環境変数を正しく読み込むため）
-command = /bin/zsh --login
+# tmuxセッション自動接続（Claude Code teams split panes対応）
+command = /Users/1126buri/.config/ghostty/tmux-auto.sh
 
 theme = Kanagawa Dragon
 background = #181616
