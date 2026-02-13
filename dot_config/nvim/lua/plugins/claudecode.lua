@@ -19,13 +19,9 @@ return {
       git_repo_cwd = true,
     })
 
-    -- ClaudeCodeターミナルにフォーカス時にinsertモードに切り替え
-    vim.api.nvim_create_autocmd("BufEnter", {
-      pattern = "term://*claude*",
-      callback = function()
-        vim.cmd("startinsert")
-      end,
-    })
+    -- NOTE: BufEnter + startinsert は削除済み
+    -- nativeプロバイダーが内部でstartinsertを管理しているため、
+    -- 重複するとClaude Code TUIのスクロール位置がリセットされる
 
     -- ターミナルモードで Ctrl+v でクリップボードからペースト
     -- 注: Cmd+V（macOS標準）の方が確実。これはfallback用
