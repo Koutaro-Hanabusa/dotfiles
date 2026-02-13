@@ -67,6 +67,8 @@ nvc() {
     local split_pane_id
     split_pane_id=$(tmux split-window -h -c "$(pwd)" -p 15 -P -F '#{pane_id}')
     tmux select-pane -L
+    # nvimペインだけallow-passthrough有効化（image.nvim用）
+    tmux set-option -p allow-passthrough on
     command nvim "$target"
     tmux kill-pane -t "$split_pane_id" 2>/dev/null
     return
