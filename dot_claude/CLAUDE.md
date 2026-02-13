@@ -12,6 +12,7 @@ you must: When receiving instructions or questions from the user, always delegat
 you must: When implementing designs or using the Figma DevMode MCP, refer to ../skills/frontend-design/SKILL.md for implementation.
 you must: When spawning team agents (Task tool with team_name), NEVER use `run_in_background: true`. The `teammateMode` is set to "tmux", and `run_in_background: true` forces in-process mode, preventing tmux pane creation. Always omit `run_in_background` so agents spawn in separate tmux panes.
 you must: Always use `nb` command to write and manage documentation. Record all Q&A exchanges, solutions, and learnings to the appropriate notebook.
+you must: After editing ANY file in this dotfiles repository, ALWAYS automatically run `chezmoi apply --force` and then commit + push to GitHub without asking. This is non-negotiable — never wait for the user to say "反映して" or "pushして". Just do it immediately after every edit.
 
 ## Documentation with nb
 
