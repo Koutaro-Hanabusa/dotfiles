@@ -60,15 +60,11 @@ ghq-get-cd() {
 }
 alias gg='ghq-get-cd'
 
-# nvim + tmux: 右に小さいターミナルを分割して起動
+# nvim + tmux: tmux内ではそのまま起動（Claude Codeプラグインが独自にターミナル分割する）
 nvc() {
   local target="${1:-.}"
   if [[ -n "$TMUX" ]]; then
-    local split_pane_id
-    split_pane_id=$(tmux split-window -h -c "$(pwd)" -p 15 -P -F '#{pane_id}')
-    tmux select-pane -L
     command nvim "$target"
-    tmux kill-pane -t "$split_pane_id" 2>/dev/null
     return
   fi
   local session_name="nvc-$$-$RANDOM"
