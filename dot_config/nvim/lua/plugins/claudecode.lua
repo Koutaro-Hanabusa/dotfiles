@@ -19,9 +19,19 @@ return {
       git_repo_cwd = true,
     })
 
-    -- NOTE: BufEnter + startinsert は削除済み
-    -- nativeプロバイダーが内部でstartinsertを管理しているため、
-    -- 重複するとClaude Code TUIのスクロール位置がリセットされる
+    -- Claudeターミナルに戻ったときにinsertモードに切り替え
+    -- WinEnter + 条件チェックで不要な発火を抑制（スクロールリセット防止）
+    vim.api.nvim_create_autocmd("WinEnter", {
+      callback = function()
+        local buf = vim.api.nvim_get_current_buf()
+        if vim.bo[buf].buftype == "terminal" then
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match("claude") and vim.fn.mode() ~= "t" then
+            vim.cmd("startinsert")
+          end
+        end
+      end,
+    })
 
     -- ターミナルモードで Ctrl+v でクリップボードからペースト
     -- 注: Cmd+V（macOS標準）の方が確実。これはfallback用
