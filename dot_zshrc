@@ -1,6 +1,9 @@
 # mise - ランタイムバージョン管理（node, python, go等）
 eval "$(mise activate zsh)"
 
+# Go バイナリへのパス
+export PATH="$HOME/go/bin:$PATH"
+
 alias sail="bash vendor/bin/sail"
 
 # Git公式のgit-prompt.shを使用してブランチ名を表示
