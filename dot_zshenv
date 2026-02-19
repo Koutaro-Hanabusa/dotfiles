@@ -1,0 +1,13 @@
+
+# Voltaを無効化（miseを優先）
+# export VOLTA_HOME="$HOME/.volta"
+# export PATH="$VOLTA_HOME/bin:$PATH"
+
+# miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+# zoxide - 全シェルコンテキストで確実に初期化（フルパス指定）
+# .zshrcだけでは非ログインシェルでPATHが不完全なため初期化失敗するケースがある
+if [[ -x /opt/homebrew/bin/zoxide ]]; then
+  eval "$(/opt/homebrew/bin/zoxide init zsh --cmd cd)"
+fi
