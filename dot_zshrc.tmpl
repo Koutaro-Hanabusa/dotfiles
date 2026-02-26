@@ -30,6 +30,12 @@ export OTEL_LOGS_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 
+# Grafana Cloud 接続情報（.chezmoidata.yaml から展開）
+export GRAFANA_LOKI_URL="{{ .grafana_cloud.loki_url }}"
+export GRAFANA_LOKI_USER="{{ .grafana_cloud.loki_user }}"
+export GRAFANA_PROMETHEUS_URL="{{ .grafana_cloud.prometheus_url }}"
+export GRAFANA_PROMETHEUS_USER="{{ .grafana_cloud.prometheus_user }}"
+
 # ローカル環境固有のシークレット（GRAFANA_CLOUD_API_KEY等）
 [ -f ~/.zsh_secrets ] && source ~/.zsh_secrets
 
