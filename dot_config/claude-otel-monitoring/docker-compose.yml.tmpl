@@ -18,10 +18,8 @@ services:
   promtail:
     image: grafana/promtail:2.9.4
     container_name: claude-promtail
-    command: -config.file=/etc/promtail/config.yaml -config.expand-env=true
+    command: -config.file=/etc/promtail/config.yaml
     volumes:
       - ./promtail-config.yaml:/etc/promtail/config.yaml
       - ./logs:/var/log/claude-hooks
-    environment:
-      - GRAFANA_CLOUD_API_KEY=${GRAFANA_CLOUD_API_KEY}
     restart: unless-stopped
