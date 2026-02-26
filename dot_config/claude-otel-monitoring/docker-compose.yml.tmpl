@@ -91,7 +91,7 @@ services:
     command: tunnel --config /etc/cloudflared/config.yml run
     volumes:
       - ./cloudflared-config.yml:/etc/cloudflared/config.yml
-      - /Users/1126buri/.cloudflared/59a580f0-763e-4ff8-87e4-f2a6c9376e0c.json:/etc/cloudflared/credentials.json:ro
+      - {{ .chezmoi.homeDir }}/.cloudflared/{{ .cloudflare.tunnel_id }}.json:/etc/cloudflared/credentials.json:ro
     networks:
       - claude-monitoring
     depends_on:

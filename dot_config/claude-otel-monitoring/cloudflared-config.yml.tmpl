@@ -1,9 +1,9 @@
-tunnel: 59a580f0-763e-4ff8-87e4-f2a6c9376e0c
+tunnel: {{ .cloudflare.tunnel_id }}
 credentials-file: /etc/cloudflared/credentials.json
 
 ingress:
-  - hostname: claude-grafana.burio16.com
+  - hostname: claude-grafana.{{ .cloudflare.domain }}
     service: http://grafana:3000
-  - hostname: claude-otel.burio16.com
+  - hostname: claude-otel.{{ .cloudflare.domain }}
     service: http://otel-collector:4318
   - service: http_status:404
