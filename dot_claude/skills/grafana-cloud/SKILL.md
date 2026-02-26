@@ -98,15 +98,54 @@ Claude Code Usage Summary (Today)
 
 ユーザーが `/grafana` を実行、またはコスト・トークン・パフォーマンスについて質問した場合、以下の詳細レポートを生成する。
 
+### 使い方・オプション
+
+| コマンド | 動作 |
+|---------|------|
+| `/grafana` | 全PC合計 + Home/Work内訳の詳細レポート |
+| `/grafana home` | Home PCのデータのみ表示 |
+| `/grafana work` | Work PCのデータのみ表示 |
+| `/grafana 7d` | 直近7日間のレポート（デフォルトは今日） |
+| `/grafana home 7d` | Home PCの直近7日間 |
+
+オプション解釈ルール:
+- 引数に `home` or `work` が含まれる → `pc_type` フィルタを適用
+- 引数に `7d`, `30d`, `1w`, `1m` 等が含まれる → 期間を変更
+- フィルタなしの場合 → 全体合計を表示し、PC別内訳も併記
+
+### PromQLフィルタの適用方法
+
+```promql
+# フィルタなし（全体）
+sum by (model)(claude_code_cost_usage_USD_total)
+
+# home のみ
+sum by (model)(claude_code_cost_usage_USD_total{pc_type="home"})
+
+# work のみ
+sum by (model)(claude_code_cost_usage_USD_total{pc_type="work"})
+```
+
+LogQLも同様:
+```logql
+# フィルタなし
+{job="claude-hooks"}
+
+# home のみ
+{job="claude-hooks", pc_type="home"}
+```
+
 ### レポート項目
 
-1. **コスト分析**: 今日/今週/今月の合計（PC別）、モデル別内訳、日別推移
-2. **トークン分析**: 種別内訳 (`input`/`output`/`cacheRead`/`cacheCreation`)、PC別
+1. **コスト分析**: 合計、モデル別内訳、日別推移
+2. **トークン分析**: 種別内訳 (`input`/`output`/`cacheRead`/`cacheCreation`)
 3. **ツール使用**: OTelログから集計、上位10ツール
-4. **Subagent/Skill使用状況**: hooksログから `subagent_type`別 / `skill`別 / PC別
-5. **キャッシュヒット率**: `cacheRead / (input + cacheRead)`、PC別比較
+4. **Subagent/Skill使用状況**: hooksログから `subagent_type`別 / `skill`別
+5. **キャッシュヒット率**: `cacheRead / (input + cacheRead)`
 6. **セッション統計**: セッション数、アクティブ時間、コミット数
-7. **エラー一覧**: 直近24hの `detected_level="error"` ログ、PC別
+7. **エラー一覧**: `detected_level="error"` ログ
+
+PC別フィルタが指定されていない場合は、各項目にPC別内訳カラムも追加する。
 
 ### 出力フォーマット
 
