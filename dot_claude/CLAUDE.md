@@ -26,11 +26,7 @@ nb add home:knowledge/ -c "content"
 
 # For work PC (work notebook)
 nb add work:knowledge/ -c "content"
-
-# To edit existing notes
-nb edit home:knowledge/<filename>
-# or
-nb edit work:knowledge/<filename>
 ```
 
-3. Continue editing and appending to the created .md file until the question is resolved.
+3. To update existing notes, directly edit the file with the Edit tool (path: `~/.nb/home/knowledge/<filename>` or `~/.nb/work/knowledge/<filename>`), then run `nb sync` to push changes.
+   NEVER use `nb edit` — it opens nvim and hangs in non-interactive environments.
