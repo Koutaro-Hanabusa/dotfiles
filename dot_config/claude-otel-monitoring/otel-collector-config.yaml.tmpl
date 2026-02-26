@@ -30,6 +30,9 @@ processors:
       - key: service.name
         value: claude-code
         action: upsert
+      - key: pc_type
+        value: {{ if stat (joinPath .chezmoi.homeDir ".is_work_pc") }}work{{ else }}home{{ end }}
+        action: upsert
 
   # Delta → Cumulative 変換（Claude Code は Delta temporality で送信するため）
   deltatocumulative:

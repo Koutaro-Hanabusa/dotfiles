@@ -18,6 +18,7 @@ scrape_configs:
           - localhost
         labels:
           job: claude-hooks
+          pc_type: {{ if stat (joinPath .chezmoi.homeDir ".is_work_pc") }}work{{ else }}home{{ end }}
           __path__: /var/log/claude-hooks/claude-hooks.log
     pipeline_stages:
       - json:
