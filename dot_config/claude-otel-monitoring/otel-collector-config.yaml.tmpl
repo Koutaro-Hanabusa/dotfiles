@@ -1,3 +1,13 @@
+extensions:
+  basicauth/metrics:
+    client_auth:
+      username: "{{ .grafana_cloud.prometheus_user }}"
+      password: "${env:GRAFANA_CLOUD_API_KEY}"
+  basicauth/logs:
+    client_auth:
+      username: "{{ .grafana_cloud.loki_user }}"
+      password: "${env:GRAFANA_CLOUD_API_KEY}"
+
 receivers:
   otlp:
     protocols:
@@ -27,27 +37,24 @@ processors:
     max_streams: 1000
 
 exporters:
-  # Prometheus Remote Write for metrics
+  # Grafana Cloud Prometheus Remote Write
   prometheusremotewrite:
-    endpoint: http://prometheus:9090/api/v1/write
-    tls:
-      insecure: true
+    endpoint: "{{ .grafana_cloud.prometheus_url }}"
+    auth:
+      authenticator: basicauth/metrics
 
-  # Loki for logs
+  # Grafana Cloud Loki
   loki:
-    endpoint: http://loki:3100/loki/api/v1/push
-    tls:
-      insecure: true
+    endpoint: "{{ .grafana_cloud.loki_url }}"
+    auth:
+      authenticator: basicauth/logs
 
   # Debug logging
   debug:
     verbosity: basic
 
-  # Prometheus exporter for OTel Collector's own metrics
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-
 service:
+  extensions: [basicauth/metrics, basicauth/logs]
   pipelines:
     metrics:
       receivers: [otlp]

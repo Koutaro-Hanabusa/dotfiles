@@ -23,20 +23,15 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Claude Code - 常にMCP設定を読み込む
 alias claude='command claude --mcp-config ~/.claude/mcp.json'
 
-# Claude Code - OpenTelemetry モニタリング
+# Claude Code - OpenTelemetry モニタリング (→ Grafana Cloud)
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
 export OTEL_METRICS_EXPORTER=otlp
 export OTEL_LOGS_EXPORTER=otlp
-{{- if stat (joinPath .chezmoi.homeDir ".is_work_pc") }}
-export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
-export OTEL_EXPORTER_OTLP_ENDPOINT=https://claude-otel.burio16.com
-{{- else }}
 export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
-{{- end }}
 
-# トンネリング設定（環境固有）
-[ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
+# ローカル環境固有のシークレット（GRAFANA_CLOUD_API_KEY等）
+[ -f ~/.zsh_secrets ] && source ~/.zsh_secrets
 
 # モダンCLIツールのエイリアス
 alias cat="bat"

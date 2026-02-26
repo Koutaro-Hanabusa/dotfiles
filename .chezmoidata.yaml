@@ -1,5 +1,5 @@
-cloudflare:
-  tunnel_id: "59a580f0-763e-4ff8-87e4-f2a6c9376e0c"
-  domain: "burio16.com"
-  grafana_subdomain: "claude-grafana"
-  otel_subdomain: "claude-otel"
+grafana_cloud:
+  prometheus_url: "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push"
+  prometheus_user: "3002958"
+  loki_url: "https://logs-prod-030.grafana.net/loki/api/v1/push"
+  loki_user: "1497154"

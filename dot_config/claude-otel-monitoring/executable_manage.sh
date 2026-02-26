@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Claude Code OTel Monitoring Stack Management Script
+# Grafana Cloud edition: otel-collector + promtail only
 
 set -e
 
@@ -12,12 +13,12 @@ case "${1:-}" in
     echo "Starting Claude Code monitoring stack..."
     docker compose up -d
     echo ""
-    echo "✓ All services are running"
+    echo "✓ otel-collector + promtail are running"
     echo ""
-    echo "Access URLs:"
-    echo "  Grafana:    http://localhost:3030"
-    echo "  Prometheus: http://localhost:9090"
-    echo "  Loki:       http://localhost:3100"
+    echo "Endpoints:"
+    echo "  OTel gRPC:  localhost:4317"
+    echo "  OTel HTTP:  localhost:4318"
+    echo "  Dashboard:  https://grafana.com (Grafana Cloud)"
     echo ""
     ;;
 
@@ -47,19 +48,19 @@ case "${1:-}" in
     ;;
 
   clean)
-    echo "Removing all data and containers..."
-    read -p "Are you sure? This will delete all metrics and logs. (y/N): " -n 1 -r
+    echo "Removing all containers..."
+    read -p "Are you sure? (y/N): " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       docker compose down -v
-      echo "✓ All data removed"
+      echo "✓ All containers removed"
     else
       echo "Cancelled"
     fi
     ;;
 
   health|check)
-    echo "Checking health of all services..."
+    echo "Checking health of services..."
     echo ""
 
     echo -n "OTel Collector: "
@@ -69,51 +70,17 @@ case "${1:-}" in
       echo "✗ Unhealthy"
     fi
 
-    echo -n "Prometheus:     "
-    if curl -sf http://localhost:9090/-/healthy > /dev/null; then
-      echo "✓ Healthy"
+    echo -n "Promtail:       "
+    if docker compose ps promtail --format '{{.Status}}' 2>/dev/null | grep -q "Up"; then
+      echo "✓ Running"
     else
-      echo "✗ Unhealthy"
+      echo "✗ Not running"
     fi
-
-    echo -n "Loki:           "
-    LOKI_STATUS=$(curl -s http://localhost:3100/ready)
-    if echo "$LOKI_STATUS" | grep -q "ready"; then
-      echo "✓ Healthy"
-    else
-      echo "⚠ $LOKI_STATUS"
-    fi
-
-    echo -n "Grafana:        "
-    if curl -sf http://localhost:3030/api/health > /dev/null; then
-      echo "✓ Healthy"
-    else
-      echo "✗ Unhealthy"
-    fi
-    ;;
-
-  open)
-    case "${2:-grafana}" in
-      grafana)
-        open http://localhost:3030
-        ;;
-      prometheus)
-        open http://localhost:9090
-        ;;
-      loki)
-        open http://localhost:3100
-        ;;
-      *)
-        echo "Unknown service: ${2}"
-        echo "Available: grafana, prometheus, loki"
-        exit 1
-        ;;
-    esac
     ;;
 
   *)
     cat << 'EOF'
-Claude Code OpenTelemetry Monitoring Stack Manager
+Claude Code OTel Monitoring Stack Manager (Grafana Cloud)
 
 Usage: ./manage.sh <command> [options]
 
@@ -123,15 +90,15 @@ Commands:
   restart             Restart all services
   status, ps          Show status of all services
   logs [service]      Show logs (optionally for specific service)
-  clean               Remove all data and containers
+  clean               Remove all containers
   health, check       Check health of all services
-  open [service]      Open service in browser (default: grafana)
+
+Services: otel-collector, promtail
 
 Examples:
   ./manage.sh start
   ./manage.sh logs otel-collector
   ./manage.sh health
-  ./manage.sh open prometheus
   ./manage.sh clean
 EOF
     ;;
