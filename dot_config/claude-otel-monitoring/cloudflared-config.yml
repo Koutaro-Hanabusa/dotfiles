@@ -1,0 +1,9 @@
+tunnel: 59a580f0-763e-4ff8-87e4-f2a6c9376e0c
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  - hostname: claude-grafana.burio16.com
+    service: http://grafana:3000
+  - hostname: claude-otel.burio16.com
+    service: http://otel-collector:4318
+  - service: http_status:404
