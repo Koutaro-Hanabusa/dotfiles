@@ -1,3 +1,5 @@
 cloudflare:
   tunnel_id: "59a580f0-763e-4ff8-87e4-f2a6c9376e0c"
   domain: "burio16.com"
+  grafana_subdomain: "claude-grafana"
+  otel_subdomain: "claude-otel"

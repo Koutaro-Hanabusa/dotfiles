@@ -2,8 +2,8 @@ tunnel: {{ .cloudflare.tunnel_id }}
 credentials-file: /etc/cloudflared/credentials.json
 
 ingress:
-  - hostname: claude-grafana.{{ .cloudflare.domain }}
+  - hostname: {{ .cloudflare.grafana_subdomain }}.{{ .cloudflare.domain }}
     service: http://grafana:3000
-  - hostname: claude-otel.{{ .cloudflare.domain }}
+  - hostname: {{ .cloudflare.otel_subdomain }}.{{ .cloudflare.domain }}
     service: http://otel-collector:4318
   - service: http_status:404
