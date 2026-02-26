@@ -37,7 +37,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -95,7 +95,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "sum(claude_code_cost_usage_USD_total)",
           "refId": "A"
@@ -108,7 +108,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -154,7 +154,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "sum(claude_code_token_usage_tokens_total)",
           "refId": "A"
@@ -167,7 +167,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -213,7 +213,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "sum(claude_code_lines_of_code_count_total)",
           "refId": "A"
@@ -226,7 +226,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -272,7 +272,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "sum(claude_code_active_time_seconds_total)",
           "refId": "A"
@@ -297,7 +297,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -370,7 +370,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "rate(claude_code_cost_usage_USD_total[5m]) * 60",
           "refId": "A",
@@ -384,7 +384,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "grafanacloud-koutarouhanabusa-prom"
       },
       "fieldConfig": {
         "defaults": {
@@ -457,7 +457,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "grafanacloud-koutarouhanabusa-prom"
           },
           "expr": "rate(claude_code_token_usage_tokens_total[5m]) * 60",
           "refId": "A",
@@ -471,7 +471,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -545,7 +545,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_model) (sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cost_usd [$__interval]))",
           "refId": "A",
@@ -559,7 +559,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -692,7 +692,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__interval]))",
           "refId": "A",
@@ -701,7 +701,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_output_tokens [$__interval]))",
           "refId": "B",
@@ -710,7 +710,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__interval]))",
           "refId": "C",
@@ -719,7 +719,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_creation_tokens [$__interval]))",
           "refId": "D",
@@ -745,7 +745,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -830,7 +830,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "quantile_over_time(0.5, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
           "refId": "A",
@@ -839,7 +839,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "quantile_over_time(0.95, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
           "refId": "B",
@@ -848,7 +848,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "quantile_over_time(0.99, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
           "refId": "C",
@@ -862,7 +862,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -921,7 +921,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__range])) / (sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__range])) + sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__range])))",
           "refId": "A"
@@ -934,7 +934,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -986,7 +986,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__range]))",
           "refId": "A",
@@ -995,7 +995,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_output_tokens [$__range]))",
           "refId": "B",
@@ -1004,7 +1004,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__range]))",
           "refId": "C",
@@ -1013,7 +1013,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_creation_tokens [$__range]))",
           "refId": "D",
@@ -1039,7 +1039,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1113,7 +1113,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json [$__interval]))",
           "refId": "A",
@@ -1127,7 +1127,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1179,7 +1179,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json [$__range]))",
           "refId": "A",
@@ -1193,7 +1193,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1265,7 +1265,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "avg_over_time({job=\"claude-code\"} |= \"tool_result\" | json | unwrap attributes_duration_ms [$__interval]) by (attributes_tool_name)",
           "refId": "A",
@@ -1279,7 +1279,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1338,7 +1338,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"true\" [$__range])) / sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json [$__range]))",
           "refId": "A"
@@ -1351,7 +1351,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1424,7 +1424,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (body) (count_over_time({job=\"claude-code\"} | json [$__interval]))",
           "refId": "A",
@@ -1438,7 +1438,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1540,7 +1540,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_tool_name=~\"Skill|Task\" [$__interval]))",
           "refId": "A",
@@ -1554,7 +1554,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "gridPos": {
         "h": 8,
@@ -1577,7 +1577,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "{job=\"claude-code\"} | json | attributes_tool_name=~\"Skill|Task\"",
           "refId": "A"
@@ -1590,7 +1590,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1663,7 +1663,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (subagent_type) (count_over_time({job=\"claude-hooks\", tool_name=\"Task\"} [$__interval]))",
           "refId": "A",
@@ -1677,7 +1677,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1750,7 +1750,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (skill) (count_over_time({job=\"claude-hooks\", tool_name=\"Skill\"} [$__interval]))",
           "refId": "A",
@@ -1764,7 +1764,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1816,7 +1816,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (subagent_type) (count_over_time({job=\"claude-hooks\", tool_name=\"Task\"} [$__range]))",
           "refId": "A",
@@ -1830,7 +1830,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "gridPos": {
         "h": 8,
@@ -1853,7 +1853,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "{job=\"claude-hooks\"}",
           "refId": "A"
@@ -1878,7 +1878,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -1952,7 +1952,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_session_id) (sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cost_usd [$__interval]))",
           "refId": "A",
@@ -1966,7 +1966,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -2040,7 +2040,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_session_id) (sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__interval])) + sum by (attributes_session_id) (sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_output_tokens [$__interval]))",
           "refId": "A",
@@ -2066,7 +2066,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -2141,7 +2141,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(count_over_time({job=\"claude-code\"} |= \"api_error\" | json [$__interval]))",
           "refId": "A",
@@ -2150,7 +2150,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\" [$__interval]))",
           "refId": "B",
@@ -2164,7 +2164,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "gridPos": {
         "h": 8,
@@ -2187,7 +2187,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "{job=\"claude-code\"} |= \"api_error\" | json",
           "refId": "A"
@@ -2200,7 +2200,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "gridPos": {
         "h": 8,
@@ -2223,7 +2223,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "{job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\"",
           "refId": "A"
@@ -2236,7 +2236,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -2288,7 +2288,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\" [$__range]))",
           "refId": "A",
@@ -2314,7 +2314,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "gridPos": {
         "h": 10,
@@ -2337,7 +2337,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "{job=\"claude-code\"}",
           "refId": "A"
@@ -2350,7 +2350,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -2421,7 +2421,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(count_over_time({job=\"claude-code\"} [1m]))",
           "refId": "A",
@@ -2435,7 +2435,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "Loki"
+        "uid": "grafanacloud-koutarouhanabusa-logs"
       },
       "fieldConfig": {
         "defaults": {
@@ -2506,7 +2506,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "Loki"
+            "uid": "grafanacloud-koutarouhanabusa-logs"
           },
           "expr": "sum(count_over_time({job=\"claude-code\"} |= \"api_request\" | json [5m]))",
           "refId": "A",
