@@ -21,6 +21,15 @@
             "command": "afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3"
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "marker=/tmp/.claude-nb-reminded; now=$(date +%s); if [ -f \"$marker\" ]; then last=$(stat -f %m \"$marker\"); if [ $(( now - last )) -lt 60 ]; then exit 0; fi; fi; touch \"$marker\"; if [ -f \"$HOME/.is_work_pc\" ]; then notebook=\"work\"; else notebook=\"home\"; fi; echo \"[nb-knowledge] Record session learnings if any (Q&A, bug fixes, design decisions). Use: nb add ${notebook}:knowledge/ -c 'content'. Skip if nothing to record or already recorded.\""
+          }
+        ]
       }
     ]
   },
