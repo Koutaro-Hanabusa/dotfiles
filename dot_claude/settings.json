@@ -1,6 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Task|Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); tool_name=$(echo \"$input\" | jq -r '.tool_name // empty'); tool_input=$(echo \"$input\" | jq -r '.tool_input // empty'); timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ); subagent_type=$(echo \"$tool_input\" | jq -r '.subagent_type // empty'); skill=$(echo \"$tool_input\" | jq -r '.skill // empty'); description=$(echo \"$tool_input\" | jq -r '.description // empty'); prompt=$(echo \"$tool_input\" | jq -r '.prompt // empty' | head -c 200); args=$(echo \"$tool_input\" | jq -r '.args // empty'); log_dir=\"$HOME/.config/claude-otel-monitoring/logs\"; mkdir -p \"$log_dir\"; echo '{\"timestamp\":\"'\"$timestamp\"'\",\"tool_name\":\"'\"$tool_name\"'\",\"subagent_type\":'$([ -n \"$subagent_type\" ] && echo '\"'\"$subagent_type\"'\"' || echo 'null')',\"skill\":'$([ -n \"$skill\" ] && echo '\"'\"$skill\"'\"' || echo 'null')',\"description\":'$([ -n \"$description\" ] && echo '\"'\"$description\"'\"' || echo 'null')',\"prompt\":'$([ -n \"$prompt\" ] && echo '\"'\"$prompt\"'\"' || echo 'null')',\"args\":'$([ -n \"$args\" ] && echo '\"'\"$args\"'\"' || echo 'null')'}' >> \"$log_dir/claude-hooks.log\""
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
