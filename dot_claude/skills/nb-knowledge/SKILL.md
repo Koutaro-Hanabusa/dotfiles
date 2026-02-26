@@ -24,7 +24,7 @@ This skill manages automatic knowledge recording to nb notebooks throughout ever
    - Work PC: `~/.is_work_pc` exists → use `work:knowledge/`
    - Personal PC: use `home:knowledge/`
 
-2. Create or append to notes:
+2. Create new notes:
 
 ```bash
 # Work PC
@@ -32,13 +32,21 @@ nb add work:knowledge/ -c "content"
 
 # Personal PC
 nb add home:knowledge/ -c "content"
-
-# Edit existing notes
-nb edit work:knowledge/<filename>
-nb edit home:knowledge/<filename>
 ```
 
-3. Continue editing and appending to the created .md file until the topic is resolved.
+3. To update existing notes, directly edit the file with the Edit tool, then run `nb sync` to push changes:
+   - Home: `~/.nb/home/knowledge/<filename>`
+   - Work: `~/.nb/work/knowledge/<filename>`
+   - NEVER use `nb edit` — it opens nvim and hangs in non-interactive environments.
+
+4. When running `nb sync`, ensure the active notebook has a remote configured.
+   The `work` notebook may not have a remote. Switch to the correct notebook first:
+
+```bash
+nb use home && nb sync
+# or
+nb use work && nb sync
+```
 
 ## Note Format
 

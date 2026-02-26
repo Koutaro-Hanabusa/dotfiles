@@ -24,7 +24,7 @@ description: Q&Aのやりとり、コードレビューの学び、デザイン�
    - 仕事用PC: `~/.is_work_pc` が存在する → `work:knowledge/` を使用
    - 個人PC: `home:knowledge/` を使用
 
-2. ノートの作成または追記：
+2. 新規ノートの作成：
 
 ```bash
 # 仕事用PC
@@ -32,13 +32,21 @@ nb add work:knowledge/ -c "内容"
 
 # 個人PC
 nb add home:knowledge/ -c "内容"
-
-# 既存ノートの編集
-nb edit work:knowledge/<ファイル名>
-nb edit home:knowledge/<ファイル名>
 ```
 
-3. トピックが解決するまで、作成した.mdファイルへの編集・追記を続ける。
+3. 既存ノートの更新は、Editツールでファイルを直接編集し、`nb sync` で反映する：
+   - Home: `~/.nb/home/knowledge/<ファイル名>`
+   - Work: `~/.nb/work/knowledge/<ファイル名>`
+   - **`nb edit` は絶対に使わない** — nvimが起動して非対話環境ではハングする。
+
+4. `nb sync` 実行時は、アクティブノートブックにリモートが設定されていることを確認する。
+   `work` ノートブックにはリモート未設定の場合がある。先に正しいノートブックに切り替えること：
+
+```bash
+nb use home && nb sync
+# または
+nb use work && nb sync
+```
 
 ## ノートのフォーマット
 
