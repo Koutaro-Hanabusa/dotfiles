@@ -12,32 +12,66 @@ Claude CodeのOTelメトリクス・ログをGrafana Cloudから取得し、使�
 
 ## 認証
 
+**重要**: `~/.zsh_secrets` はzsh固有の構文を含むため、必ず `zsh -c` 経由で実行すること。
+
 ```bash
-# APIキーをロード（~/.zsh_secrets に GRAFANA_CLOUD_API_KEY が定義されている）
-source ~/.zsh_secrets
+# 正しい呼び出し方法（bashからの場合）
+zsh -c 'source ~/.zsh_secrets && curl ...'
+
+# 直接 source ~/.zsh_secrets は bash では動作しない
 ```
 
 ## エンドポイント
 
-| サービス | URL | ユーザーID |
-|---------|-----|-----------|
-| Loki | `https://logs-prod-030.grafana.net` | `1497154` |
-| Prometheus | `https://prometheus-prod-49-prod-ap-northeast-0.grafana.net` | `3002958` |
+| サービス | ベースURL | ユーザーID | 読み取りパス |
+|---------|----------|-----------|------------|
+| Loki | `https://logs-prod-030.grafana.net` | `1497154` | `/loki/api/v1/query`, `/loki/api/v1/query_range` |
+| Prometheus | `https://prometheus-prod-49-prod-ap-northeast-0.grafana.net` | `3002958` | `/api/prom/api/v1/query`, `/api/prom/api/v1/query_range` |
+
+## データ構造
+
+### Prometheus メトリクス（実際に存在するもの）
+
+| メトリクス名 | 説明 | ラベル |
+|-------------|------|--------|
+| `claude_code_cost_usage_USD_total` | コスト（USD） | `model`, `session_id`, `terminal_type`, `pc_type` |
+| `claude_code_token_usage_tokens_total` | トークン数 | `model`, `type`, `session_id`, `terminal_type`, `pc_type` |
+| `claude_code_active_time_seconds_total` | アクティブ時間 | `session_id`, `pc_type` |
+| `claude_code_session_count_total` | セッション数 | `pc_type` |
+| `claude_code_commit_count_total` | コミット数 | `pc_type` |
+| `claude_code_lines_of_code_count_total` | コード行数 | `pc_type` |
+| `claude_code_code_edit_tool_decision_total` | 編集ツール決定数 | `pc_type` |
+
+**トークン `type` ラベル値**: `input`, `output`, `cacheRead`, `cacheCreation`
+
+### Loki ログ
+
+**job="claude-code"** (OTel経由):
+- ラベル: `service_name`, `exporter=OTLP`, `detected_level` (info/error/warn)
+- ログ本文はJSON。`| json` パイプラインで属性展開
+- 主要属性: `body` にイベント詳細
+
+**job="claude-hooks"** (Promtail経由):
+- ラベル: `tool_name`, `subagent_type`, `skill`, `pc_type`
+- ログ本文はJSON: `timestamp`, `tool_name`, `subagent_type`, `skill`, `description`, `prompt`, `args`
 
 ## PC種別の区別
 
-OTelデータには `pc_type` ラベルが付与されている:
-- `home` — 自宅PC
+OTelコレクターの `resource` プロセッサで `pc_type` ラベルが自動付与される:
+- `home` — 自宅PC（デフォルト）
 - `work` — 会社PC（`~/.is_work_pc` が存在する環境）
 
-クエリ時に `pc_type` でフィルタ可能。デフォルトでは全PCの合計を表示し、PC種別ごとの内訳も表示する。
+Promtailのhooksログにも同様に `pc_type` ラベルが付与される。
+
+**注意**: `pc_type` ラベルは2026-02-26以降のデータにのみ存在。それ以前のデータにはこのラベルがない。
+クエリ時は `pc_type` がないデータも考慮し、`by (pc_type)` での集計が空でもエラーにならないようにする。
 
 ## セッション開始時の自動サマリー
 
 新しいセッションの最初に、以下の簡易サマリーを表示する:
 
 ```
-📊 Claude Code Usage Summary (Today)
+Claude Code Usage Summary (Today)
 ┌─────────────┬──────────┬──────────┐
 │             │ Home     │ Work     │
 ├─────────────┼──────────┼──────────┤
@@ -49,13 +83,12 @@ OTelデータには `pc_type` ラベルが付与されている:
 
 ### サマリー取得手順
 
-1. `source ~/.zsh_secrets` でAPIキーをロード
-2. 現在時刻を `mcp__time__get_current_time` で取得
-3. 以下の3クエリを**並列実行**:
-   - 今日のコスト合計（PC別）
-   - 今日のトークン消費量（PC別）
-   - 直近24hのエラー件数（PC別）
-4. テーブル形式で出力
+1. 現在時刻を `mcp__time__get_current_time` (timezone: Asia/Tokyo) で取得
+2. 以下の3クエリを `zsh -c` 経由で**並列実行**:
+   - 今日のコスト合計（PC別）: `sum by (pc_type)(claude_code_cost_usage_USD_total)`
+   - 今日のトークン消費量（PC別）: `sum by (pc_type)(claude_code_token_usage_tokens_total)`
+   - 直近24hのエラー件数（PC別）: Lokiで `{job="claude-code"} |= "error"` を `count_over_time`
+3. テーブル形式で出力
 
 ## 手動 `/grafana` — 詳細レポート
 
@@ -65,35 +98,35 @@ OTelデータには `pc_type` ラベルが付与されている:
 
 1. **コスト分析**
    - 今日/今週/今月の合計コスト（PC別）
-   - モデル別コスト内訳
+   - モデル別コスト内訳: `sum by (model, pc_type)(claude_code_cost_usage_USD_total)`
    - 日別コスト推移（直近7日）
 
 2. **トークン分析**
-   - トークン種別内訳: input / output / cache_read / cache_creation
-   - PC別トークン使用量
+   - トークン種別内訳: `sum by (type, pc_type)(claude_code_token_usage_tokens_total)`
+   - type値: `input`, `output`, `cacheRead`, `cacheCreation`
    - 日別推移（直近7日）
 
 3. **ツール使用ランキング**
-   - OTelログから `tool_result` イベントを集計
+   - OTelログ（Loki `job="claude-code"`）から集計
    - 上位10ツールの使用回数
 
 4. **Subagent/Skill使用状況**
-   - hooksログ（`job="claude-hooks"`）から集計
-   - subagent_type別の呼び出し回数
-   - skill別の呼び出し回数
+   - hooksログ（Loki `job="claude-hooks"`）から集計
+   - `subagent_type` 別の呼び出し回数
+   - `skill` 別の呼び出し回数
    - PC別の内訳
 
-5. **APIパフォーマンス**
-   - レスポンスタイム: p50 / p95
-   - 直近1時間の推移
-
-6. **キャッシュヒット率**
-   - cache_read_tokens / (input_tokens + cache_read_tokens)
+5. **キャッシュヒット率**
+   - `cacheRead / (input + cacheRead)` で算出
    - PC別の比較
 
+6. **セッション統計**
+   - セッション数: `claude_code_session_count_total`
+   - アクティブ時間: `claude_code_active_time_seconds_total`
+   - コミット数: `claude_code_commit_count_total`
+
 7. **エラー一覧**
-   - 直近24hの api_error
-   - ツール実行失敗
+   - 直近24hのLokiエラーログ: `{job="claude-code", detected_level="error"}`
    - PC別の内訳
 
 ### レポート出力フォーマット
@@ -106,37 +139,48 @@ OTelデータには `pc_type` ラベルが付与されている:
 
 ## API呼び出し方法
 
-### Loki クエリ (LogQL)
+### Prometheus instant query
 
 ```bash
-source ~/.zsh_secrets
-curl -s -u "1497154:$GRAFANA_CLOUD_API_KEY" \
-  "https://logs-prod-030.grafana.net/loki/api/v1/query_range" \
-  --data-urlencode 'query={job="claude-code"} |= "api_request" | json' \
-  --data-urlencode 'start=<RFC3339_START>' \
-  --data-urlencode 'end=<RFC3339_END>' \
-  --data-urlencode 'limit=5000'
-```
-
-### Prometheus クエリ (PromQL)
-
-```bash
-source ~/.zsh_secrets
-curl -s -u "3002958:$GRAFANA_CLOUD_API_KEY" \
+zsh -c 'source ~/.zsh_secrets && curl -s -u "3002958:$GRAFANA_CLOUD_API_KEY" \
   "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/api/v1/query" \
-  --data-urlencode 'query=sum(claude_code_cost_usage_USD_total)'
+  --data-urlencode "query=sum by (pc_type)(claude_code_cost_usage_USD_total)"'
 ```
 
-### Prometheus Range クエリ
+### Prometheus range query
 
 ```bash
-source ~/.zsh_secrets
-curl -s -u "3002958:$GRAFANA_CLOUD_API_KEY" \
-  "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/api/v1/query_range" \
-  --data-urlencode 'query=sum(claude_code_cost_usage_USD_total)' \
-  --data-urlencode 'start=<UNIX_TIMESTAMP_START>' \
-  --data-urlencode 'end=<UNIX_TIMESTAMP_END>' \
-  --data-urlencode 'step=3600'
+zsh -c 'source ~/.zsh_secrets && \
+  START=$(date -v-7d +%s) && \
+  END=$(date +%s) && \
+  curl -s -u "3002958:$GRAFANA_CLOUD_API_KEY" \
+    "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/api/v1/query_range" \
+    --data-urlencode "query=sum(claude_code_cost_usage_USD_total)" \
+    --data-urlencode "start=$START" \
+    --data-urlencode "end=$END" \
+    --data-urlencode "step=86400"'
+```
+
+### Loki instant query
+
+```bash
+zsh -c 'source ~/.zsh_secrets && curl -s -u "1497154:$GRAFANA_CLOUD_API_KEY" \
+  "https://logs-prod-030.grafana.net/loki/api/v1/query" \
+  --data-urlencode "query=sum by (subagent_type)(count_over_time({job=\"claude-hooks\", tool_name=\"Task\"} [24h]))"'
+```
+
+### Loki query_range
+
+```bash
+zsh -c 'source ~/.zsh_secrets && \
+  START=$(date -u -v-24H +%Y-%m-%dT%H:%M:%SZ) && \
+  END=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
+  curl -s -u "1497154:$GRAFANA_CLOUD_API_KEY" \
+    "https://logs-prod-030.grafana.net/loki/api/v1/query_range" \
+    --data-urlencode "query={job=\"claude-code\", detected_level=\"error\"}" \
+    --data-urlencode "start=$START" \
+    --data-urlencode "end=$END" \
+    --data-urlencode "limit=100"'
 ```
 
 ## クエリリファレンス
@@ -145,7 +189,9 @@ curl -s -u "3002958:$GRAFANA_CLOUD_API_KEY" \
 
 ## 注意事項
 
+- **必ず `zsh -c '...'` で実行する**（bashでは `~/.zsh_secrets` のsourceが失敗する）
 - Loki の `query_range` はデフォルトで最大5000件。大量データの場合は期間を短くする
-- Prometheus メトリクスは Delta→Cumulative 変換済みのため、`rate()` や `increase()` が使える
-- APIキーは `~/.zsh_secrets` に格納。絶対にログや出力に含めないこと
-- PC種別でフィルタする場合は `pc_type="home"` または `pc_type="work"` を使用
+- Prometheus メトリクスは Delta→Cumulative 変換済みのため `rate()` や `increase()` が使える
+- APIキーは `~/.zsh_secrets` に格納。**絶対にログや出力に含めないこと**
+- PC種別フィルタ: `pc_type="home"` or `pc_type="work"`（2026-02-26以降のデータのみ）
+- curlレスポンスは `| jq .` でパースしてから値を抽出する
