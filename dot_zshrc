@@ -23,6 +23,13 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Claude Code - 常にMCP設定を読み込む
 alias claude='command claude --mcp-config ~/.claude/mcp.json'
 
+# Claude Code - OpenTelemetry モニタリング
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_LOGS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+
 # トンネリング設定（環境固有）
 [ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
 
