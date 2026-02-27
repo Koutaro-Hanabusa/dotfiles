@@ -24,20 +24,35 @@ scrape_configs:
       - json:
           expressions:
             timestamp: timestamp
+            event_type: event_type
             tool_name: tool_name
             subagent_type: subagent_type
             skill: skill
             description: description
+            project: project
+            session_id: session_id
+      - template:
+          source: event_type
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ else }}tool_call{{ end }}" }}'
       - template:
           source: subagent_type
           template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
       - template:
           source: skill
           template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: project
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: session_id
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
       - labels:
+          event_type:
           tool_name:
           subagent_type:
           skill:
+          project:
+          session_id:
       - timestamp:
           source: timestamp
           format: "2006-01-02T15:04:05Z"

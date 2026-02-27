@@ -99,7 +99,42 @@ sum by (tool_name)(count_over_time({job="claude-hooks"} [24h]))
 
 ---
 
-## 5. エラー分析 (LogQL)
+## 5. プロンプト分析 (LogQL)
+
+ラベル: `event_type="user_prompt"`, `project`, `session_id`
+ログ本文に `summary`（先頭100文字）と `prompt_length` を含む。
+
+```logql
+# プロンプト数（時系列）
+count_over_time({job="claude-hooks", event_type="user_prompt"} [1h])
+
+# PC別プロンプト数
+sum by (pc_type)(count_over_time({job="claude-hooks", event_type="user_prompt"} [24h]))
+
+# プロジェクト別プロンプト数
+sum by (project)(count_over_time({job="claude-hooks", event_type="user_prompt"} [24h]))
+
+# プロジェクト別 x PC別
+sum by (project, pc_type)(count_over_time({job="claude-hooks", event_type="user_prompt"} [24h]))
+
+# セッション別プロンプト数
+sum by (session_id)(count_over_time({job="claude-hooks", event_type="user_prompt"} [24h]))
+
+# プロンプトの平均文字数（プロジェクト別）
+avg by (project)(
+  avg_over_time({job="claude-hooks", event_type="user_prompt"} | json | unwrap prompt_length [24h])
+)
+
+# 直近のプロンプト一覧（要約付き）
+{job="claude-hooks", event_type="user_prompt"} | json | line_format "{{.project}} | {{.summary}}"
+
+# 長いプロンプト（500文字以上）
+{job="claude-hooks", event_type="user_prompt"} | json | prompt_length > 500
+```
+
+---
+
+## 6. エラー分析 (LogQL)
 
 ```logql
 # エラーログ一覧
@@ -114,7 +149,7 @@ sum by (pc_type)(count_over_time({job="claude-code", detected_level="error"} [24
 
 ---
 
-## 6. OTelログ (LogQL)
+## 7. OTelログ (LogQL)
 
 ```logql
 # ログ本文JSON展開
@@ -128,7 +163,7 @@ sum by (pc_type)(count_over_time({job="claude-code", detected_level="error"} [24
 
 ---
 
-## 7. よくある分析パターン
+## 8. よくある分析パターン
 
 ### 今日のサマリー（並列3クエリ）
 

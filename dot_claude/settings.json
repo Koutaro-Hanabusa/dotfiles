@@ -1,6 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ); session_id=$(echo \"$input\" | jq -r '.session_id // empty'); cwd=$(echo \"$input\" | jq -r '.cwd // empty'); prompt=$(echo \"$input\" | jq -r '.prompt // empty'); prompt_length=${#prompt}; project=$(basename \"$cwd\"); summary=$(echo \"$prompt\" | head -c 100); log_dir=\"$HOME/.config/claude-otel-monitoring/logs\"; mkdir -p \"$log_dir\"; jq -n --arg ts \"$timestamp\" --arg et \"user_prompt\" --arg sid \"$session_id\" --arg cwd \"$cwd\" --arg proj \"$project\" --argjson plen \"${prompt_length:-0}\" --arg sum \"$summary\" '{timestamp: $ts, event_type: $et, session_id: $sid, cwd: $cwd, project: $proj, prompt_length: $plen, summary: $sum}' >> \"$log_dir/claude-hooks.log\""
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Task|Skill",
