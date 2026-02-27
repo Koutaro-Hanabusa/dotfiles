@@ -5,17 +5,36 @@ Hooks ログ（Tool/Skill/Subagent 呼び出し）も Promtail 経由で Loki �
 
 ## アーキテクチャ
 
-```
-Claude Code (クライアント)
-  │
-  ├─ [OTel OTLP gRPC/HTTP] ──→ OTel Collector (localhost:4317/4318)
-  │                               ├→ Prometheus Remote Write → Grafana Cloud Prometheus
-  │                               ├→ Loki Exporter           → Grafana Cloud Loki
-  │                               └→ Debug (ローカルログ)
-  │
-  └─ [Hooks: PreToolUse/UserPromptSubmit/Stop]
-       │
-       └→ claude-hooks.log ──→ Promtail ──→ Grafana Cloud Loki
+```mermaid
+graph LR
+  subgraph Local["ローカル環境"]
+    CC["Claude Code"]
+    HC["Hooks<br/><small>PreToolUse / UserPromptSubmit</small>"]
+    LOG["claude-hooks.log"]
+    subgraph Docker["Docker Compose"]
+      OC["OTel Collector<br/><small>:4317 gRPC / :4318 HTTP</small>"]
+      PT["Promtail<br/><small>:9080</small>"]
+    end
+  end
+
+  subgraph GC["Grafana Cloud"]
+    PROM["Prometheus"]
+    LOKI["Loki"]
+    DASH["Dashboard"]
+  end
+
+  CC -- "OTLP gRPC/HTTP<br/><small>metrics, logs, traces</small>" --> OC
+  CC --> HC
+  HC -- "JSON append" --> LOG
+  LOG -- "tail & ship" --> PT
+
+  OC -- "Remote Write<br/><small>metrics</small>" --> PROM
+  OC -- "Push<br/><small>logs</small>" --> LOKI
+
+  PT -- "Push<br/><small>hooks logs</small>" --> LOKI
+
+  PROM --> DASH
+  LOKI --> DASH
 ```
 
 ## ファイル構成
@@ -44,14 +63,37 @@ dot_config/claude-otel-monitoring/
 | 認証 | `GRAFANA_CLOUD_API_KEY` を Docker 環境変数で注入、設定内で `${GRAFANA_CLOUD_API_KEY}` として参照 |
 
 **パイプライン**:
-- **metrics**: OTLP → deltatocumulative → batch → Prometheus Remote Write
-- **logs**: OTLP → batch → Loki
-- **traces**: OTLP → batch → Debug（送信なし）
 
-**Processors**:
-- `deltatocumulative`: Claude Code が Delta で送信するメトリクスを Cumulative に変換
-- `resource`: `service.name=claude-code`, `pc_type=work|home` ラベル付与
-- `memory_limiter`: 512 MiB 制限
+```mermaid
+graph LR
+  subgraph Receivers
+    OTLP["OTLP<br/><small>gRPC + HTTP</small>"]
+  end
+
+  subgraph Processors
+    ML["memory_limiter<br/><small>512 MiB</small>"]
+    RES["resource<br/><small>service.name=claude-code<br/>pc_type=work|home</small>"]
+    D2C["deltatocumulative"]
+    BAT["batch<br/><small>10s / 1024</small>"]
+  end
+
+  subgraph Exporters
+    PRW["prometheusremotewrite<br/><small>→ Grafana Cloud</small>"]
+    LOK["loki<br/><small>→ Grafana Cloud</small>"]
+    DBG["debug<br/><small>ローカルログ</small>"]
+  end
+
+  OTLP -- "metrics" --> ML --> RES --> D2C --> BAT --> PRW
+  OTLP -- "logs" ----> BAT --> LOK
+  BAT --> DBG
+```
+
+| Processor | 役割 |
+|-----------|------|
+| `memory_limiter` | メモリ使用量を 512 MiB に制限 |
+| `resource` | `service.name=claude-code`, `pc_type` ラベル付与 |
+| `deltatocumulative` | Claude Code の Delta メトリクスを Cumulative に変換（`rate()` / `increase()` が使えるようになる） |
+| `batch` | 10 秒 or 1024 件でバッチ処理 |
 
 ### Promtail (`claude-promtail`)
 
@@ -62,10 +104,15 @@ dot_config/claude-otel-monitoring/
 | 認証 | `GRAFANA_CLOUD_API_KEY` を Docker 環境変数で注入、設定内で `${GRAFANA_CLOUD_API_KEY}` として参照 |
 
 **ログパイプライン**:
-1. JSON パース（timestamp, event_type, tool_name, subagent_type, skill 等）
-2. テンプレート処理（空値のフォールバック）
-3. ラベル抽出（`event_type`, `tool_name`, `subagent_type`, `skill` 等）
-4. タイムスタンプ解析
+
+```mermaid
+graph LR
+  A["claude-hooks.log<br/><small>JSON lines</small>"] --> B["json<br/><small>フィールド抽出</small>"]
+  B --> C["template<br/><small>空値フォールバック</small>"]
+  C --> D["labels<br/><small>event_type, tool_name<br/>subagent_type, skill ...</small>"]
+  D --> E["timestamp<br/><small>RFC3339 解析</small>"]
+  E --> F["→ Grafana Cloud Loki"]
+```
 
 **認証方式の注意**: パスワードは `${GRAFANA_CLOUD_API_KEY}`（Docker ランタイム環境変数）で解決する。
 chezmoi テンプレート `{{ env "..." }}` は `chezmoi apply` 時に環境変数が未設定だと空になるため使わない。
@@ -73,6 +120,27 @@ chezmoi テンプレート `{{ env "..." }}` は `chezmoi apply` 時に環境変
 ## Hooks ログ
 
 Claude Code の Hooks（`~/.claude/settings.json`）でツール呼び出しを記録する。
+
+```mermaid
+sequenceDiagram
+  participant U as ユーザー
+  participant CC as Claude Code
+  participant Hook as Hook (settings.json)
+  participant Log as claude-hooks.log
+  participant PT as Promtail
+  participant Loki as Grafana Cloud Loki
+
+  U->>CC: プロンプト送信
+  CC->>Hook: UserPromptSubmit
+  Hook->>Log: {"event_type":"user_prompt", ...}
+
+  CC->>CC: Skill/Task 呼び出し決定
+  CC->>Hook: PreToolUse (matcher: Task|Skill)
+  Hook->>Log: {"event_type":"skill_call|subagent_spawn", ...}
+
+  Log-->>PT: tail (ファイル監視)
+  PT->>Loki: JSON パース → ラベル付与 → Push
+```
 
 ### イベント種別
 
@@ -96,6 +164,28 @@ sum by (event_type) (count_over_time({job="claude-hooks"}[24h]))
 ```
 
 ## 環境変数
+
+```mermaid
+graph TB
+  subgraph Sources["設定ソース"]
+    ZRC["~/.zshrc<br/><small>URL, ユーザーID,<br/>OTel 設定</small>"]
+    ZSC["~/.zsh_secrets<br/><small>GRAFANA_CLOUD_API_KEY<br/>⚠ git 管理外</small>"]
+    CHZ["chezmoi.toml<br/><small>テンプレート変数</small>"]
+  end
+
+  subgraph Consumers["利用先"]
+    CC2["Claude Code<br/><small>OTLP エンドポイント</small>"]
+    DC["docker-compose<br/><small>API キー注入</small>"]
+    TP["*.tmpl ファイル<br/><small>chezmoi apply 時展開</small>"]
+    RS["grafana-report.sh<br/><small>API クエリ</small>"]
+  end
+
+  ZRC --> CC2
+  ZRC --> RS
+  ZSC --> DC
+  ZSC --> RS
+  CHZ --> TP
+```
 
 ### `~/.zshrc` に設定
 
