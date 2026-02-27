@@ -14,7 +14,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Task|Skill|mcp__",
+        "matcher": "Task|Skill|mcp__.*",
         "hooks": [
           {
             "type": "command",
