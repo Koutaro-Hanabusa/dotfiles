@@ -7,6 +7,11 @@ description: >
   changes to GitHub. Also triggers when user mentions chezmoi or dotfiles management.
 ---
 
+> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
+> ```
+> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"chezmoi"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
+> ```
+
 # chezmoi Dotfiles Auto-Sync
 
 ## Post-Edit Workflow (ALWAYS execute after editing dotfiles)

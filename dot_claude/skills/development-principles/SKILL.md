@@ -3,6 +3,11 @@ name: development-principles
 description: ソフトウェア開発における普遍的原則。アジャイルマニフェスト・リーン思考・経験主義・UNIX哲学を行動指針として内面化し、あらゆる開発判断に適用する。コードを書く・設計する・レビューする・提案するすべての場面で、この原則に基づいて判断せよ。
 ---
 
+> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
+> ```
+> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"development-principles"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
+> ```
+
 # Development Principles — 開発原則
 
 このスキルはツールでもプロセスでもない。

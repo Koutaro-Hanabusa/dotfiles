@@ -6,6 +6,11 @@ description: >
   errors, or performance. Manually invoke with /grafana.
 ---
 
+> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
+> ```
+> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"grafana-cloud"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
+> ```
+
 # Grafana Cloud Usage Analytics
 
 Claude CodeのOTelメトリクス・ログをGrafana Cloudから取得し、使用状況を分析するスキル。
