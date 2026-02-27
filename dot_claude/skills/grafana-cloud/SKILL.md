@@ -13,6 +13,7 @@ Claude CodeのOTelメトリクス・ログをGrafana Cloudから取得し、使�
 ## 認証・接続
 
 **重要**: `~/.zsh_secrets` はzsh固有の構文を含むため、必ず `zsh -c` 経由で実行すること。
+**重要**: 環境変数は `~/.zshrc`（URL/ユーザーID）と `~/.zsh_secrets`（APIキー）に分散しているため、両方をsourceすること。
 
 以下の環境変数が `~/.zshrc` / `~/.zsh_secrets` で定義済み:
 
@@ -96,102 +97,54 @@ Claude Code Usage Summary (Today)
 
 ## 手動 `/grafana` — 詳細レポート
 
-ユーザーが `/grafana` を実行、またはコスト・トークン・パフォーマンスについて質問した場合、以下の詳細レポートを生成する。
+ユーザーが `/grafana` を実行、またはコスト・トークン・パフォーマンスについて質問した場合、**レポートスクリプトを実行**して結果をMarkdownテーブルに整形する。
 
-### 使い方・オプション
+### レポートスクリプト
+
+```bash
+zsh ~/.claude/skills/grafana-cloud/grafana-report.sh [home|work] [24h|7d|30d]
+```
 
 | コマンド | 動作 |
 |---------|------|
-| `/grafana` | 全PC合計 + Home/Work内訳の詳細レポート |
-| `/grafana home` | Home PCのデータのみ表示 |
-| `/grafana work` | Work PCのデータのみ表示 |
-| `/grafana 7d` | 直近7日間のレポート（デフォルトは今日） |
-| `/grafana home 7d` | Home PCの直近7日間 |
+| `zsh grafana-report.sh` | 全PC合計の詳細レポート（24h） |
+| `zsh grafana-report.sh home` | Home PCのデータのみ |
+| `zsh grafana-report.sh work` | Work PCのデータのみ |
+| `zsh grafana-report.sh 7d` | 直近7日間のレポート |
+| `zsh grafana-report.sh home 7d` | Home PCの直近7日間 |
 
-オプション解釈ルール:
-- 引数に `home` or `work` が含まれる → `pc_type` フィルタを適用
-- 引数に `7d`, `30d`, `1w`, `1m` 等が含まれる → 期間を変更
-- フィルタなしの場合 → 全体合計を表示し、PC別内訳も併記
+スクリプトはPrometheus/Lokiクエリを**並列実行**し、TSV形式で以下を出力する:
+- COST: モデル別コスト + 合計
+- TOKENS: 種別内訳（input/output/cacheRead/cacheCreation）
+- CACHE HIT RATE: キャッシュヒット率
+- SESSION STATS: セッション数、アクティブ時間、コミット数、コード行数
+- TOOL USAGE: OTelログから上位15ツール
+- EVENT DISTRIBUTION: イベント種別分布
+- ERRORS: 直近20件のエラー詳細（OTelの `claude_code.api_error` イベントから）
+- DAILY COST TREND: 日別コスト推移
 
-### PromQLフィルタの適用方法
+### 出力のMarkdown整形ルール
 
-```promql
-# フィルタなし（全体）
-sum by (model)(claude_code_cost_usage_USD_total)
+スクリプト出力のTSVデータを以下のルールでMarkdownテーブルに変換:
+- 金額: `$X.XX`
+- トークン: `K`/`M`単位（例: 29.1M, 1.1M, 180.8K）
+- パーセンテージ: `XX.X%`
+- 時間: `X.Xh`
 
-# home のみ
-sum by (model)(claude_code_cost_usage_USD_total{pc_type="home"})
+### 追加の個別クエリが必要な場合
 
-# work のみ
-sum by (model)(claude_code_cost_usage_USD_total{pc_type="work"})
-```
-
-LogQLも同様:
-```logql
-# フィルタなし
-{job="claude-hooks"}
-
-# home のみ
-{job="claude-hooks", pc_type="home"}
-```
-
-### レポート項目
-
-1. **コスト分析**: 合計、モデル別内訳、日別推移
-2. **トークン分析**: 種別内訳 (`input`/`output`/`cacheRead`/`cacheCreation`)
-3. **ツール使用**: OTelログから集計、上位10ツール
-4. **Subagent/Skill使用状況**: hooksログから `subagent_type`別 / `skill`別
-5. **キャッシュヒット率**: `cacheRead / (input + cacheRead)`
-6. **セッション統計**: セッション数、アクティブ時間、コミット数
-7. **エラー一覧**: `detected_level="error"` ログ
-
-PC別フィルタが指定されていない場合は、各項目にPC別内訳カラムも追加する。
-
-### 出力フォーマット
-
-- Markdownテーブル
-- 金額: `$X.XX`、トークン: `K`/`M`単位、パーセンテージ: `XX.X%`
-- PC種別は Home / Work で区別
-
-## API呼び出しテンプレート
-
-### Prometheus instant query
+スクリプトで得られない情報が必要な場合のみ、以下のテンプレートを使う:
 
 ```bash
-zsh -c 'source ~/.zsh_secrets && \
+# Prometheus instant query
+zsh -c 'source ~/.zshrc 2>/dev/null; source ~/.zsh_secrets 2>/dev/null; \
   PROM_BASE="${GRAFANA_PROMETHEUS_URL%/api/prom/push}" && \
   curl -s -u "$GRAFANA_PROMETHEUS_USER:$GRAFANA_CLOUD_API_KEY" \
     "$PROM_BASE/api/prom/api/v1/query" \
     --data-urlencode "query=<PROMQL>" | jq .'
-```
 
-### Prometheus range query
-
-```bash
-zsh -c 'source ~/.zsh_secrets && \
-  PROM_BASE="${GRAFANA_PROMETHEUS_URL%/api/prom/push}" && \
-  START=$(date -v-7d +%s) && END=$(date +%s) && \
-  curl -s -u "$GRAFANA_PROMETHEUS_USER:$GRAFANA_CLOUD_API_KEY" \
-    "$PROM_BASE/api/prom/api/v1/query_range" \
-    --data-urlencode "query=<PROMQL>" \
-    --data-urlencode "start=$START" --data-urlencode "end=$END" \
-    --data-urlencode "step=86400" | jq .'
-```
-
-### Loki instant query
-
-```bash
-zsh -c 'source ~/.zsh_secrets && \
-  LOKI_BASE="${GRAFANA_LOKI_URL%/loki/api/v1/push}" && \
-  curl -s -u "$GRAFANA_LOKI_USER:$GRAFANA_CLOUD_API_KEY" \
-    "$LOKI_BASE/loki/api/v1/query" \
-    --data-urlencode "query=<LOGQL>" | jq .'
-```
-
-### Loki query_range
-
-```bash
-zsh -c 'source ~/.zsh_secrets && \
+# Loki query_range
+zsh -c 'source ~/.zshrc 2>/dev/null; source ~/.zsh_secrets 2>/dev/null; \
   LOKI_BASE="${GRAFANA_LOKI_URL%/loki/api/v1/push}" && \
   START=$(date -u -v-24H +%Y-%m-%dT%H:%M:%SZ) && END=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
   curl -s -u "$GRAFANA_LOKI_USER:$GRAFANA_CLOUD_API_KEY" \
@@ -200,6 +153,8 @@ zsh -c 'source ~/.zsh_secrets && \
     --data-urlencode "start=$START" --data-urlencode "end=$END" \
     --data-urlencode "limit=5000" | jq .'
 ```
+
+**重要**: `source ~/.zshrc` と `source ~/.zsh_secrets` の両方が必要（環境変数が分散している）。
 
 ## クエリリファレンス
 
