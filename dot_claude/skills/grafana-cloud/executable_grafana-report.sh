@@ -105,6 +105,7 @@ prom_query  "$COMMIT_Q"  > "$WORK/commits.json" &
 prom_query  "$LOC_Q"     > "$WORK/loc.json" &
 prom_range  "$DAILY_Q"   > "$WORK/cost_daily.json" &
 loki_range  '{job="claude-code"}' 5000 > "$WORK/otel_logs.json" &
+loki_range  '{job="claude-hooks"}' 5000 > "$WORK/hooks_logs.json" &
 
 wait
 
@@ -151,6 +152,41 @@ jq -r '
   | sort_by(-.count) | .[:15]
   | .[] | "\(.tool)\t\(.count)"
 ' "$WORK/otel_logs.json" 2>/dev/null || echo "(no data)"
+echo ""
+
+# --- Subagent使用（hooks: job="claude-hooks", tool_name="Task"） ---
+echo "--- SUBAGENT USAGE (hooks) ---"
+jq -r '
+  [.data.result[]
+   | select(.stream.tool_name=="Task")
+   | {type: .stream.subagent_type, count: (.values | length)}]
+  | group_by(.type) | map({type: .[0].type, count: (map(.count) | add)})
+  | sort_by(-.count)
+  | .[] | "\(.type)\t\(.count)"
+' "$WORK/hooks_logs.json" 2>/dev/null || echo "(no data)"
+echo ""
+
+# --- Skill使用（hooks: job="claude-hooks", tool_name="Skill"） ---
+echo "--- SKILL USAGE (hooks) ---"
+jq -r '
+  [.data.result[]
+   | select(.stream.tool_name=="Skill")
+   | {skill: .stream.skill, count: (.values | length)}]
+  | group_by(.skill) | map({skill: .[0].skill, count: (map(.count) | add)})
+  | sort_by(-.count)
+  | .[] | "\(.skill)\t\(.count)"
+' "$WORK/hooks_logs.json" 2>/dev/null || echo "(no data)"
+echo ""
+
+# --- Hooks全体（tool_name別） ---
+echo "--- HOOKS TOOL DISTRIBUTION ---"
+jq -r '
+  [.data.result[]
+   | {tool: (.stream.tool_name // "unknown"), count: (.values | length)}]
+  | group_by(.tool) | map({tool: .[0].tool, count: (map(.count) | add)})
+  | sort_by(-.count)
+  | .[] | "\(.tool)\t\(.count)"
+' "$WORK/hooks_logs.json" 2>/dev/null || echo "(no data)"
 echo ""
 
 # --- イベント分布 ---
