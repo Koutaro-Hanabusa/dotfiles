@@ -28,6 +28,7 @@ scrape_configs:
             tool_name: tool_name
             subagent_type: subagent_type
             skill: skill
+            mcp_server: mcp_server
             description: description
             project: project
             session_id: session_id
@@ -41,6 +42,9 @@ scrape_configs:
           source: skill
           template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
       - template:
+          source: mcp_server
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
           source: project
           template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
       - template:
@@ -51,6 +55,7 @@ scrape_configs:
           tool_name:
           subagent_type:
           skill:
+          mcp_server:
           project:
           session_id:
       - timestamp:
