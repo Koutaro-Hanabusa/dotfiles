@@ -39,6 +39,9 @@ export GRAFANA_PROMETHEUS_USER="{{ .grafana_cloud.prometheus_user }}"
 # ローカル環境固有のシークレット（GRAFANA_CLOUD_API_KEY等）
 [ -f ~/.zsh_secrets ] && source ~/.zsh_secrets
 
+# AWSログイン & SSHトンネリング（i, o エイリアス）
+[ -f ~/.zsh_tunneling ] && source ~/.zsh_tunneling
+
 # モダンCLIツールのエイリアス
 alias cat="bat"
 alias ls="eza --icons --git"
