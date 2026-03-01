@@ -47,7 +47,13 @@ return {
     end, { desc = "Paste in terminal" })
   end,
   keys = {
-    { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude Code" },
+    {
+      "<leader>ac",
+      function()
+        vim.fn.system("tmux split-window -h -l 40%")
+      end,
+      desc = "Open tmux terminal (right)",
+    },
     { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume session (picker)" },
     { "<leader>ao", "<cmd>ClaudeCode --continue<cr>", desc = "Continue last session" },
     { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send selection to Claude" },
