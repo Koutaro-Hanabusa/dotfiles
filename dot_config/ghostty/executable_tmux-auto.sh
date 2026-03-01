@@ -1,12 +1,12 @@
 #!/bin/zsh
 
-# tmuxセッション自動接続（Claude Code teams split panes対応）
-# ロックで同時起動のレースコンディションを防止
+# tmuxセッション自動接続（Claude Code agent teams split panes対応）
+# Ghostty / cmux 両対応。ロックで同時起動のレースコンディションを防止
 
-# Ghosttyが最小環境で起動するためPATHを明示的に設定
+# Ghostty/cmuxが最小環境で起動するためPATHを明示的に設定
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
-LOCKDIR="/tmp/ghostty-tmux-lock"
+LOCKDIR="/tmp/terminal-tmux-lock"
 
 # ロック取得を試みる（最大2秒待機）
 for i in {1..20}; do
