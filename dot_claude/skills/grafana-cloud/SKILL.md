@@ -17,30 +17,41 @@ Claude CodeのOTelメトリクス・ログをGrafana Cloudから取得し、使�
 
 ## 認証・接続
 
+### 推奨: MCP サーバー経由（mcp-grafana）
+
+Grafana MCP サーバー (`mcp__grafana__*`) が利用可能。認証は MCP 設定で自動処理されるため、環境変数やcurlは不要。
+
+**主要ツール:**
+
+| MCPツール | 用途 |
+|----------|------|
+| `mcp__grafana__query_prometheus` | PromQL クエリ実行 |
+| `mcp__grafana__query_loki_logs` | LogQL ログクエリ実行 |
+| `mcp__grafana__list_datasources` | データソース一覧取得 |
+| `mcp__grafana__list_prometheus_metric_names` | メトリクス名一覧 |
+| `mcp__grafana__list_prometheus_label_values` | ラベル値一覧 |
+| `mcp__grafana__list_loki_label_names` | Loki ラベル名一覧 |
+| `mcp__grafana__list_loki_label_values` | Loki ラベル値一覧 |
+
+### フォールバック: curl + zsh -c
+
+MCP サーバーが利用できない場合のみ、以下の curl 方式を使う。
+
 **重要**: `~/.zsh_secrets` はzsh固有の構文を含むため、必ず `zsh -c` 経由で実行すること。
-**重要**: 環境変数は `~/.zshrc`（URL/ユーザーID）と `~/.zsh_secrets`（APIキー）に分散しているため、両方をsourceすること。
 
 以下の環境変数が `~/.zshrc` / `~/.zsh_secrets` で定義済み:
 
 | 環境変数 | 用途 |
 |---------|------|
-| `GRAFANA_LOKI_URL` | Loki push URL（queryは `/loki/api/v1/query` 等を使う） |
+| `GRAFANA_LOKI_URL` | Loki push URL |
 | `GRAFANA_LOKI_USER` | Loki Basic認証ユーザーID |
-| `GRAFANA_PROMETHEUS_URL` | Prometheus push URL（queryは `/api/prom/api/v1/query` 等を使う） |
+| `GRAFANA_PROMETHEUS_URL` | Prometheus push URL |
 | `GRAFANA_PROMETHEUS_USER` | Prometheus Basic認証ユーザーID |
 | `GRAFANA_CLOUD_API_KEY` | APIキー（`~/.zsh_secrets` に定義） |
 
-### エンドポイントの導出
-
-push URLからquery URLを導出する:
-- **Loki**: push URL から `/loki/api/v1/push` を除いたベースURL + `/loki/api/v1/query` or `/loki/api/v1/query_range`
-- **Prometheus**: push URL から `/api/prom/push` を除いたベースURL + `/api/prom/api/v1/query` or `/api/prom/api/v1/query_range`
-
-```bash
-# 例: query用ベースURLの導出
-LOKI_BASE="${GRAFANA_LOKI_URL%/loki/api/v1/push}"
-PROM_BASE="${GRAFANA_PROMETHEUS_URL%/api/prom/push}"
-```
+エンドポイント導出:
+- **Loki**: push URL から `/loki/api/v1/push` を除去 → + `/loki/api/v1/query_range`
+- **Prometheus**: push URL から `/api/prom/push` を除去 → + `/api/prom/api/v1/query`
 
 ## データ構造
 
@@ -94,11 +105,13 @@ Claude Code Usage Summary (Today)
 ### サマリー取得手順
 
 1. 現在時刻を `mcp__time__get_current_time` (timezone: Asia/Tokyo) で取得
-2. 以下の3クエリを `zsh -c` 経由で**並列実行**:
-   - 今日のコスト合計（PC別）
-   - 今日のトークン消費量（PC別）
-   - 直近24hのエラー件数（PC別）
+2. 以下の3クエリを MCP ツールで**並列実行**:
+   - `mcp__grafana__query_prometheus` — 今日のコスト合計（PC別）
+   - `mcp__grafana__query_prometheus` — 今日のトークン消費量（PC別）
+   - `mcp__grafana__query_loki_logs` — 直近24hのエラー件数（PC別）
 3. テーブル形式で出力
+
+MCP が利用できない場合は `zsh -c` 経由の curl で代替する。
 
 ## 手動 `/grafana` — 詳細レポート
 
@@ -138,7 +151,33 @@ zsh ~/.claude/skills/grafana-cloud/grafana-report.sh [home|work] [24h|7d|30d]
 
 ### 追加の個別クエリが必要な場合
 
-スクリプトで得られない情報が必要な場合のみ、以下のテンプレートを使う:
+スクリプトで得られない情報が必要な場合は、MCPツールを直接呼び出す:
+
+```
+# Prometheus クエリ（MCP推奨）
+mcp__grafana__query_prometheus(
+  datasourceUid: "<uid>",
+  expr: "<PROMQL>",
+  startRfc3339: "2026-03-01T00:00:00+09:00",
+  endRfc3339: "2026-03-01T23:59:59+09:00",
+  stepSeconds: 3600
+)
+
+# Loki ログクエリ（MCP推奨）
+mcp__grafana__query_loki_logs(
+  datasourceUid: "<uid>",
+  logQL: "<LOGQL>",
+  startRfc3339: "2026-03-01T00:00:00+09:00",
+  endRfc3339: "2026-03-01T23:59:59+09:00",
+  limit: 100
+)
+```
+
+**datasourceUid** は `mcp__grafana__list_datasources` で取得する。
+
+### フォールバック: curl テンプレート
+
+MCP が利用できない場合のみ:
 
 ```bash
 # Prometheus instant query
@@ -159,16 +198,15 @@ zsh -c 'source ~/.zshrc 2>/dev/null; source ~/.zsh_secrets 2>/dev/null; \
     --data-urlencode "limit=5000" | jq .'
 ```
 
-**重要**: `source ~/.zshrc` と `source ~/.zsh_secrets` の両方が必要（環境変数が分散している）。
-
 ## クエリリファレンス
 
 詳細なクエリ定義は [references/queries.md](references/queries.md) を参照。
 
 ## 注意事項
 
-- **必ず `zsh -c '...'` で実行する**（bashでは `~/.zsh_secrets` のsourceが失敗する）
-- Loki の `query_range` はデフォルトで最大5000件。大量データの場合は期間を短くする
+- **MCP ツールを優先的に使う**。curl は MCP が利用できない場合のフォールバック
+- curl を使う場合は **必ず `zsh -c '...'` で実行する**（bashでは `~/.zsh_secrets` のsourceが失敗する）
+- Loki クエリはデフォルトで最大5000件。大量データの場合は期間を短くする
 - Prometheus メトリクスは Delta→Cumulative 変換済みのため `rate()` や `increase()` が使える
 - **APIキーを絶対にログや出力に含めないこと**
 - `pc_type` ラベルは2026-02-26以降のデータのみ
