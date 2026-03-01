@@ -45,23 +45,27 @@ PROM_END=$(date +%s)
 # ── PromQL フィルタ構築 ───────────────────────────────────
 # PC_FILTER あり → {pc_type="xxx"} でフィルタ、group by しない
 # PC_FILTER なし → フィルタなし、group by pc_type を追加
+# increase(metric[PERIOD]) は deltatocumulative のカウンターリセット（Docker再起動等）で
+# 長期間ほど値が減る問題がある。sum_over_time(increase(metric[1d])[PERIOD:1d]) で
+# 1日単位の増分を合算する方式に変更し、リセットの影響を最小化する。
 if [[ -n "$PC_FILTER" ]]; then
-  COST_Q="sum by (model)(increase(claude_code_cost_usage_USD_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}]))"
-  TOKEN_Q="sum by (type)(increase(claude_code_token_usage_tokens_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}]))"
-  CACHE_Q="sum(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\",pc_type=\"${PC_FILTER}\"}[${PERIOD}])) / (sum(increase(claude_code_token_usage_tokens_total{type=\"input\",pc_type=\"${PC_FILTER}\"}[${PERIOD}])) + sum(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\",pc_type=\"${PC_FILTER}\"}[${PERIOD}])))"
-  SESSION_Q="sum(increase(claude_code_session_count_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}]))"
-  ACTIVE_Q="sum(increase(claude_code_active_time_seconds_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}])) / 3600"
-  COMMIT_Q="sum(increase(claude_code_commit_count_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}]))"
-  LOC_Q="sum(increase(claude_code_lines_of_code_count_total{pc_type=\"${PC_FILTER}\"}[${PERIOD}]))"
-  DAILY_Q="sum by (model)(increase(claude_code_cost_usage_USD_total{pc_type=\"${PC_FILTER}\"}[1d]))"
+  PCT="{pc_type=\"${PC_FILTER}\"}"
+  COST_Q="sum by (model)(sum_over_time(increase(claude_code_cost_usage_USD_total${PCT}[1d])[${PERIOD}:1d]))"
+  TOKEN_Q="sum by (type)(sum_over_time(increase(claude_code_token_usage_tokens_total${PCT}[1d])[${PERIOD}:1d]))"
+  CACHE_Q="sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\",pc_type=\"${PC_FILTER}\"}[1d])[${PERIOD}:1d])) / (sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"input\",pc_type=\"${PC_FILTER}\"}[1d])[${PERIOD}:1d])) + sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\",pc_type=\"${PC_FILTER}\"}[1d])[${PERIOD}:1d])))"
+  SESSION_Q="sum(sum_over_time(increase(claude_code_session_count_total${PCT}[1d])[${PERIOD}:1d]))"
+  ACTIVE_Q="sum(sum_over_time(increase(claude_code_active_time_seconds_total${PCT}[1d])[${PERIOD}:1d])) / 3600"
+  COMMIT_Q="sum(sum_over_time(increase(claude_code_commit_count_total${PCT}[1d])[${PERIOD}:1d]))"
+  LOC_Q="sum(sum_over_time(increase(claude_code_lines_of_code_count_total${PCT}[1d])[${PERIOD}:1d]))"
+  DAILY_Q="sum by (model)(increase(claude_code_cost_usage_USD_total${PCT}[1d]))"
 else
-  COST_Q="sum by (model)(increase(claude_code_cost_usage_USD_total[${PERIOD}]))"
-  TOKEN_Q="sum by (type)(increase(claude_code_token_usage_tokens_total[${PERIOD}]))"
-  CACHE_Q="sum(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\"}[${PERIOD}])) / (sum(increase(claude_code_token_usage_tokens_total{type=\"input\"}[${PERIOD}])) + sum(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\"}[${PERIOD}])))"
-  SESSION_Q="sum(increase(claude_code_session_count_total[${PERIOD}]))"
-  ACTIVE_Q="sum(increase(claude_code_active_time_seconds_total[${PERIOD}])) / 3600"
-  COMMIT_Q="sum(increase(claude_code_commit_count_total[${PERIOD}]))"
-  LOC_Q="sum(increase(claude_code_lines_of_code_count_total[${PERIOD}]))"
+  COST_Q="sum by (model)(sum_over_time(increase(claude_code_cost_usage_USD_total[1d])[${PERIOD}:1d]))"
+  TOKEN_Q="sum by (type)(sum_over_time(increase(claude_code_token_usage_tokens_total[1d])[${PERIOD}:1d]))"
+  CACHE_Q="sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\"}[1d])[${PERIOD}:1d])) / (sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"input\"}[1d])[${PERIOD}:1d])) + sum(sum_over_time(increase(claude_code_token_usage_tokens_total{type=\"cacheRead\"}[1d])[${PERIOD}:1d])))"
+  SESSION_Q="sum(sum_over_time(increase(claude_code_session_count_total[1d])[${PERIOD}:1d]))"
+  ACTIVE_Q="sum(sum_over_time(increase(claude_code_active_time_seconds_total[1d])[${PERIOD}:1d])) / 3600"
+  COMMIT_Q="sum(sum_over_time(increase(claude_code_commit_count_total[1d])[${PERIOD}:1d]))"
+  LOC_Q="sum(sum_over_time(increase(claude_code_lines_of_code_count_total[1d])[${PERIOD}:1d]))"
   DAILY_Q="sum by (model)(increase(claude_code_cost_usage_USD_total[1d]))"
 fi
 
