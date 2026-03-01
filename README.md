@@ -113,13 +113,15 @@ chezmoiはソースディレクトリで特殊なプレフィックスを使用�
 
 nvimで`:q`すればtmuxセッションごと終了する。
 
-### Claude Code連携キーバインド
+### Claude Code連携キーバインド（claudecode.nvim）
 
 nvim内でClaude Codeと連携するためのキーバインド。
 
 | キー | 動作 |
 |------|------|
-| `Space` `ac` | Claude Codeパネルのトグル |
+| `Space` `ac` | tmux右分割ターミナルを開く（40%幅） |
+| `Space` `ar` | Claude Codeセッション再開（ピッカー） |
+| `Space` `ao` | 直前のセッションを継続 |
 | `Space` `as` | 選択範囲をClaudeに送信（Visual mode） |
 | `Space` `aa` | 現在のファイルをClaudeに追加 |
 
@@ -188,12 +190,12 @@ nvim内でGitHubのPR/Issueを操作。
 
 | ファイルタイプ | フォーマッター | インストール |
 |---------------|---------------|-------------|
-| JavaScript (`.js`) | prettier | `npm install -g prettier` |
-| TypeScript (`.ts`) | prettier | `npm install -g prettier` |
-| TypeScript React (`.tsx`) | prettier | `npm install -g prettier` |
-| JavaScript React (`.jsx`) | prettier | `npm install -g prettier` |
-| JSON (`.json`) | prettier | `npm install -g prettier` |
-| CSS (`.css`) | prettier | `npm install -g prettier` |
+| JavaScript (`.js`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
+| TypeScript (`.ts`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
+| TypeScript React (`.tsx`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
+| JavaScript React (`.jsx`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
+| JSON (`.json`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
+| CSS (`.css`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
 | HTML (`.html`) | prettier | `npm install -g prettier` |
 | Markdown (`.md`) | prettier | `npm install -g prettier` |
 | Lua (`.lua`) | stylua | `brew install stylua` |
@@ -201,9 +203,35 @@ nvim内でGitHubのPR/Issueを操作。
 | Go (`.go`) | gofmt | Go に同梱 |
 | PHP (`.php`) | pint | `composer global require laravel/pint` |
 
+※ `biome → prettier` はbiomeを優先し、なければprettierにフォールバック
+
 ### 手動フォーマット
 
 `<Space>f` で現在のバッファを手動フォーマット
+
+---
+
+## LSP（言語サーバー）
+
+Mason経由で自動インストール。
+
+| 言語 | LSP | 対象ファイル |
+|------|-----|-------------|
+| Lua | lua_ls | `.lua` |
+| TypeScript / JavaScript | ts_ls | `.ts`, `.tsx`, `.js`, `.jsx` |
+| Python | pyright | `.py` |
+| Go | gopls | `.go`, `go.mod` |
+| PHP | intelephense | `.php` |
+
+### LSPキーバインド
+
+| キー | 動作 |
+|------|------|
+| `gd` | 定義にジャンプ |
+| `K` | ホバードキュメント |
+| `gr` | 参照を検索 |
+| `Space` `rn` | シンボルをリネーム |
+| `Space` `ca` | コードアクション |
 
 ---
 
@@ -527,6 +555,58 @@ git: 'brnach' is not a git command.
 $ fuck
 git branch  # 自動修正されて実行される
 ```
+
+---
+
+## Neovimプラグイン一覧
+
+lazy.nvimで管理。1日1回バックグラウンドで更新チェックし、更新があれば通知表示（`:Lazy update` で手動更新）。
+
+### エディタ・UI
+
+| プラグイン | 機能 |
+|-----------|------|
+| catppuccin | カラースキーム |
+| lualine.nvim | ステータスライン |
+| bufferline.nvim | バッファタブ |
+| indent-blankline.nvim | インデントガイド |
+| nvim-web-devicons | ファイルアイコン |
+| nvim-tree.lua | ファイルエクスプローラー |
+| which-key.nvim | キーマップヒント表示 |
+| trouble.nvim | 診断・エラー一覧 |
+
+### コーディング
+
+| プラグイン | 機能 |
+|-----------|------|
+| nvim-treesitter | シンタックスハイライト |
+| nvim-ts-autotag | HTMLタグ自動閉じ |
+| nvim-cmp | 自動補完 |
+| LuaSnip | スニペットエンジン |
+| nvim-autopairs | 括弧の自動補完 |
+| Comment.nvim | コメントトグル（`gc`） |
+| conform.nvim | 自動フォーマット |
+| nvim-lint | Linter統合（textlint等） |
+
+### Git
+
+| プラグイン | 機能 |
+|-----------|------|
+| gitsigns.nvim | Git差分表示（行単位） |
+| git-blame.nvim | Git blame表示 |
+| diffview.nvim | 差分ビューア |
+| lazygit.nvim | lazygit統合 |
+| octo.nvim | GitHub PR/Issue操作 |
+
+### ツール
+
+| プラグイン | 機能 |
+|-----------|------|
+| telescope.nvim | ファジーファインダー |
+| toggleterm.nvim | ターミナル管理 |
+| claudecode.nvim | Claude Code統合 |
+| img-clip.nvim | クリップボードから画像ペースト（`Space` `p`） |
+| image.nvim | ターミナル内画像表示 |
 
 ---
 
