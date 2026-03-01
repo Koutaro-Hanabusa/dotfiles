@@ -114,6 +114,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup("plugins", {
+  checker = {
+    enabled = true,
+    notify = true,
+    frequency = 86400, -- 1日1回チェック
+  },
   change_detection = {
     notify = false,
   },
