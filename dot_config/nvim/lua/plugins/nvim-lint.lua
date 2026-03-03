@@ -39,10 +39,6 @@ return {
     lint.linters_by_ft = {
       markdown = { "textlint" },
       text = { "textlint" },
-      javascript = { "textlint" },
-      typescript = { "textlint" },
-      javascriptreact = { "textlint" },
-      typescriptreact = { "textlint" },
     }
 
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
