@@ -114,6 +114,25 @@ _show_md() {
 alias dothelp='_show_md ~/.local/share/chezmoi/README.md'
 alias vimhelp='_show_md ~/.config/nvim/doc/README.md'
 
+# ブランチ名規約チェック（checkout -b / switch -c 時に自動警告）
+git() {
+  command git "$@"
+  local exit_code=$?
+  if [[ $exit_code -eq 0 && \
+        (("$1" == "checkout" && " $* " == *" -b "*) || \
+         ("$1" == "switch" && " $* " == *" -c "*)) ]]; then
+    local branch
+    branch=$(command git symbolic-ref --short HEAD 2>/dev/null)
+    local pattern='^(feature|fix|hotfix|release|chore|refactor|docs|test|ci|perf|build)/[0-9]+-[a-z0-9-]+$'
+    if [[ -n "$branch" && ! "$branch" =~ $pattern ]]; then
+      print -P "\n%F{yellow}⚠️  ブランチ名が推奨パターンに沿っていません: %F{red}$branch%f"
+      print -P "   %F{white}推奨: %F{green}<type>/<TICKET番号>-<short-summary>%f"
+      print -P "   %F{white}例:   %F{green}feature/55-add-login-page%f"
+    fi
+  fi
+  return $exit_code
+}
+
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
 
