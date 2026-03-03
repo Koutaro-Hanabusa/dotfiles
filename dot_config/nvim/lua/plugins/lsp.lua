@@ -73,6 +73,16 @@ return {
         },
       }
 
+      -- oxlint (JavaScript/TypeScript Linter)
+      vim.lsp.config.oxlint = {
+        capabilities = capabilities,
+      }
+
+      -- oxfmt (JavaScript/TypeScript Formatter)
+      vim.lsp.config.oxfmt = {
+        capabilities = capabilities,
+      }
+
       -- PHP (Laravel)
       vim.lsp.config.intelephense = {
         cmd = { "intelephense", "--stdio" },
@@ -102,7 +112,7 @@ return {
       }
 
       -- Enable LSPs
-      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense" })
+      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense", "oxlint", "oxfmt" })
 
       -- Key mappings
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
