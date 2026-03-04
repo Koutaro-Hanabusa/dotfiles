@@ -114,6 +114,15 @@ _show_md() {
 alias dothelp='_show_md ~/.local/share/chezmoi/README.md'
 alias vimhelp='_show_md ~/.config/nvim/doc/README.md'
 
+# fzf でブランチをファジー検索して切り替え（gco cheese → sen/8122-cheese）
+gco() {
+  local branch
+  branch=$(command git branch --format='%(refname:short)' | fzf --query="$1" --select-1 --exit-0)
+  if [[ -n "$branch" ]]; then
+    git switch "$branch"
+  fi
+}
+
 # ブランチ名規約チェック（checkout -b / switch -c 時に自動警告）
 git() {
   command git "$@"
