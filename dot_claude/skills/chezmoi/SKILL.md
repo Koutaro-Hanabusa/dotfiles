@@ -30,10 +30,25 @@ Do NOT ask for confirmation — just do it. The user expects this to happen auto
 
 ## Commit Message
 
-Write a concise commit message in Japanese describing what was changed. Examples:
-- `zshrcにエイリアス追加`
-- `nvimのLSP設定を修正`
-- `tmuxのキーバインド変更`
+Conventional Commits 形式で日本語で書く。
+
+フォーマット: `<type>(<scope>): <description>`
+
+### type
+- `feat` — 新機能追加
+- `fix` — バグ修正
+- `refactor` — リファクタリング（機能変更なし）
+- `chore` — 設定変更、依存更新等
+- `docs` — ドキュメントのみ
+
+### scope
+変更対象のツール/設定名（例: `nvim`, `zsh`, `tmux`, `git`, `skills`, `grafana`）
+
+### Examples
+- `feat(zsh): fzfによるブランチ切り替え関数を追加`
+- `fix(nvim): LSP設定のキーマップ競合を修正`
+- `refactor(tmux): ステータスバーの設定を整理`
+- `chore(skills): changeset スキルの説明文を更新`
 
 ## Naming Conventions
 
