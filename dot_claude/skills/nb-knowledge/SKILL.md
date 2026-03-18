@@ -1,6 +1,11 @@
 ---
 name: nb-knowledge
-description: Automatically record Q&A exchanges, code review learnings, design pattern discoveries, and session insights to nb notebooks in the background. Always active — no user invocation needed.
+description: >
+  Automatically record Q&A exchanges, code review learnings, design pattern discoveries, and session
+  insights to nb notebooks in the background. Triggers on: (1) session start — record session context,
+  (2) after answering a user question or explaining code, (3) after a bug fix or code review,
+  (4) after a design decision or architectural discussion, (5) at task completion — review for missed
+  recordings. Use when any learning, insight, or notable exchange occurs during the session.
 ---
 
 > **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
