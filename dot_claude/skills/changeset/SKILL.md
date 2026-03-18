@@ -48,7 +48,15 @@ git diff --name-only main...HEAD
 
 ### Step 3: 要約の自動生成
 
-diff の内容から、以下のフォーマットで要約を生成:
+diff の内容から changeset の要約を生成する。要約の 1 行目は **Conventional Commit 形式のタイトル**にする:
+
+- **形式**: `<type>(<scope>): <説明>` または `<type>: <説明>`
+- **type**: `feat` / `fix` / `docs` / `style` / `refactor` / `test` / `chore` / `ci` / `perf` / `build`
+- **scope**: 任意。変更パッケージ名（`packages/` や `apps/` 配下のディレクトリ名）。複数にまたがる場合は主要なもの 1 つ。ルート直下の設定ファイルのみなら scope なし
+- **説明**: 日本語で簡潔に（70 文字以内推奨）
+- コミット履歴と差分から最適な type を判断
+
+2 行目以降は補足説明（任意）:
 
 - **何を変えたか**（What）を簡潔に
 - 技術的な詳細より、ユーザー視点の影響を優先
