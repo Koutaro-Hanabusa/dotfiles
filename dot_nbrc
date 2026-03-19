@@ -13,4 +13,10 @@
 # https://github.com/xwmx/nb
 ###############################################################################
 
-export EDITOR="nvim" # Set by `nb` • Thu Jan  8 20:28:29 JST 2026
+# Claude Code などの非対話環境ではエディタ起動を防止
+# CLAUDECODE=1 の場合、エディタの代わりに cat（読み取り専用）を使う
+if [[ -n "${CLAUDECODE}" ]]; then
+  export EDITOR="cat"
+else
+  export EDITOR="nvim"
+fi
