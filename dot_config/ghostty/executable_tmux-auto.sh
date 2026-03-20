@@ -6,6 +6,18 @@
 # Ghostty/cmuxが最小環境で起動するためPATHを明示的に設定
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
+# cmux環境変数をtmuxグローバル環境に引き継ぐ（ソケット認証・通知用）
+# cmuxがシェルに設定するCMUX_*変数を、tmuxサーバー経由で全ペインに伝播させる
+_forward_cmux_env() {
+    if [ -n "$CMUX_SOCKET_PASSWORD" ] || [ -n "$CMUX_WORKSPACE_ID" ]; then
+        for var in CMUX_SOCKET_PASSWORD CMUX_WORKSPACE_ID CMUX_SURFACE_ID CMUX_SOCKET_PATH CMUX_TAB_ID; do
+            if [ -n "${(P)var}" ]; then
+                tmux set-environment -g "$var" "${(P)var}" 2>/dev/null
+            fi
+        done
+    fi
+}
+
 LOCKDIR="/tmp/terminal-tmux-lock"
 
 # ロック取得を試みる（最大2秒待機）
@@ -18,9 +30,13 @@ if ! tmux has-session -t main 2>/dev/null; then
     rmdir "$LOCKDIR" 2>/dev/null
     exec tmux new-session -s main
 elif [ -z "$(tmux list-clients -t main 2>/dev/null)" ]; then
+    # 既存サーバーにCMUX環境変数を注入してからattach
+    _forward_cmux_env
     rmdir "$LOCKDIR" 2>/dev/null
     exec tmux attach-session -t main
 else
+    # 既存サーバーにCMUX環境変数を注入
+    _forward_cmux_env
     rmdir "$LOCKDIR" 2>/dev/null
     exec tmux new-session
 fi
