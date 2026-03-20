@@ -38,6 +38,15 @@
         "hooks": [
           {
             "type": "command",
+            "command": "export CMUX_SOCKET_PASSWORD=$(tmux show-environment -g CMUX_SOCKET_PASSWORD 2>/dev/null | sed 's/^[^=]*=//'); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
             "command": "marker=/tmp/.claude-nb-reminded; now=$(date +%s); if [ -f \"$marker\" ]; then last=$(stat -f %m \"$marker\"); if [ $(( now - last )) -lt 60 ]; then exit 0; fi; fi; touch \"$marker\"; if [ -f \"$HOME/.is_work_pc\" ]; then notebook=\"work\"; else notebook=\"home\"; fi; echo \"[nb-knowledge] Record session learnings if any (Q&A, bug fixes, design decisions). Use: nb add ${notebook}:knowledge/ -c 'content'. Skip if nothing to record or already recorded.\""
           }
         ]
