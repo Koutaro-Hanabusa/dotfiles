@@ -23,6 +23,17 @@
         ]
       }
     ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "export CMUX_SOCKET_PASSWORD=$(tmux show-environment -g CMUX_SOCKET_PASSWORD 2>/dev/null | sed 's/^[^=]*=//'); cmux notify --title 'Claude Code' --body '許可が必要です' 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
