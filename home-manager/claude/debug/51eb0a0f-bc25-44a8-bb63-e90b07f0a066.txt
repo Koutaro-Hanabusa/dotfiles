@@ -1,0 +1,155 @@
+2026-03-21T12:29:55.214Z [DEBUG] Detected deletion of /Users/1126buri/.claude/settings.local.json
+2026-03-21T12:29:55.215Z [DEBUG] Getting matching hook commands for ConfigChange with query: local_settings
+2026-03-21T12:29:55.215Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T12:29:55.215Z [DEBUG] Matched 0 unique hooks for query "local_settings" (0 before deduplication)
+2026-03-21T12:29:55.218Z [DEBUG] Settings changed from localSettings, updating app state
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all deny rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all ask rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all deny rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all ask rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all deny rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T12:29:55.218Z [DEBUG] Replacing all ask rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T12:29:55.226Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T12:29:55.231Z [DEBUG] High write ratio: blit=0, write=6372 (100.0% writes), screen=105x235
+2026-03-21T12:29:55.344Z [DEBUG] Writing to temp file: /Users/1126buri/.claude.json.tmp.70337.1774096195344
+2026-03-21T12:29:55.344Z [DEBUG] Preserving file permissions: 100644
+2026-03-21T12:29:55.344Z [DEBUG] Temp file written successfully, size: 60219 bytes
+2026-03-21T12:29:55.344Z [DEBUG] Applied original permissions to temp file
+2026-03-21T12:29:55.344Z [DEBUG] Renaming /Users/1126buri/.claude.json.tmp.70337.1774096195344 to /Users/1126buri/.claude.json
+2026-03-21T12:29:55.344Z [DEBUG] File /Users/1126buri/.claude.json written atomically
+2026-03-21T12:29:55.685Z [ERROR] AxiosError: [url=https://api.anthropic.com/api/oauth/claude_cli/client_data,status=429,body=Rate limited. Please try again later.] Error
+    at DM (/$bunfs/root/claude:92:1144)
+    at <anonymous> (/$bunfs/root/claude:93:10067)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:861:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:95:2149)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T12:46:44.475Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T12:47:24.964Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:16:44.381Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:17:24.972Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:30:49.430Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:30:49.441Z [DEBUG] High write ratio: blit=0, write=6400 (100.0% writes), screen=105x237
+2026-03-21T13:30:51.076Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:30:51.082Z [DEBUG] High write ratio: blit=0, write=6372 (100.0% writes), screen=105x235
+2026-03-21T13:30:51.326Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:30:51.333Z [DEBUG] High write ratio: blit=0, write=6400 (100.0% writes), screen=105x237
+2026-03-21T13:30:51.341Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:30:51.348Z [DEBUG] High write ratio: blit=0, write=6372 (100.0% writes), screen=105x235
+2026-03-21T13:31:51.343Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2026-03-21T13:31:51.343Z [DEBUG] Found 1 hook matchers in settings
+2026-03-21T13:31:51.343Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2026-03-21T13:33:51.966Z [DEBUG] Detected deletion of /Users/1126buri/.claude/settings.json
+2026-03-21T13:33:51.972Z [DEBUG] Getting matching hook commands for ConfigChange with query: user_settings
+2026-03-21T13:33:51.972Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:51.972Z [DEBUG] Matched 0 unique hooks for query "user_settings" (0 before deduplication)
+2026-03-21T13:33:51.977Z [DEBUG] Settings changed from userSettings, updating app state
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all deny rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all ask rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all deny rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all ask rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all deny rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:51.977Z [DEBUG] Replacing all ask rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:51.987Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:33:52.020Z [DEBUG] High write ratio: blit=0, write=6363 (100.0% writes), screen=105x235
+2026-03-21T13:33:52.162Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/issue-child.md
+2026-03-21T13:33:52.164Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.164Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.164Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.164Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today.md
+2026-03-21T13:33:52.164Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.164Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.164Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.164Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/review.md
+2026-03-21T13:33:52.164Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.164Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.164Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.176Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.177Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.178Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.178Z [DEBUG] Plugin loading errors: Plugin figma not found in marketplace claude-plugins-official, Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.178Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.184Z [DEBUG] Loaded 0 unique skills (0 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 0)
+2026-03-21T13:33:52.184Z [DEBUG] Loaded 0 unique skills (0 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 0)
+2026-03-21T13:33:52.184Z [DEBUG] Loaded 0 unique skills (0 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 0)
+2026-03-21T13:33:52.184Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.184Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.184Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.215Z [DEBUG] High write ratio: blit=0, write=6363 (100.0% writes), screen=105x235
+2026-03-21T13:33:52.355Z [ERROR] Failed to save config with lock: Error: Lock file is already being held
+2026-03-21T13:33:52.358Z [DEBUG] Writing to temp file: /Users/1126buri/.claude.json.tmp.70337.1774100032358
+2026-03-21T13:33:52.358Z [DEBUG] Preserving file permissions: 100644
+2026-03-21T13:33:52.361Z [DEBUG] Temp file written successfully, size: 59327 bytes
+2026-03-21T13:33:52.361Z [DEBUG] Applied original permissions to temp file
+2026-03-21T13:33:52.361Z [DEBUG] Renaming /Users/1126buri/.claude.json.tmp.70337.1774100032358 to /Users/1126buri/.claude.json
+2026-03-21T13:33:52.362Z [DEBUG] File /Users/1126buri/.claude.json written atomically
+2026-03-21T13:33:52.362Z [ERROR] Failed to save config with lock: Error: Lock file is already being held
+2026-03-21T13:33:52.369Z [DEBUG] Writing to temp file: /Users/1126buri/.claude.json.tmp.70337.1774100032369
+2026-03-21T13:33:52.369Z [ERROR] Failed to write file atomically: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/51eb0a0f-bc25-44a8-bb63-e90b07f0a066.txt'
+2026-03-21T13:33:52.370Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/51eb0a0f-bc25-44a8-bb63-e90b07f0a066.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at Ke (/$bunfs/root/claude:6258:869)
+    at ED0 (/$bunfs/root/claude:6258:5297)
+    at WA (/$bunfs/root/claude:6258:3810)
+    at McA (/$bunfs/root/claude:4188:578)
+2026-03-21T13:33:52.630Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:53.034Z [DEBUG] [keybindings] Detected change to /Users/1126buri/.claude/keybindings.json
+2026-03-21T13:33:53.126Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today
+2026-03-21T13:33:53.371Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today.md
+2026-03-21T13:33:53.430Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/review.md
+2026-03-21T13:33:53.584Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/changeset/SKILL.md
+2026-03-21T13:33:53.584Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/SKILL.md
+2026-03-21T13:33:53.662Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/commands.md
+2026-03-21T13:33:53.714Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/templates.md
+2026-03-21T13:33:53.714Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:53.757Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/development-principles/SKILL.md
+2026-03-21T13:33:53.806Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/frontend-design/SKILL.md
+2026-03-21T13:33:53.806Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/SKILL.md
+2026-03-21T13:33:53.864Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL.md
+2026-03-21T13:33:53.864Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/references/queries.md
+2026-03-21T13:33:53.875Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/issue-child.md
+2026-03-21T13:33:53.919Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL_ja.md
+2026-03-21T13:33:54.307Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/grafana-report.sh
+2026-03-21T13:46:44.377Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:47:24.893Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81

@@ -1,0 +1,6 @@
+2026-03-21T12:31:49.586Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T12:31:49.889Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:01:49.518Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:01:49.834Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:31:49.479Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:31:49.791Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81

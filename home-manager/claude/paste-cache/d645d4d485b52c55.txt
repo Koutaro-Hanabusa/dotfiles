@@ -1,0 +1,26 @@
+ tree '/Users/1126buri/dotfiles' is dirty
+warning: Git tree '/Users/1126buri/dotfiles' is dirty
+warning: Git tree '/Users/1126buri/dotfiles' is dirty
+error:
+       … while calling the 'derivationStrict' builtin
+         at «nix-internal»/derivation-internal.nix:37:12:
+           36|
+           37|   strict = derivationStrict drvAttrs;
+             |            ^
+           38|
+
+       … while evaluating derivation 'home-manager-generation'
+         whose name attribute is located at «github:nixos/nixpkgs/9cf7092bdd603554bd8b63c216e8943cf9b12512?narHash=sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0%3D»/pkgs/stdenv/generic/make-derivation.n
+ix:536:13
+
+       … while evaluating attribute 'buildCommand' of derivation 'home-manager-generation'
+         at «github:nixos/nixpkgs/9cf7092bdd603554bd8b63c216e8943cf9b12512?narHash=sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0%3D»/pkgs/build-support/trivial-builders/default.nix:80:17:
+           79|         enableParallelBuilding = true;
+           80|         inherit buildCommand name;
+             |                 ^
+           81|         passAsFile = [ "buildCommand" ] ++ (derivationArgs.passAsFile or [ ]);
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: Path 'git/.gitconfig' does not exist in Git repository "/Users/1126buri/dotfiles".
+1126buri@MacB

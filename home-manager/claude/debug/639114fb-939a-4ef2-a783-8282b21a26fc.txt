@@ -1,0 +1,600 @@
+2026-03-21T12:32:12.031Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T12:42:23.421Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:02:11.963Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:12:23.341Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81
+2026-03-21T13:32:11.916Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
+2026-03-21T13:33:51.985Z [DEBUG] Detected deletion of /Users/1126buri/.claude/settings.json
+2026-03-21T13:33:52.003Z [DEBUG] Getting matching hook commands for ConfigChange with query: user_settings
+2026-03-21T13:33:52.003Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.005Z [DEBUG] Matched 0 unique hooks for query "user_settings" (0 before deduplication)
+2026-03-21T13:33:52.046Z [DEBUG] Settings changed from userSettings, updating app state
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all deny rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all ask rules for destination 'userSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all allow rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all deny rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all ask rules for destination 'projectSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all deny rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:52.050Z [DEBUG] Replacing all ask rules for destination 'localSettings' with 0 rule(s): []
+2026-03-21T13:33:52.051Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 23 rule(s): ["Bash(find:*)","Bash(gh issue:*)","Bash(gh repo:*)","Bash(gh label:*)","mcp__chrome-devtools__list_console_messages","Bash(xargs cat:*)","Bash(pnpm build:*)","Bash(xargs ls -lh)","Bash(xargs ls:*)","Bash(gzip:*)","Bash(strings:*)","Bash(sort:*)","Bash(npm ls:*)","Bash(git add:*)","Bash(pnpm install:*)","Bash(printf y\\\\ny\\\\nn\\\\n:*)","Bash(gh pr:*)","Bash(npm run:*)","Bash(git log:*)","Bash(npx tsx:*)","Bash(node:*)","Bash(curl:*)","WebSearch"]
+2026-03-21T13:33:52.133Z [DEBUG] [BackendRegistry] isInProcessEnabled: false (mode=auto, insideTmux=true)
+2026-03-21T13:33:52.171Z [DEBUG] High write ratio: blit=0, write=5662 (100.0% writes), screen=229x58
+2026-03-21T13:33:52.305Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/issue-child.md
+2026-03-21T13:33:52.306Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.306Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.306Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.306Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/review.md
+2026-03-21T13:33:52.306Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.306Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.306Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.306Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today.md
+2026-03-21T13:33:52.306Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.306Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.306Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.311Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.313Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.313Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin skills loaded: 0
+2026-03-21T13:33:52.313Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.313Z [DEBUG] Total plugin commands loaded: 0
+2026-03-21T13:33:52.363Z [DEBUG] Writing to temp file: /Users/1126buri/.claude.json.tmp.85654.1774100032363
+2026-03-21T13:33:52.363Z [DEBUG] Preserving file permissions: 100644
+2026-03-21T13:33:52.370Z [DEBUG] Temp file written successfully, size: 59327 bytes
+2026-03-21T13:33:52.370Z [DEBUG] Applied original permissions to temp file
+2026-03-21T13:33:52.370Z [DEBUG] Renaming /Users/1126buri/.claude.json.tmp.85654.1774100032363 to /Users/1126buri/.claude.json
+2026-03-21T13:33:52.370Z [DEBUG] File /Users/1126buri/.claude.json written atomically
+2026-03-21T13:33:52.375Z [DEBUG] Loaded 1 unique skills (1 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 1)
+2026-03-21T13:33:52.375Z [DEBUG] Loaded 1 unique skills (1 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 1)
+2026-03-21T13:33:52.375Z [DEBUG] Loaded 1 unique skills (1 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 1)
+2026-03-21T13:33:52.375Z [DEBUG] getSkills returning: 1 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.375Z [DEBUG] getSkills returning: 1 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.375Z [DEBUG] getSkills returning: 1 skill dir commands, 0 plugin skills, 3 bundled skills
+2026-03-21T13:33:52.396Z [DEBUG] High write ratio: blit=0, write=5662 (100.0% writes), screen=229x58
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/.DS_Store
+2026-03-21T13:33:52.631Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.631Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.631Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL_ja.md
+2026-03-21T13:33:52.631Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.631Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.631Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL.md
+2026-03-21T13:33:52.631Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.631Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.631Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/development-principles/SKILL.md
+2026-03-21T13:33:52.631Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.631Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.631Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.631Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/grafana-report.sh
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/SKILL.md
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/references/queries.md
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/frontend-design/SKILL.md
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/templates.md
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/commands.md
+2026-03-21T13:33:52.632Z [DEBUG] Getting matching hook commands for ConfigChange with query: skills
+2026-03-21T13:33:52.632Z [DEBUG] Found 0 hook matchers in settings
+2026-03-21T13:33:52.632Z [DEBUG] Matched 0 unique hooks for query "skills" (0 before deduplication)
+2026-03-21T13:33:52.632Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.632Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.633Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.633Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.633Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.633Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.633Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.634Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.634Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.634Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.634Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/1126buri/.claude/skills, project=[]
+2026-03-21T13:33:52.634Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.634Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.634Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.634Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.634Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.634Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1787:5426)
+    at A (/$bunfs/root/claude:11:8107)
+    at hP8 (/$bunfs/root/claude:5691:926)
+    at <anonymous> (/$bunfs/root/claude:5691:3938)
+2026-03-21T13:33:52.635Z [DEBUG] Skill directory commands failed to load, continuing without them
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [DEBUG] Plugin loading errors: Plugin typescript-lsp not found in marketplace claude-plugins-official, Plugin figma not found in marketplace claude-plugins-official, Plugin pr-review-toolkit not found in marketplace claude-plugins-official
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.635Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:4329)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.635Z [DEBUG] Plugin skills failed to load, continuing without them
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:5691:1023)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Unexpected error in getSkills, returning empty
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [ERROR] Error: Error: ENOENT: no such file or directory, open '/Users/1126buri/.claude/debug/639114fb-939a-4ef2-a783-8282b21a26fc.txt'
+    at appendFileSync (unknown)
+    at appendFileSync (/$bunfs/root/claude:12:1854)
+    at writeFn (/$bunfs/root/claude:12:4949)
+    at H (/$bunfs/root/claude:12:4332)
+    at write (/$bunfs/root/claude:12:4455)
+    at F (/$bunfs/root/claude:14:36)
+    at <anonymous> (/$bunfs/root/claude:1623:1674)
+    at async <anonymous> (/$bunfs/root/claude:5691:3933)
+    at async <anonymous> (/$bunfs/root/claude:11662:26737)
+    at processTicksAndRejections (native:7:39)
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.636Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:52.637Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:53.040Z [DEBUG] [keybindings] Detected change to /Users/1126buri/.claude/keybindings.json
+2026-03-21T13:33:53.229Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today
+2026-03-21T13:33:53.378Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/fetch_today.md
+2026-03-21T13:33:53.402Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/issue-child.md
+2026-03-21T13:33:53.403Z [DEBUG] Detected skill change: /Users/1126buri/.claude/commands/review.md
+2026-03-21T13:33:53.583Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/changeset/SKILL.md
+2026-03-21T13:33:53.583Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/SKILL.md
+2026-03-21T13:33:53.664Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/commands.md
+2026-03-21T13:33:53.714Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/templates.md
+2026-03-21T13:33:53.714Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/chezmoi/references/naming.md
+2026-03-21T13:33:53.756Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/development-principles/SKILL.md
+2026-03-21T13:33:53.808Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/grafana-report.sh
+2026-03-21T13:33:53.808Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/frontend-design/SKILL.md
+2026-03-21T13:33:53.808Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/SKILL.md
+2026-03-21T13:33:53.864Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL.md
+2026-03-21T13:33:53.864Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/grafana-cloud/references/queries.md
+2026-03-21T13:33:53.917Z [DEBUG] Detected skill change: /Users/1126buri/.claude/skills/nb-knowledge/SKILL_ja.md
+2026-03-21T13:42:23.298Z [DEBUG] PackageManagerAutoUpdater: Update available 2.1.62 -> 2.1.81

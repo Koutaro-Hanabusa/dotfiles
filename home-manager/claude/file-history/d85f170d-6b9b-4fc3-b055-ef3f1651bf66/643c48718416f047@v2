@@ -1,0 +1,17 @@
+[user]
+	name = Koutaro-Hanabusa
+	email = koutarouhanabusa@gmail.com
+[core]
+	editor = vim -c "set fenc=utf-8"
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[ghq]
+	root = /Users/1126buri/ghq
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
