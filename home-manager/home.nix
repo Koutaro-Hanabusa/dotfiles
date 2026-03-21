@@ -1,36 +1,33 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./zsh.nix
+    ./tmux.nix
+    ./git.nix
+    ./cli-tools.nix
+    ./ghostty.nix
+  ];
+
   home.username = "1126buri";
   home.homeDirectory = "/Users/1126buri";
 
   home.stateVersion = "25.11";
 
-  # CLIツール群（Nixで管理）
+  # CLIツール群（programs.<package> で管理しないもののみ）
   home.packages = with pkgs; [
     # Editor / IDE
     neovim
     neovim-remote
     stylua
 
-    # Shell / Terminal
-    tmux
-    # thefuck はNixpkgsから削除済み（python 3.12+非対応）→ Brewfileで管理
-
     # Git
-    gh
-    lazygit
     tig
 
     # Modern CLI Tools
-    bat
-    eza
     fd
-    fzf
     ghq
     glow
-    ripgrep
-    zoxide
 
     # Development Languages / Runtimes
     go
@@ -42,15 +39,8 @@
     pandoc
   ];
 
-  # 設定ファイルのシンボリックリンク（mkOutOfStoreSymlink で即時反映）
+  # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
   home.file = {
-    # Shell
-    ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/zshrc";
-    ".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/zshenv";
-
-    # tmux
-    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/tmux.conf";
-
     # nb
     ".nbrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nbrc";
 
@@ -64,12 +54,6 @@
 
     # Neovim
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nvim";
-
-    # Ghostty
-    ".config/ghostty".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/ghostty";
-
-    # lazygit
-    ".config/lazygit".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/lazygit";
 
     # Karabiner
     ".config/karabiner".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/karabiner";
@@ -86,8 +70,6 @@
     # gh-dash
     ".config/gh-dash".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/gh-dash";
   };
-
-  home.sessionVariables = { };
 
   programs.home-manager.enable = true;
 }

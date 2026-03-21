@@ -1,0 +1,25 @@
+{ ... }:
+
+{
+  # programs.git はスキップ（グローバル gitconfig なしの現状維持）
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      customCommands = [
+        {
+          key = "C";
+          context = "files";
+          description = "AI commit (Conventional Commits)";
+          command = ''msg=$(claude -p --model claude-haiku-4-5-20251001 "以下のgit diffを見て、Conventional Commits形式のコミットメッセージを1行だけ生成してください。メッセージ本文のみを出力してください。形式: <type>(<scope>): <説明> typeは feat/fix/docs/style/refactor/test/chore/ci/perf/build のいずれか。scopeは変更されたパッケージ名(packages/やapps/配下のディレクトリ名)を使ってください。複数パッケージにまたがる場合は主要なものを1つ選んでください。ルート直下の設定ファイルのみの変更はscopeなしでOKです。日本語で書いてください。$(git diff --cached)" < /dev/null) && git commit -m "$msg"'';
+          loadingText = "AIがコミットメッセージを生成中...";
+          output = "popup";
+        }
+      ];
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+  };
+}
