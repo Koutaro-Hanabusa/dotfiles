@@ -46,36 +46,36 @@
   home.file = {
     # Shell
     ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/zshrc";
-    ".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zshenv";
+    ".zshenv".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/zshenv";
 
     # tmux
-    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/tmux.conf";
+    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/tmux.conf";
 
     # nb
-    ".nbrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nbrc";
+    ".nbrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nbrc";
 
     # Prettier
-    ".prettierrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/prettierrc";
+    ".prettierrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/prettierrc";
 
     # textlint
-    ".textlintrc.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/textlintrc.json";
-    ".textlintignore".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/textlintignore";
-    ".textlint-rules".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/textlint-rules";
+    ".textlintrc.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlintrc.json";
+    ".textlintignore".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlintignore";
+    ".textlint-rules".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlint-rules";
 
     # Neovim
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nvim";
 
     # Ghostty
-    ".config/ghostty".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ghostty";
+    ".config/ghostty".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/ghostty";
 
     # lazygit
-    ".config/lazygit".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/lazygit";
+    ".config/lazygit".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/lazygit";
 
     # Karabiner
-    ".config/karabiner".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/karabiner";
+    ".config/karabiner".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/karabiner";
 
     # Keymap (Vial)
-    ".config/keymap.vil".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/keymap.vil";
+    ".config/keymap.vil".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/keymap.vil";
 
     # Claude Code
     ".claude".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude";
@@ -84,7 +84,7 @@
     ".config/claude-otel-monitoring".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude-otel-monitoring";
 
     # gh-dash
-    ".config/gh-dash".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/gh-dash";
+    ".config/gh-dash".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/gh-dash";
   };
 
   home.sessionVariables = { };
