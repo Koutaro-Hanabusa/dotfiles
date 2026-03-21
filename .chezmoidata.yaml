@@ -1,0 +1,5 @@
+grafana_cloud:
+  prometheus_url: "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push"
+  prometheus_user: "3002958"
+  loki_url: "https://logs-prod-030.grafana.net/loki/api/v1/push"
+  loki_user: "1497154"

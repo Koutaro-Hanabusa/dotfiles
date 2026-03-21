@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh:*)",
+      "Bash(gh auth:*)",
+      "Read(//Users/1126buri/.ssh/**)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
