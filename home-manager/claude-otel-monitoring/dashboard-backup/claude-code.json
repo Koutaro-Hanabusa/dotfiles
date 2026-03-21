@@ -1,0 +1,1791 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "\ud83d\udcca \u6982\u8981 (Overview)",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "orange", "value": 5 },
+              { "color": "red", "value": 10 }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 1 },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(increase(claude_code_cost_usage_USD_total{pc_type=~\"$pc_type\"}[$__range]))",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udcb0 \u671f\u9593\u30b3\u30b9\u30c8",
+      "description": "\u9078\u629e\u671f\u9593\u5185\u306eClaude Code API\u8cbb\u7528\u306e\u5897\u52a0\u5206\uff08USD\uff09\u3002\u95be\u5024: \u7dd1\u2192\u9ec4($1)\u2192\u6a59($5)\u2192\u8d64($10)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 1 },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(increase(claude_code_token_usage_tokens_total{pc_type=~\"$pc_type\"}[$__range]))",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83c\udfaf \u671f\u9593\u30c8\u30fc\u30af\u30f3\u6570",
+      "description": "\u9078\u629e\u671f\u9593\u5185\u306e\u30c8\u30fc\u30af\u30f3\u6d88\u8cbb\u306e\u5897\u52a0\u5206",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "purple", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 1 },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(increase(claude_code_lines_of_code_count_total{pc_type=~\"$pc_type\"}[$__range]))",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udcdd \u671f\u9593\u30b3\u30fc\u30c9\u884c\u6570",
+      "description": "\u9078\u629e\u671f\u9593\u5185\u306e\u30b3\u30fc\u30c9\u884c\u6570\u306e\u5897\u52a0\u5206",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "semi-dark-orange", "value": null }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 1 },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(increase(claude_code_active_time_seconds_total{pc_type=~\"$pc_type\"}[$__range]))",
+          "refId": "A"
+        }
+      ],
+      "title": "\u23f1\ufe0f \u671f\u9593\u30a2\u30af\u30c6\u30a3\u30d6\u6642\u9593",
+      "description": "\u9078\u629e\u671f\u9593\u5185\u306e\u30a2\u30af\u30c6\u30a3\u30d6\u6642\u9593\u306e\u5897\u52a0\u5206",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
+      "id": 110,
+      "title": "\ud83d\udcc8 \u30b3\u30b9\u30c8\u52b9\u7387\u6307\u6a19",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "orange", "value": 1 },
+              { "color": "red", "value": 3 }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 8 },
+      "id": 111,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(claude_code_cost_usage_USD_total{pc_type=~\"$pc_type\"}) / clamp_min(sum(claude_code_commit_count_total{pc_type=~\"$pc_type\"}), 1)",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udcb0 \u30b3\u30b9\u30c8/\u30b3\u30df\u30c3\u30c8",
+      "description": "\u30b3\u30df\u30c3\u30c8\u3042\u305f\u308a\u306e\u5e73\u5747\u30b3\u30b9\u30c8",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 4,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.01 },
+              { "color": "orange", "value": 0.05 },
+              { "color": "red", "value": 0.1 }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 8 },
+      "id": 112,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(claude_code_cost_usage_USD_total{pc_type=~\"$pc_type\"}) / clamp_min(sum(claude_code_lines_of_code_count_total{pc_type=~\"$pc_type\"}), 1)",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udcdd \u30b3\u30b9\u30c8/\u30b3\u30fc\u30c9\u884c",
+      "description": "\u30b3\u30fc\u30c9\u884c\u3042\u305f\u308a\u306e\u5e73\u5747\u30b3\u30b9\u30c8",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "orange", "value": 3 },
+              { "color": "red", "value": 5 }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 8 },
+      "id": 113,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(claude_code_cost_usage_USD_total{pc_type=~\"$pc_type\"}) / clamp_min(sum(claude_code_session_count_total{pc_type=~\"$pc_type\"}), 1)",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udd04 \u30b3\u30b9\u30c8/\u30bb\u30c3\u30b7\u30e7\u30f3",
+      "description": "\u30bb\u30c3\u30b7\u30e7\u30f3\u3042\u305f\u308a\u306e\u5e73\u5747\u30b3\u30b9\u30c8",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 8 },
+      "id": 114,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "textMode": "value_and_name"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum(claude_code_lines_of_code_count_total{pc_type=~\"$pc_type\"}) / clamp_min(sum(claude_code_commit_count_total{pc_type=~\"$pc_type\"}), 1)",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udcca \u884c\u6570/\u30b3\u30df\u30c3\u30c8",
+      "description": "\u30b3\u30df\u30c3\u30c8\u3042\u305f\u308a\u306e\u5e73\u5747\u30b3\u30fc\u30c9\u884c\u6570",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "id": 101,
+      "title": "\ud83d\udcb8 \u30b3\u30b9\u30c8 & \u30c8\u30fc\u30af\u30f3\u5206\u6790",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-koutarouhanabusa-prom"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "USD",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 70,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 15 },
+      "id": 115,
+      "interval": "1d",
+      "options": {
+        "legend": {
+          "calcs": ["sum", "mean", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "grafanacloud-koutarouhanabusa-prom"
+          },
+          "expr": "sum by (model)(increase(claude_code_cost_usage_USD_total{pc_type=~\"$pc_type\", model=~\"$model\"}[1d]))",
+          "refId": "A",
+          "legendFormat": "{{model}}"
+        }
+      ],
+      "title": "\ud83d\udcc5 \u65e5\u5225\u30b3\u30b9\u30c8\u63a8\u79fb (\u30e2\u30c7\u30eb\u5225)",
+      "description": "\u30e2\u30c7\u30eb\u5225\u306e\u65e5\u5225\u30b3\u30b9\u30c8\u63a8\u79fb",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "USD",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 15 },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": ["sum", "last"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (attributes_model) (sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cost_usd [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{attributes_model}}"
+        }
+      ],
+      "title": "\u30e2\u30c7\u30eb\u5225\u30b3\u30b9\u30c8\u5185\u8a33",
+      "description": "Loki\u30ed\u30b0\u304b\u3089\u53d6\u5f97\u3057\u305fAPI\u547c\u3073\u51fa\u3057\u3054\u3068\u306e\u30b3\u30b9\u30c8\u3092\u30e2\u30c7\u30eb\u5225\u306b\u96c6\u8a08",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "tokens",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "input" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "output" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cache_read" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "cache_creation" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 23 },
+      "id": 51,
+      "options": {
+        "legend": {
+          "calcs": ["sum", "last"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__interval]))",
+          "refId": "A",
+          "legendFormat": "input"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_output_tokens [$__interval]))",
+          "refId": "B",
+          "legendFormat": "output"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__interval]))",
+          "refId": "C",
+          "legendFormat": "cache_read"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_creation_tokens [$__interval]))",
+          "refId": "D",
+          "legendFormat": "cache_creation"
+        }
+      ],
+      "title": "\u30c8\u30fc\u30af\u30f3\u7a2e\u5225\u5185\u8a33",
+      "description": "Input/Output/CacheRead/CacheCreation\u30c8\u30fc\u30af\u30f3\u306e\u5185\u8a33",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 23 },
+      "id": 116,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["value", "percent"]
+        },
+        "pieType": "donut",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["sum"],
+          "fields": ""
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (attributes_model) (count_over_time({job=\"claude-code\"} |= \"api_request\" | json [$__range]))",
+          "refId": "A",
+          "legendFormat": "{{attributes_model}}"
+        }
+      ],
+      "title": "\ud83e\udd16 \u30e2\u30c7\u30eb\u4f7f\u7528\u5272\u5408",
+      "description": "\u9078\u629e\u671f\u9593\u5168\u4f53\u3067\u306e\u30e2\u30c7\u30eb\u5225API\u30ea\u30af\u30a8\u30b9\u30c8\u5272\u5408",
+      "type": "piechart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "id": 102,
+      "title": "\u26a1 \u30d1\u30d5\u30a9\u30fc\u30de\u30f3\u30b9 & \u30ad\u30e3\u30c3\u30b7\u30e5",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 70,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1000 },
+              { "color": "orange", "value": 3000 },
+              { "color": "red", "value": 5000 }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 },
+      "id": 52,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "max", "min"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "quantile_over_time(0.5, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
+          "refId": "A",
+          "legendFormat": "p50 (\u4e2d\u592e\u5024)"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "quantile_over_time(0.95, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
+          "refId": "B",
+          "legendFormat": "p95"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "quantile_over_time(0.99, {job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_duration_ms [$__interval])",
+          "refId": "C",
+          "legendFormat": "p99"
+        }
+      ],
+      "title": "API\u30ec\u30a4\u30c6\u30f3\u30b7\u5206\u5e03 (\u30d1\u30fc\u30bb\u30f3\u30bf\u30a4\u30eb)",
+      "description": "API\u547c\u3073\u51fa\u3057\u306e\u30ec\u30a4\u30c6\u30f3\u30b7\u3092p50/p95/p99\u3067\u8868\u793a",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 20 },
+              { "color": "yellow", "value": 40 },
+              { "color": "green", "value": 60 }
+            ]
+          },
+          "unit": "percentunit",
+          "max": 1,
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 32 },
+      "id": 53,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__range])) / (sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__range])) + sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__range])))",
+          "refId": "A"
+        }
+      ],
+      "title": "\u30ad\u30e3\u30c3\u30b7\u30e5\u30d2\u30c3\u30c8\u7387",
+      "description": "cache_read_tokens / (input_tokens + cache_read_tokens) \u3067\u7b97\u51fa",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "area" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 20 },
+              { "color": "yellow", "value": 40 },
+              { "color": "green", "value": 60 }
+            ]
+          },
+          "unit": "percentunit",
+          "max": 1,
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 32 },
+      "id": 117,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "last", "min"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__interval])) / (sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_input_tokens [$__interval])) + sum(sum_over_time({job=\"claude-code\"} |= \"api_request\" | json | unwrap attributes_cache_read_tokens [$__interval])))",
+          "refId": "A",
+          "legendFormat": "\u30ad\u30e3\u30c3\u30b7\u30e5\u30d2\u30c3\u30c8\u7387"
+        }
+      ],
+      "title": "\u30ad\u30e3\u30c3\u30b7\u30e5\u30d2\u30c3\u30c8\u7387\u63a8\u79fb",
+      "description": "\u30ad\u30e3\u30c3\u30b7\u30e5\u30d2\u30c3\u30c8\u7387\u306e\u6642\u7cfb\u5217\u63a8\u79fb",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 40 },
+      "id": 103,
+      "title": "\ud83d\udd27 \u30c4\u30fc\u30eb\u4f7f\u7528\u72b6\u6cc1",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "calls",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 50,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 41 },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": ["sum", "last"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{attributes_tool_name}}"
+        }
+      ],
+      "title": "\u30c4\u30fc\u30eb\u547c\u3073\u51fa\u3057\u56de\u6570\u63a8\u79fb",
+      "description": "tool_result\u30a4\u30d9\u30f3\u30c8\u304b\u3089\u30c4\u30fc\u30eb\u5225\u306e\u547c\u3073\u51fa\u3057\u56de\u6570\u3092\u6642\u7cfb\u5217\u3067\u8868\u793a\u3002",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "ms",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 41 },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "max"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "avg_over_time({job=\"claude-code\"} |= \"tool_result\" | json | unwrap attributes_duration_ms [$__interval]) by (attributes_tool_name)",
+          "refId": "A",
+          "legendFormat": "{{attributes_tool_name}}"
+        }
+      ],
+      "title": "\u30c4\u30fc\u30eb\u5e73\u5747\u5b9f\u884c\u6642\u9593",
+      "description": "\u30c4\u30fc\u30eb\u5225\u306e\u5e73\u5747\u5b9f\u884c\u6642\u9593\uff08ms\uff09\u306e\u63a8\u79fb\u3002",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 70 },
+              { "color": "yellow", "value": 85 },
+              { "color": "green", "value": 95 }
+            ]
+          },
+          "unit": "percentunit",
+          "max": 1,
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 50 },
+      "id": 55,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"true\" [$__range])) / sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json [$__range]))",
+          "refId": "A"
+        }
+      ],
+      "title": "\u30c4\u30fc\u30eb\u6210\u529f\u7387",
+      "description": "attributes_success=\"true\" \u306e\u5272\u5408",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "calls",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Agent" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "super-light-purple" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Skill" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "super-light-green" } }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 50 },
+      "id": 24,
+      "options": {
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_tool_name=~\"Skill|Agent\" [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{attributes_tool_name}}"
+        }
+      ],
+      "title": "\ud83e\udd16 Subagent (Agent) & Skill \u547c\u3073\u51fa\u3057\u56de\u6570",
+      "description": "Agent=\u30b5\u30d6\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u8d77\u52d5\u3001Skill=\u30b9\u30ad\u30eb\u5b9f\u884c\u306e\u56de\u6570\u3002",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "calls",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 50 },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (subagent_type) (count_over_time({job=\"claude-hooks\", tool_name=\"Agent\"} [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{subagent_type}}"
+        }
+      ],
+      "title": "\ud83e\uddd1\u200d\ud83d\udcbb Subagent\u7a2e\u5225\u306e\u547c\u3073\u51fa\u3057\u56de\u6570",
+      "description": "PreToolUse\u30d5\u30c3\u30af\u3067\u8a18\u9332\u3055\u308c\u305fAgent\u547c\u3073\u51fa\u3057\u304b\u3089\u3001subagent_type\u5225\u306e\u547c\u3073\u51fa\u3057\u56de\u6570\u3092\u8868\u793a\u3002",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "calls",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 58 },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (skill) (count_over_time({job=\"claude-hooks\", tool_name=\"Skill\"} [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{skill}}"
+        }
+      ],
+      "title": "\ud83d\udd0c Skill\u7a2e\u5225\u306e\u547c\u3073\u51fa\u3057\u56de\u6570",
+      "description": "PreToolUse\u30d5\u30c3\u30af\u3067\u8a18\u9332\u3055\u308c\u305fSkill\u547c\u3073\u51fa\u3057\u304b\u3089\u3001skill\u540d\u5225\u306e\u547c\u3073\u51fa\u3057\u56de\u6570\u3092\u8868\u793a\u3002",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 58 },
+      "id": 29,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "{job=\"claude-hooks\"}",
+          "refId": "A"
+        }
+      ],
+      "title": "\ud83d\udd0d Hooks \u30ed\u30b0\u8a73\u7d30 (Agent/Skill)",
+      "description": "PreToolUse\u30d5\u30c3\u30af\u3067\u8a18\u9332\u3055\u308c\u305f\u5168\u30ed\u30b0\u3002subagent_type, skill\u540d, description, prompt\u7b49\u306e\u8a73\u7d30\u3092\u78ba\u8a8d\u53ef\u80fd\u3002",
+      "type": "logs"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 66 },
+      "id": 118,
+      "title": "\ud83d\udcac \u30d7\u30ed\u30f3\u30d7\u30c8\u5206\u6790",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 67 },
+      "id": 119,
+      "options": {
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Total",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (project) (count_over_time({job=\"claude-hooks\", event_type=\"user_prompt\"} [$__interval]))",
+          "refId": "A",
+          "legendFormat": "{{project}}"
+        }
+      ],
+      "title": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5225\u30d7\u30ed\u30f3\u30d7\u30c8\u6570",
+      "description": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5225\u306e\u30d7\u30ed\u30f3\u30d7\u30c8\u6570\u63a8\u79fb",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 67 },
+      "id": 120,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["value", "percent"]
+        },
+        "pieType": "donut",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["sum"],
+          "fields": ""
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (project) (count_over_time({job=\"claude-hooks\", event_type=\"user_prompt\"} [$__range]))",
+          "refId": "A",
+          "legendFormat": "{{project}}"
+        }
+      ],
+      "title": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5225\u5229\u7528\u5272\u5408",
+      "description": "\u9078\u629e\u671f\u9593\u5168\u4f53\u3067\u306e\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5225\u5229\u7528\u5272\u5408",
+      "type": "piechart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 75 },
+      "id": 105,
+      "title": "\ud83d\udea8 \u30a8\u30e9\u30fc\u76e3\u8996",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "errors",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 70,
+            "gradientMode": "scheme",
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": { "type": "linear" },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 76 },
+      "id": 70,
+      "options": {
+        "legend": {
+          "calcs": ["sum"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(count_over_time({job=\"claude-code\"} |= \"api_error\" | json [$__interval]))",
+          "refId": "A",
+          "legendFormat": "API\u30a8\u30e9\u30fc"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum(count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\" [$__interval]))",
+          "refId": "B",
+          "legendFormat": "\u30c4\u30fc\u30eb\u5931\u6557"
+        }
+      ],
+      "title": "\u30a8\u30e9\u30fc\u767a\u751f\u6570\u63a8\u79fb",
+      "description": "API\u30a8\u30e9\u30fc\u3068\u30c4\u30fc\u30eb\u5b9f\u884c\u5931\u6557\u306e\u767a\u751f\u6570",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 76 },
+      "id": 71,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "{job=\"claude-code\"} |= \"api_error\" | json",
+          "refId": "A"
+        }
+      ],
+      "title": "API\u30a8\u30e9\u30fc\u30ed\u30b0",
+      "description": "api_error\u30a4\u30d9\u30f3\u30c8\u306e\u30ed\u30b0\u8a73\u7d30",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 84 },
+      "id": 72,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "{job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\"",
+          "refId": "A"
+        }
+      ],
+      "title": "\u30c4\u30fc\u30eb\u5931\u6557\u30ed\u30b0",
+      "description": "attributes_success=\"false\" \u306e\u30ed\u30b0\u8a73\u7d30",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "grafanacloud-koutarouhanabusa-logs"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 84 },
+      "id": 73,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["value", "percent"]
+        },
+        "pieType": "donut",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["sum"],
+          "fields": ""
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "grafanacloud-koutarouhanabusa-logs"
+          },
+          "expr": "sum by (attributes_tool_name) (count_over_time({job=\"claude-code\"} |= \"tool_result\" | json | attributes_success=\"false\" [$__range]))",
+          "refId": "A",
+          "legendFormat": "{{attributes_tool_name}}"
+        }
+      ],
+      "title": "\u30c4\u30fc\u30eb\u5931\u6557\u5206\u5e03",
+      "description": "\u5931\u6557\u3057\u305f\u30c4\u30fc\u30eb\u547c\u3073\u51fa\u3057\u306e\u5185\u8a33",
+      "type": "piechart"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "claude-code",
+    "monitoring",
+    "opentelemetry",
+    "observability"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {"selected": false, "text": "All", "value": "$__all"},
+        "hide": 0,
+        "includeAll": true,
+        "label": "PC Type",
+        "multi": false,
+        "name": "pc_type",
+        "options": [],
+        "query": "label_values(claude_code_cost_usage_USD_total, pc_type)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-koutarouhanabusa-prom"
+        }
+      },
+      {
+        "current": {"selected": false, "text": "All", "value": "$__all"},
+        "hide": 0,
+        "includeAll": true,
+        "label": "Model",
+        "multi": true,
+        "name": "model",
+        "options": [],
+        "query": "label_values(claude_code_cost_usage_USD_total, model)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-koutarouhanabusa-prom"
+        }
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Claude Code \u30e2\u30cb\u30bf\u30ea\u30f3\u30b0 v2",
+  "uid": "claude-code-monitoring-v2",
+  "version": 1,
+  "weekStart": ""
+}

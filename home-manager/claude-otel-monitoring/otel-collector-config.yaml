@@ -1,0 +1,79 @@
+extensions:
+  basicauth/metrics:
+    client_auth:
+      username: "${env:GRAFANA_PROMETHEUS_USER}"
+      password: "${env:GRAFANA_CLOUD_API_KEY}"
+  basicauth/logs:
+    client_auth:
+      username: "${env:GRAFANA_LOKI_USER}"
+      password: "${env:GRAFANA_CLOUD_API_KEY}"
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 10s
+    send_batch_size: 1024
+
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+
+  resource:
+    attributes:
+      - key: service.name
+        value: claude-code
+        action: upsert
+      - key: pc_type
+        value: home
+        action: upsert
+
+  # Delta → Cumulative 変換（Claude Code は Delta temporality で送信するため）
+  deltatocumulative:
+    max_stale: 5m
+    max_streams: 1000
+
+exporters:
+  # Grafana Cloud Prometheus Remote Write
+  prometheusremotewrite:
+    endpoint: "${env:GRAFANA_PROMETHEUS_URL}"
+    auth:
+      authenticator: basicauth/metrics
+
+  # Grafana Cloud Loki
+  loki:
+    endpoint: "${env:GRAFANA_LOKI_URL}"
+    auth:
+      authenticator: basicauth/logs
+
+  # Debug logging
+  debug:
+    verbosity: basic
+
+service:
+  extensions: [basicauth/metrics, basicauth/logs]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, deltatocumulative, batch, resource]
+      exporters: [prometheusremotewrite, debug]
+
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch, resource]
+      exporters: [loki, debug]
+
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch, resource]
+      exporters: [debug]
+
+  telemetry:
+    metrics:
+      address: 0.0.0.0:8888

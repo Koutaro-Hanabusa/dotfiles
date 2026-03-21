@@ -1,0 +1,27 @@
+services:
+  # OpenTelemetry Collector → Grafana Cloud
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.120.0
+    container_name: claude-otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"  # OTLP gRPC receiver
+      - "4318:4318"  # OTLP HTTP receiver
+      - "8888:8888"  # Prometheus metrics exposed by the collector
+    environment:
+      - GRAFANA_CLOUD_API_KEY=${GRAFANA_CLOUD_API_KEY}
+    restart: unless-stopped
+
+  # Promtail - Hooks log shipper → Grafana Cloud Loki
+  promtail:
+    image: grafana/promtail:2.9.4
+    container_name: claude-promtail
+    command: -config.file=/etc/promtail/config.yaml -config.expand-env=true
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - ./logs:/var/log/claude-hooks
+    environment:
+      - GRAFANA_CLOUD_API_KEY=${GRAFANA_CLOUD_API_KEY}
+    restart: unless-stopped
