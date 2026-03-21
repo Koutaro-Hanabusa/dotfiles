@@ -1,8 +1,0 @@
-2026-03-21T12:32:07.440Z [DEBUG] detectFileEncoding failed for expected reason: ENOENT
-2026-03-21T12:32:07.440Z [DEBUG] MDM settings load completed in 11ms
-2026-03-21T12:32:07.482Z [DEBUG] [init] configureGlobalMTLS starting
-2026-03-21T12:32:07.482Z [DEBUG] [init] configureGlobalMTLS complete
-2026-03-21T12:32:07.482Z [DEBUG] [init] configureGlobalAgents starting
-2026-03-21T12:32:07.482Z [DEBUG] [init] configureGlobalAgents complete
-2026-03-21T12:32:07.486Z [DEBUG] Git remote URL: null
-2026-03-21T12:32:07.486Z [DEBUG] No git remote URL found
