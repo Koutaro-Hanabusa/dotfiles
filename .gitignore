@@ -1,3 +1,14 @@
-# nvim内の.gitディレクトリを除外
-dot_config/nvim/dot_git/
-dot_config/nvim/lazy-lock.json
+# Claude Code - ログ/デバッグ/一時ファイル（シークレットが含まれる可能性あり）
+home-manager/claude/debug/
+home-manager/claude/projects/
+home-manager/claude/history.jsonl
+home-manager/claude/backups/
+home-manager/claude/file-history/
+home-manager/claude/ide/
+home-manager/claude/shell-snapshots/
+home-manager/claude/todos/
+home-manager/claude/mcp-needs-auth-cache.json
+home-manager/claude/plugins/blocklist.json
+
+# Claude OTel Monitoring logs
+home-manager/claude-otel-monitoring/logs/
