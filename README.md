@@ -1,94 +1,102 @@
 # dotfiles
 
-chezmoiで管理しているdotfiles
+Nix Home Manager で管理している dotfiles
 
 ## セットアップ
 
 ```bash
-# chezmoiをインストール
-brew install chezmoi
+# Nix をインストール（公式インストーラー）
+curl -L https://nixos.org/nix/install | sh
 
-# dotfilesを適用
-chezmoi init --apply Koutaro-Hanabusa
+# dotfiles をクローン
+git clone https://github.com/Koutaro-Hanabusa/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+
+# Home Manager で設定を適用
+home-manager switch --flake .
 ```
 
 ---
 
-## chezmoiの使い方
+## Home Manager の使い方
+
+### 構成
+
+設定は `home-manager/` 配下でモジュール分割されている。
+
+```
+home-manager/
+├── home.nix          # メイン（imports + home.packages + 残りのhome.file）
+├── zsh.nix           # programs.zsh（エイリアス、関数、プロンプト）
+├── tmux.nix          # programs.tmux（prefix、ペイン操作、ステータスバー）
+├── git.nix           # programs.lazygit + programs.gh
+├── cli-tools.nix     # programs.bat, eza, fzf, zoxide, ripgrep
+├── ghostty.nix       # Ghostty設定（home.file）
+├── nvim/             # Neovim設定
+├── karabiner/        # Karabiner設定
+├── claude/           # Claude Code設定
+└── ...               # その他の設定ファイル
+```
 
 ### 基本コマンド
 
 | コマンド | 動作 |
 |----------|------|
-| `chezmoi cd` | ソースディレクトリに移動 |
-| `chezmoi status` | 変更があるファイルを確認 |
-| `chezmoi diff` | 適用される変更の差分を表示 |
-| `chezmoi apply` | 変更をホームディレクトリに適用 |
-| `chezmoi apply -v` | 適用内容を表示しながら適用 |
-
-### ファイルの追加・編集
-
-| コマンド | 動作 |
-|----------|------|
-| `chezmoi add ~/.zshrc` | ファイルをchezmoi管理下に追加 |
-| `chezmoi add --template ~/.zshrc` | テンプレートとして追加 |
-| `chezmoi edit ~/.zshrc` | 管理ファイルを編集 |
-| `chezmoi forget ~/.zshrc` | 管理から除外（実ファイルは残る） |
-
-### 同期
-
-| コマンド | 動作 |
-|----------|------|
-| `chezmoi update` | リモートから取得して適用 |
-| `chezmoi git pull` | ソースリポジトリをpull |
-| `chezmoi git push` | ソースリポジトリをpush |
-| `chezmoi git status` | ソースリポジトリの状態確認 |
-
-### 確認・デバッグ
-
-| コマンド | 動作 |
-|----------|------|
-| `chezmoi data` | テンプレートで使える変数を表示 |
-| `chezmoi cat ~/.zshrc` | 適用後の内容をプレビュー |
-| `chezmoi source-path ~/.zshrc` | ソースファイルのパスを表示 |
-| `chezmoi managed` | 管理中のファイル一覧 |
+| `home-manager switch --flake .` | 設定をビルド・適用 |
+| `home-manager generations` | 過去の世代一覧 |
+| `home-manager packages` | インストール済みパッケージ一覧 |
+| `nix flake update` | flake入力（nixpkgs, home-manager）を更新 |
 
 ### 典型的なワークフロー
 
 ```bash
-# 1. 設定ファイルを編集
-chezmoi edit ~/.zshrc
+# 1. 設定ファイルを編集（例: zsh.nixを変更）
+vim ~/dotfiles/home-manager/zsh.nix
 
-# 2. 差分を確認
-chezmoi diff
+# 2. ビルド・適用
+home-manager switch --flake ~/dotfiles
 
-# 3. 変更を適用
-chezmoi apply
-
-# 4. 変更をコミット・プッシュ
-chezmoi cd
-git add -A && git commit -m "update zshrc" && git push
+# 3. 変更をコミット・プッシュ
+cd ~/dotfiles
+git add -A && git commit -m "update zsh config" && git push
 ```
 
-### ファイル名の規則
+### programs.\<package\> で管理しているツール
 
-chezmoiはソースディレクトリで特殊なプレフィックスを使用：
+以下のツールは `programs.<package>.enable = true` で宣言的に管理されている。
+パッケージのインストールと設定が一体で管理される。
 
-| プレフィックス | 意味 |
-|----------------|------|
-| `dot_` | `.`に変換（例: `dot_zshrc` → `.zshrc`） |
-| `private_` | パーミッション600で作成 |
-| `executable_` | 実行権限を付与 |
-| `readonly_` | 読み取り専用 |
-| `create_` | 存在しない場合のみ作成 |
-| `modify_` | 既存ファイルを修正するスクリプト |
-| `run_` | 適用時に実行されるスクリプト |
+| モジュール | 管理対象 |
+|-----------|---------|
+| `zsh.nix` | zsh, zsh-autosuggestions, zsh-syntax-highlighting |
+| `tmux.nix` | tmux |
+| `git.nix` | lazygit, gh |
+| `cli-tools.nix` | bat, eza, fzf, zoxide, ripgrep |
+
+### home.packages で管理しているツール
+
+設定ファイルが不要なツールは `home.packages` でインストールのみ管理。
+
+neovim, neovim-remote, stylua, tig, fd, ghq, glow, go, go-task, curl, nmap, pandoc
+
+### home.file で管理している設定
+
+`programs.<package>` に対応するモジュールがないものは `home.file` + `mkOutOfStoreSymlink` でシンボリックリンク管理。
+ファイルを直接編集すると即時反映される。
+
+- `.config/nvim` — Neovim
+- `.config/ghostty` — Ghostty（macOSでNixパッケージ未対応のため）
+- `.config/karabiner` — Karabiner
+- `.claude` — Claude Code
+- `.config/claude-otel-monitoring` — Claude OTel Monitoring
+- `.config/gh-dash` — gh-dash
+- `.nbrc`, `.prettierrc`, `.textlintrc.json` 等
 
 ---
 
 ## nvim + Claude Code 統合環境
 
-`vim`や`code`コマンドでnvimとClaude Codeが左右分割で起動する。
+`vim`や`nvc`コマンドでnvimとClaude Codeが左右分割で起動する。
 
 ```
 ┌────────────────────────────┬───────┐
@@ -105,9 +113,7 @@ chezmoiはソースディレクトリで特殊なプレフィックスを使用�
 | コマンド | 動作 |
 |----------|------|
 | `vim` | nvim + Claude Code 起動 |
-| `code` | nvim + Claude Code 起動 |
 | `nvc` | 同上 |
-| `nvim-raw` | 純粋なnvimのみ起動 |
 
 ### 終了
 
@@ -137,6 +143,7 @@ prefixキーは `Ctrl+a`
 | `Ctrl+a` `H/J/K/L` | ペインリサイズ |
 | `Ctrl+a` `\|` | 縦分割 |
 | `Ctrl+a` `-` | 横分割 |
+| `Ctrl+a` `M` | マウスモード ON/OFF |
 | `Ctrl+a` `d` | デタッチ（セッション維持） |
 | `tmux attach` | セッションに再接続 |
 | マウス | ペイン選択・リサイズ可 |
@@ -180,6 +187,23 @@ nvim内でGitHubのPR/Issueを操作。
 - `:Octo issue create` - Issueを作成
 - `:Octo review start` - PRレビューを開始
 
+### gco（ブランチ切り替え）
+
+fzfでブランチをファジー検索して切り替え。
+
+```bash
+gco cheese    # → sen/work-cheese にマッチして切り替え
+```
+
+### ブランチ名規約チェック
+
+`git checkout -b` / `git switch -c` 時にブランチ名が推奨パターンに沿っているか自動チェック。
+
+```
+推奨: <type>/<TICKET番号>-<short-summary>
+例:   feature/55-add-login-page
+```
+
 ---
 
 ## 自動フォーマット
@@ -198,7 +222,7 @@ nvim内でGitHubのPR/Issueを操作。
 | CSS (`.css`) | biome → prettier | `npm install -g @biomejs/biome prettier` |
 | HTML (`.html`) | prettier | `npm install -g prettier` |
 | Markdown (`.md`) | prettier | `npm install -g prettier` |
-| Lua (`.lua`) | stylua | `brew install stylua` |
+| Lua (`.lua`) | stylua | Nix で管理 |
 | Python (`.py`) | black | `pip install black` |
 | Go (`.go`) | gofmt | Go に同梱 |
 | PHP (`.php`) | pint | `composer global require laravel/pint` |
@@ -309,8 +333,6 @@ textlint "docs/**/*.md"
 vimhelp
 ```
 
-または直接ファイルを参照: [dot_config/nvim/doc/README.md](dot_config/nvim/doc/README.md)
-
 ---
 
 ## Karabiner（Mouse Keys Mode）
@@ -374,7 +396,7 @@ vimhelp
 | エージェント | 役割 |
 |-------------|------|
 | `@.react-pro` | React専門 |
-| `@.frotend-developer` | フロントエンド全般 |
+| `@.frontend-developer` | フロントエンド全般 |
 | `@.golang-pro` | Go言語専門 |
 | `@.backend-developer` | バックエンド全般 |
 | `@.laravel-pro` | Laravel専門 |
@@ -431,16 +453,13 @@ Claude Codeとの連携で、Q&Aのやり取りが自動的にナレッジとし
 ## モダンCLIツール
 
 従来のUnixコマンドをより高機能なツールに置き換えるエイリアスを設定している。
+全て Nix Home Manager の `programs.<package>` で宣言的に管理。
 
 ### bat（catの代替）
 
 シンタックスハイライト、行番号表示、Git差分統合を備えたファイル表示ツール。
 
-**エイリアス設定:**
-
-```bash
-alias cat="bat"
-```
+**エイリアス:** `cat` → `bat`
 
 | コマンド | 動作 |
 |---------|------|
@@ -454,14 +473,7 @@ alias cat="bat"
 
 アイコン表示、Git状態表示、ツリー表示に対応したファイル一覧ツール。
 
-**エイリアス設定:**
-
-```bash
-alias ls="eza --icons --git"
-alias ll="eza -la --icons --git"
-alias la="eza -a --icons --git"
-alias tree="eza --tree --icons"
-```
+**エイリアス:** `ls` → `eza --icons --git`, `ll` → `eza -la --icons --git`, `la` → `eza -a --icons --git`, `tree` → `eza --tree --icons`
 
 | コマンド | 動作 |
 |---------|------|
@@ -471,15 +483,30 @@ alias tree="eza --tree --icons"
 | `tree` | ツリー形式で表示 |
 | `tree -L 2` | 深さ2までのツリー表示 |
 
+### fzf（ファジーファインダー）
+
+`programs.fzf` でZsh統合を有効化。`Ctrl+R`（履歴検索）、`Ctrl+T`（ファイル検索）が自動設定される。
+
+| キー | 動作 |
+|------|------|
+| `Ctrl+R` | コマンド履歴をファジー検索 |
+| `Ctrl+T` | ファイルをファジー検索してパスを挿入 |
+| `Ctrl+G` | ghqリポジトリをファジー検索してcd |
+
+### zoxide（cdの代替）
+
+`programs.zoxide` でZsh統合を有効化。`cd` コマンドが zoxide に置き換わる。
+
+| コマンド | 動作 |
+|---------|------|
+| `cd <dir>` | 通常のcd（初回）/ スマートジャンプ（2回目以降） |
+| `cdi <query>` | インタラクティブに候補を選択してcd |
+
 ### ripgrep（grepの代替）
 
 高速な全文検索ツール。`.gitignore`を自動的に尊重する。
 
-**エイリアス設定:**
-
-```bash
-alias grep="rg"
-```
+**エイリアス:** `grep` → `rg`
 
 | コマンド | 動作 |
 |---------|------|
@@ -503,19 +530,14 @@ alias grep="rg"
 
 ### lazygit
 
-ターミナル内で動作するTUI（テキストユーザーインターフェース）のGitクライアント。キーボードだけでステージング、コミット、ブランチ操作などができる。
-
-| コマンド | 動作 |
-|---------|------|
-| `lazygit` | TUI Gitクライアントを起動 |
-| `lazygit -p` | パッチモードで起動 |
-
-主な操作キー:
+ターミナル内で動作するTUI Gitクライアント。`programs.lazygit` で設定管理。
+`C` キーでAIコミットメッセージ生成（Claude Haiku使用）。
 
 | キー | 動作 |
 |------|------|
 | `space` | ファイルのステージング/アンステージング |
 | `c` | コミット |
+| `C` | AIコミット（Conventional Commits形式） |
 | `p` | プッシュ |
 | `P` | プル |
 | `]` / `[` | 次/前のタブ |
@@ -534,27 +556,11 @@ alias grep="rg"
 
 ### thefuck（コマンド自動修正）
 
-直前のコマンドのタイポや間違いを自動で検出・修正してくれるツール。
-
-**エイリアス設定:**
-
-```bash
-eval $(thefuck --alias)
-```
+直前のコマンドのタイポや間違いを自動で検出・修正してくれるツール（Homebrew管理、遅延ロード）。
 
 | コマンド | 動作 |
 |---------|------|
 | `fuck` | 直前のコマンドを修正して再実行 |
-
-使用例:
-
-```bash
-$ git brnach
-git: 'brnach' is not a git command.
-
-$ fuck
-git branch  # 自動修正されて実行される
-```
 
 ---
 
@@ -607,16 +613,3 @@ lazy.nvimで管理。1日1回バックグラウンドで更新チェックし、
 | claudecode.nvim | Claude Code統合 |
 | img-clip.nvim | クリップボードから画像ペースト（`Space` `p`） |
 | image.nvim | ターミナル内画像表示 |
-
----
-
-## 含まれる設定ファイル
-
-- `.zshrc` - シェル設定
-- `.tmux.conf` - tmux設定
-- `.config/nvim/` - Neovim設定
-- `.config/ghostty/` - Ghostty設定
-- `.config/karabiner/` - Karabiner設定
-- `.claude/` - Claude Code設定（エージェント、コマンド、プラグイン）
-- `.nbrc` - nb（ノートブック）設定
-- `.textlintrc.json` - textlint設定
