@@ -1,0 +1,63 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: {{ .grafana_cloud.loki_url }}
+    basic_auth:
+      username: {{ .grafana_cloud.loki_user }}
+      password: ${GRAFANA_CLOUD_API_KEY}
+
+scrape_configs:
+  - job_name: claude-hooks
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: claude-hooks
+          pc_type: {{ if stat (joinPath .chezmoi.homeDir ".is_work_pc") }}work{{ else }}home{{ end }}
+          __path__: /var/log/claude-hooks/claude-hooks.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            event_type: event_type
+            tool_name: tool_name
+            subagent_type: subagent_type
+            skill: skill
+            mcp_server: mcp_server
+            description: description
+            project: project
+            session_id: session_id
+      - template:
+          source: event_type
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ else }}tool_call{{ end }}" }}'
+      - template:
+          source: subagent_type
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: skill
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: mcp_server
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: project
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - template:
+          source: session_id
+          template: '{{ "{{ if .Value }}{{ .Value }}{{ end }}" }}'
+      - labels:
+          event_type:
+          tool_name:
+          subagent_type:
+          skill:
+          mcp_server:
+          project:
+          session_id:
+      - timestamp:
+          source: timestamp
+          format: "2006-01-02T15:04:05Z"
