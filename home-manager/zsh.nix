@@ -153,16 +153,48 @@
         fuck "$@"
       }
 
-      # ── Obsidian CLI × nb 連携 ──
+      # ── Obsidian CLI × nb 連携（ターミナル完結） ──
 
-      # Obsidian TUI を起動（nb ナレッジをブラウズ）
-      # TUI 内で `/nb-` と打つとnbフォルダだけにフィルタできる
-      alias nbo="obsidian"
+      # nbナレッジをfzfでブラウズしてglowまたはnvimで開く
+      nbo() {
+        local folder="''${1:-nb-home-knowledge}"
+        local file
+        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
+        if [[ -n "$file" ]]; then
+          local fullpath="$HOME/buri/$file"
+          if command -v glow &> /dev/null; then
+            glow -p "$fullpath"
+          else
+            command less "$fullpath"
+          fi
+        fi
+      }
 
-      # nb ナレッジを全文検索してObsidian の検索ビューで開く
+      # nbナレッジを全文検索してglowまたはnvimで開く
       nbs() {
         local query="''${1:?Usage: nbs <検索ワード>}"
-        obsidian search:open query="path:nb- $query"
+        local result
+        result=$(obsidian search query="$query" path="nb-home-knowledge" format=json 2>/dev/null | \
+          command jq -r '.[].path' 2>/dev/null | \
+          fzf --preview "obsidian read path={}" --preview-window=right:60%)
+        if [[ -n "$result" ]]; then
+          local fullpath="$HOME/buri/$result"
+          if command -v glow &> /dev/null; then
+            glow -p "$fullpath"
+          else
+            command less "$fullpath"
+          fi
+        fi
+      }
+
+      # nbナレッジをfzfで選んでnvimで編集
+      nbe() {
+        local folder="''${1:-nb-home-knowledge}"
+        local file
+        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
+        if [[ -n "$file" ]]; then
+          command nvim "$HOME/buri/$file"
+        fi
       }
 
       # nbのタイムスタンプ名ファイルにタイトルをリネーム
