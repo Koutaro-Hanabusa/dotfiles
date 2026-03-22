@@ -9,6 +9,14 @@ home-manager/claude/shell-snapshots/
 home-manager/claude/todos/
 home-manager/claude/mcp-needs-auth-cache.json
 home-manager/claude/plugins/blocklist.json
+home-manager/claude/plugins/cache/
+home-manager/claude/plugins/marketplaces/
+home-manager/claude/plugins/installed_plugins.json
+home-manager/claude/plugins/known_marketplaces.json
+home-manager/claude/cache/
+home-manager/claude/paste-cache/
+home-manager/claude/sessions/
+home-manager/claude/session-env/
 
 # Claude OTel Monitoring logs
 home-manager/claude-otel-monitoring/logs/
