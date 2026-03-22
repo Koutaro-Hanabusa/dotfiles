@@ -152,6 +152,59 @@
         eval $(thefuck --alias)
         fuck "$@"
       }
+
+      # ── Obsidian CLI × nb 連携 ──
+
+      # nbナレッジをfzf検索してObsidianで開く
+      nbo() {
+        local folder="''${1:-nb-home-knowledge}"
+        local file
+        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
+        if [[ -n "$file" ]]; then
+          obsidian open path="$file"
+        fi
+      }
+
+      # nbナレッジを全文検索してObsidianで開く
+      nbs() {
+        local query="$1"
+        if [[ -z "$query" ]]; then
+          print -P "%F{red}Usage: nbs <検索ワード>%f"
+          return 1
+        fi
+        local result
+        result=$(obsidian search query="$query" path="nb-home-knowledge" format=json 2>/dev/null | \
+          command jq -r '.[].path' 2>/dev/null | \
+          fzf --preview "obsidian read path={}" --preview-window=right:60%)
+        if [[ -n "$result" ]]; then
+          obsidian open path="$result"
+        fi
+      }
+
+      # nbのタイムスタンプ名ファイルにタイトルをリネーム
+      nb-organize() {
+        local folder="''${1:-nb-home-knowledge}"
+        local count=0
+        obsidian files folder="$folder" | while read -r filepath; do
+          local basename="''${filepath##*/}"
+          # タイムスタンプ名（数字のみ.md）のファイルだけ対象
+          if [[ "$basename" =~ ^[0-9]+\.md$ ]]; then
+            local title
+            title=$(obsidian read path="$filepath" 2>/dev/null | command head -1 | command sed 's/^#\+ //')
+            if [[ -n "$title" && "$title" != "" ]]; then
+              # タイトルをファイル名に使える形に変換
+              local safe_name
+              safe_name=$(echo "$title" | command sed 's/[\/\\:*?"<>|]/-/g' | command sed 's/  */ /g' | command head -c 80)
+              if [[ -n "$safe_name" ]]; then
+                obsidian rename path="$filepath" name="$safe_name" 2>/dev/null && \
+                  print -P "%F{green}✓%f $basename → $safe_name.md" && \
+                  ((count++))
+              fi
+            fi
+          fi
+        done
+        print -P "\n%F{blue}$count 件リネームしました%f"
+      }
     '';
   };
 }
