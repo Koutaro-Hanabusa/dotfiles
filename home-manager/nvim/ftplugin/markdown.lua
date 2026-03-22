@@ -20,7 +20,7 @@ local function close_cmux_viewer()
   end
 end
 
-vim.api.nvim_buf_create_user_command(0, "md", function()
+vim.api.nvim_buf_create_user_command(0, "Md", function()
   if vim.env.CMUX_SOCKET_PATH == nil or vim.fn.executable("cmux") == 0 then
     vim.notify("cmux が利用できません。glow で表示します", vim.log.levels.INFO)
     vim.fn.system("glow -p " .. vim.fn.shellescape(vim.fn.expand("%:p")))
