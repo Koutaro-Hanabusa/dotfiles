@@ -2,9 +2,9 @@
   "mcpServers": {
     "slack": {
       "command": "node",
-      "args": ["/Users/hanabusa.kotaro/slack-mcp-server/dist/index.js"],
+      "args": ["${HOME}/slack-mcp-server/dist/index.js"],
       "env": {
-        "PATH": "/Users/hanabusa.kotaro/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
+        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
         "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
         "SLACK_USER_TOKEN": "${SLACK_USER_TOKEN}"
       }
@@ -14,28 +14,28 @@
       "command": "npx",
       "args": ["@playwright/mcp@latest"],
       "env": {
-        "PATH": "/Users/hanabusa.kotaro/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
     },
     "time": {
       "command": "uvx",
       "args": ["mcp-server-time"],
       "env": {
-        "PATH": "/Users/hanabusa.kotaro/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
     },
     "chrome-devtools": {
       "command": "npx",
       "args": ["chrome-devtools-mcp@latest"],
       "env": {
-        "PATH": "/Users/hanabusa.kotaro/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
     },
     "drawio": {
       "command": "npx",
       "args": ["@drawio/mcp"],
       "env": {
-        "PATH": "/Users/hanabusa.kotaro/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
     }
   }
