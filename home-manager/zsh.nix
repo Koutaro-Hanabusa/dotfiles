@@ -112,7 +112,7 @@
 
       # マークダウン表示（cmux > glow > less）
       _show_md() {
-        if [[ -n "$CMUX_SOCKET_PASSWORD" ]] && command -v cmux &> /dev/null; then
+        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
           cmux markdown open "$1"
         elif command -v glow &> /dev/null; then
           glow -p "$1"
@@ -165,7 +165,7 @@
         file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
         [[ -z "$file" ]] && return
 
-        if [[ -n "$TMUX" && -n "$CMUX_SOCKET_PASSWORD" ]] && command -v cmux &> /dev/null; then
+        if [[ -n "$TMUX" && -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
           # 右ペインでcmuxビューアを開く
           local viewer_pane
           viewer_pane=$(tmux split-window -h -p 50 -P -F '#{pane_id}' "cmux markdown open \"$file\"; read")
