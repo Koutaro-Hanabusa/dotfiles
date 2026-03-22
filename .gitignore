@@ -17,6 +17,7 @@ home-manager/claude/cache/
 home-manager/claude/paste-cache/
 home-manager/claude/sessions/
 home-manager/claude/session-env/
+home-manager/claude/plans/
 
 # Claude OTel Monitoring logs
 home-manager/claude-otel-monitoring/logs/
