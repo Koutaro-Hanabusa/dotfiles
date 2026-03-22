@@ -158,12 +158,24 @@
 
       # ── nb ナレッジ（ターミナル完結: fzf + glow/nvim） ──
 
-      # nbナレッジをfzfでブラウズしてcmux/glowで閲覧
+      # nbナレッジをfzfでブラウズ → 左nvim + 右cmuxビューア
       nbo() {
         local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
         file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        [[ -n "$file" ]] && _show_md "$file"
+        [[ -z "$file" ]] && return
+
+        if [[ -n "$TMUX" && -n "$CMUX_SOCKET_PASSWORD" ]] && command -v cmux &> /dev/null; then
+          # 右ペインでcmuxビューアを開く
+          local viewer_pane
+          viewer_pane=$(tmux split-window -h -p 50 -P -F '#{pane_id}' "cmux markdown open \"$file\"; read")
+          tmux select-pane -L
+          # 左ペインでnvimを開き、終了時にビューアも閉じる
+          command nvim "$file"
+          tmux kill-pane -t "$viewer_pane" 2>/dev/null
+        else
+          _show_md "$file"
+        fi
       }
 
       # nbナレッジを全文検索してcmux/glowで閲覧
