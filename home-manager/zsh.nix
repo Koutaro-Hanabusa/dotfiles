@@ -166,12 +166,17 @@
         [[ -z "$file" ]] && return
 
         if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          # cmuxビューアパネルを開き、surface IDを取得
+          # 右にcmuxビューアを開き、surface IDを取得
           local result surface_id
           result=$(cmux markdown open "$file" 2>&1)
           surface_id=$(echo "$result" | command grep -o 'surface=[^ ]*' | cut -d= -f2)
-          # nvimで編集、終了時にビューアを閉じる
+          # ビューアの下にターミナルを開く
+          local term_result term_surface_id
+          term_result=$(cmux new-split down --surface "$surface_id" 2>&1)
+          term_surface_id=$(echo "$term_result" | command grep -o 'surface=[^ ]*' | cut -d= -f2)
+          # nvimで編集、終了時にビューアとターミナルを閉じる
           command nvim "$file"
+          [[ -n "$term_surface_id" ]] && cmux close-surface --surface "$term_surface_id" 2>/dev/null
           [[ -n "$surface_id" ]] && cmux close-surface --surface "$surface_id" 2>/dev/null
         else
           _show_md "$file"
