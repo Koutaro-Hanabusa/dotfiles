@@ -12,8 +12,23 @@ curl -L https://nixos.org/nix/install | sh
 git clone https://github.com/Koutaro-Hanabusa/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
-# Home Manager で設定を適用
+# 初回適用（Home Manager 未インストールでも OK）
+nix run home-manager -- switch --flake .
+
+# 2回目以降は home-manager が PATH に入るので直接実行可能
 home-manager switch --flake .
+```
+
+### 仕事用PCの場合
+
+```bash
+# 上記の Nix インストール + クローンまでは同じ
+
+# hanabusa.kotaro の設定で適用
+nix run home-manager -- switch --flake .#hanabusa.kotaro
+
+# work PC 判定ファイルを作成（nb-knowledge の notebook 分岐用）
+touch ~/.is_work_pc
 ```
 
 ---
