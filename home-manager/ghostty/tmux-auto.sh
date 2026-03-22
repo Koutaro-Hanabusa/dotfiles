@@ -27,15 +27,12 @@ for i in {1..20}; do
 done
 
 if ! tmux has-session -t main 2>/dev/null; then
+    # 初回起動: mainセッションを作成
     rmdir "$LOCKDIR" 2>/dev/null
     exec tmux new-session -s main
-elif [ -z "$(tmux list-clients -t main 2>/dev/null)" ]; then
-    # 既存サーバーにCMUX環境変数を注入してからattach
-    _forward_cmux_env
-    rmdir "$LOCKDIR" 2>/dev/null
-    exec tmux attach-session -t main
 else
-    # 既存サーバーにCMUX環境変数を注入
+    # mainが既に存在: CMUX環境変数を注入して新しいセッションを作成
+    # （ハングしたセッションへの再接続は行わない）
     _forward_cmux_env
     rmdir "$LOCKDIR" 2>/dev/null
     exec tmux new-session
