@@ -160,9 +160,12 @@
 
       # nbナレッジをfzfでブラウズ → 左nvim + 右cmuxビューア
       nbo() {
-        local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
-        file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        if [[ -n "$1" ]]; then
+          file=$(fd -e md . "$HOME/.nb/$1" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        else
+          file=$({ fd -e md . "$HOME/.nb/home/knowledge" 2>/dev/null; fd -e md . "$HOME/.nb/work/knowledge" 2>/dev/null; } | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        fi
         [[ -z "$file" ]] && return
 
         if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
