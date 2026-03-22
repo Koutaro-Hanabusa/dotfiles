@@ -21,7 +21,8 @@
       vim = "nvc";
       gg = "ghq-get-cd";
 
-      # ヘルプ
+      # マークダウン表示
+      md = "_show_md";
       dothelp = "_show_md ~/dotfiles/README.md";
       vimhelp = "_show_md ~/.config/nvim/doc/README.md";
 
@@ -109,9 +110,11 @@
         tmux attach-session -t "$session_name"
       }
 
-      # ヘルプ表示（glowがあれば使う、なければless）
+      # マークダウン表示（cmux > glow > less）
       _show_md() {
-        if command -v glow &> /dev/null; then
+        if [[ -n "$CMUX_SOCKET_PASSWORD" ]] && command -v cmux &> /dev/null; then
+          cmux markdown open "$1"
+        elif command -v glow &> /dev/null; then
           glow -p "$1"
         else
           less "$1"
@@ -155,21 +158,21 @@
 
       # ── nb ナレッジ（ターミナル完結: fzf + glow/nvim） ──
 
-      # nbナレッジをfzfでブラウズしてglowで閲覧
+      # nbナレッジをfzfでブラウズしてcmux/glowで閲覧
       nbo() {
         local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
         file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        [[ -n "$file" ]] && glow -p "$file"
+        [[ -n "$file" ]] && _show_md "$file"
       }
 
-      # nbナレッジを全文検索してglowで閲覧
+      # nbナレッジを全文検索してcmux/glowで閲覧
       nbs() {
         local query="''${1:?Usage: nbs <検索ワード>}"
         local file
         file=$(rg -l "$query" "$HOME/.nb/home/knowledge" "$HOME/.nb/work/knowledge" 2>/dev/null | \
           fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        [[ -n "$file" ]] && glow -p "$file"
+        [[ -n "$file" ]] && _show_md "$file"
       }
 
       # nbナレッジをfzfで選んでnvimで編集
