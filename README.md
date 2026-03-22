@@ -463,6 +463,31 @@ vimhelp
 
 Claude Codeとの連携で、Q&Aのやり取りが自動的にナレッジとして蓄積される。
 
+### ターミナルでナレッジを閲覧（fzf + glow）
+
+| コマンド | 動作 |
+|---------|------|
+| `nbo` | `home/knowledge` をfzfでブラウズ → glowで閲覧 |
+| `nbo work/knowledge` | workのナレッジをブラウズ |
+| `nbo home/tech` | techフォルダをブラウズ |
+| `nbs "キーワード"` | home + work 両方を全文検索 → glowで閲覧 |
+| `nbe` | fzfでブラウズ → nvimで編集 |
+| `nb-organize` | タイムスタンプ名ファイルをタイトルで自動リネーム |
+
+fzfの右ペインにglowプレビューが表示されるので、ノートの中身を見ながら選べる。
+
+### Obsidian連携
+
+`~/.nb/` のノートブックはObsidian Vault（`~/buri`）からシンボリックリンクで参照されている。
+Obsidianで開けばグラフビューやリンク管理などGUIの機能も使える。
+
+```
+~/buri/
+├── nb-home-knowledge -> ~/.nb/home/knowledge
+├── nb-home-tech      -> ~/.nb/home/tech
+└── nb-work-knowledge -> ~/.nb/work/knowledge
+```
+
 ---
 
 ## モダンCLIツール
