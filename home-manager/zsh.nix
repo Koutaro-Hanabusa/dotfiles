@@ -155,30 +155,14 @@
 
       # ── Obsidian CLI × nb 連携 ──
 
-      # nbナレッジをfzf検索してObsidianで開く
-      nbo() {
-        local folder="''${1:-nb-home-knowledge}"
-        local file
-        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
-        if [[ -n "$file" ]]; then
-          obsidian open path="$file"
-        fi
-      }
+      # Obsidian TUI を起動（nb ナレッジをブラウズ）
+      # TUI 内で `/nb-` と打つとnbフォルダだけにフィルタできる
+      alias nbo="obsidian"
 
-      # nbナレッジを全文検索してObsidianで開く
+      # nb ナレッジを全文検索してObsidian の検索ビューで開く
       nbs() {
-        local query="$1"
-        if [[ -z "$query" ]]; then
-          print -P "%F{red}Usage: nbs <検索ワード>%f"
-          return 1
-        fi
-        local result
-        result=$(obsidian search query="$query" path="nb-home-knowledge" format=json 2>/dev/null | \
-          command jq -r '.[].path' 2>/dev/null | \
-          fzf --preview "obsidian read path={}" --preview-window=right:60%)
-        if [[ -n "$result" ]]; then
-          obsidian open path="$result"
-        fi
+        local query="''${1:?Usage: nbs <検索ワード>}"
+        obsidian search:open query="path:nb- $query"
       }
 
       # nbのタイムスタンプ名ファイルにタイトルをリネーム
