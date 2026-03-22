@@ -5,6 +5,11 @@ description: >
   手順とパターンを提供する。dotfiles リポジトリ内のファイル編集時に自動で適用・コミット・プッシュを行う。
   トリガー: dotfiles リポジトリ内でファイルを編集したとき、Nix/Home Manager に関する質問を受けたとき、
   新しいツールや設定を追加したいとき。
+allowed-tools:
+  - Bash(home-manager switch *)
+  - Bash(git add *)
+  - Bash(git commit *)
+  - Bash(git push*)
 ---
 
 > **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
