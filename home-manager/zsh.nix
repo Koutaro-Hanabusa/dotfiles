@@ -153,48 +153,31 @@
         fuck "$@"
       }
 
-      # ── Obsidian CLI × nb 連携（ターミナル完結） ──
+      # ── nb ナレッジ（ターミナル完結: fzf + glow/nvim） ──
 
-      # nbナレッジをfzfでブラウズしてglowまたはnvimで開く
+      # nbナレッジをfzfでブラウズしてglowで閲覧
       nbo() {
-        local folder="''${1:-nb-home-knowledge}"
+        local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
-        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
-        if [[ -n "$file" ]]; then
-          local fullpath="$HOME/buri/$file"
-          if command -v glow &> /dev/null; then
-            glow -p "$fullpath"
-          else
-            command less "$fullpath"
-          fi
-        fi
+        file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        [[ -n "$file" ]] && glow -p "$file"
       }
 
-      # nbナレッジを全文検索してglowまたはnvimで開く
+      # nbナレッジを全文検索してglowで閲覧
       nbs() {
         local query="''${1:?Usage: nbs <検索ワード>}"
-        local result
-        result=$(obsidian search query="$query" path="nb-home-knowledge" format=json 2>/dev/null | \
-          command jq -r '.[].path' 2>/dev/null | \
-          fzf --preview "obsidian read path={}" --preview-window=right:60%)
-        if [[ -n "$result" ]]; then
-          local fullpath="$HOME/buri/$result"
-          if command -v glow &> /dev/null; then
-            glow -p "$fullpath"
-          else
-            command less "$fullpath"
-          fi
-        fi
+        local file
+        file=$(rg -l "$query" "$HOME/.nb/home/knowledge" "$HOME/.nb/work/knowledge" 2>/dev/null | \
+          fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        [[ -n "$file" ]] && glow -p "$file"
       }
 
       # nbナレッジをfzfで選んでnvimで編集
       nbe() {
-        local folder="''${1:-nb-home-knowledge}"
+        local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
-        file=$(obsidian files folder="$folder" | fzf --preview "obsidian read path={}" --preview-window=right:60%)
-        if [[ -n "$file" ]]; then
-          command nvim "$HOME/buri/$file"
-        fi
+        file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        [[ -n "$file" ]] && command nvim "$file"
       }
 
       # nbのタイムスタンプ名ファイルにタイトルをリネーム
