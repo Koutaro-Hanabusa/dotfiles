@@ -165,14 +165,14 @@
         file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
         [[ -z "$file" ]] && return
 
-        if [[ -n "$TMUX" && -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          # 右ペインでcmuxビューアを開く
-          local viewer_pane
-          viewer_pane=$(tmux split-window -h -p 50 -P -F '#{pane_id}' "cmux markdown open \"$file\"; read")
-          tmux select-pane -L
-          # 左ペインでnvimを開き、終了時にビューアも閉じる
+        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
+          # cmuxビューアパネルを開き、surface IDを取得
+          local result surface_id
+          result=$(cmux markdown open "$file" 2>&1)
+          surface_id=$(echo "$result" | command grep -o 'surface=[^ ]*' | cut -d= -f2)
+          # nvimで編集、終了時にビューアを閉じる
           command nvim "$file"
-          tmux kill-pane -t "$viewer_pane" 2>/dev/null
+          [[ -n "$surface_id" ]] && cmux close-surface --surface "$surface_id" 2>/dev/null
         else
           _show_md "$file"
         fi
