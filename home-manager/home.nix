@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, isWork, ... }:
 
 {
   imports = [
@@ -9,8 +9,8 @@
     ./ghostty.nix
   ];
 
-  home.username = "1126buri";
-  home.homeDirectory = "/Users/1126buri";
+  home.username = username;
+  home.homeDirectory = "/Users/${username}";
 
   home.stateVersion = "25.11";
 
