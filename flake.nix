@@ -1,8 +1,7 @@
 {
-  description = "Home Manager configuration of 1126buri";
+  description = "Home Manager configuration";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,17 +14,27 @@
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
+      mkHome =
+        {
+          username,
+          isWork ? false,
+          extraModules ? [ ],
+        }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit isWork username; };
+          modules = [ ./home-manager/home.nix ] ++ extraModules;
+        };
     in
     {
-      homeConfigurations."1126buri" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations."1126buri" = mkHome {
+        username = "1126buri";
+      };
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home-manager/home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+      homeConfigurations."hanabusa.kotaro" = mkHome {
+        username = "hanabusa.kotaro";
+        isWork = true;
+        extraModules = [ ./home-manager/work.nix ];
       };
     };
 }
