@@ -198,9 +198,12 @@
 
       # nbナレッジをfzfで選んでnvimで編集
       nbe() {
-        local dir="$HOME/.nb/''${1:-home/knowledge}"
         local file
-        file=$(fd -e md . "$dir" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        if [[ -n "$1" ]]; then
+          file=$(fd -e md . "$HOME/.nb/$1" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        else
+          file=$({ fd -e md . "$HOME/.nb/home/knowledge" 2>/dev/null; fd -e md . "$HOME/.nb/work/knowledge" 2>/dev/null; } | fzf --preview "glow -s dark {}" --preview-window=right:60%)
+        fi
         [[ -n "$file" ]] && command nvim "$file"
       }
 
