@@ -166,18 +166,19 @@
         [[ -z "$file" ]] && return
 
         if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          # 右にcmuxビューアを開き、surface IDを取得
-          local result surface_id
-          result=$(cmux markdown open "$file" 2>&1)
-          surface_id=$(echo "$result" | command grep -o 'surface=[^ ]*' | cut -d= -f2)
+          # cmux出力からsurface:Nを抽出するヘルパー
+          _extract_surface() { echo "$1" | command grep -o 'surface:[0-9]*' | head -1; }
+          # 右にcmuxビューアを開く
+          local viewer_surface
+          viewer_surface=$(_extract_surface "$(cmux markdown open "$file" 2>&1)")
           # ビューアの下にターミナルを開く
-          local term_result term_surface_id
-          term_result=$(cmux new-split down --surface "$surface_id" 2>&1)
-          term_surface_id=$(echo "$term_result" | command grep -o 'surface=[^ ]*' | cut -d= -f2)
+          local term_surface
+          term_surface=$(_extract_surface "$(cmux new-split down --surface "$viewer_surface" 2>&1)")
           # nvimで編集、終了時にビューアとターミナルを閉じる
           command nvim "$file"
-          [[ -n "$term_surface_id" ]] && cmux close-surface --surface "$term_surface_id" 2>/dev/null
-          [[ -n "$surface_id" ]] && cmux close-surface --surface "$surface_id" 2>/dev/null
+          [[ -n "$term_surface" ]] && cmux close-surface --surface "$term_surface" 2>/dev/null
+          [[ -n "$viewer_surface" ]] && cmux close-surface --surface "$viewer_surface" 2>/dev/null
+          unfunction _extract_surface
         else
           _show_md "$file"
         fi
