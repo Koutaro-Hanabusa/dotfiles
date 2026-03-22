@@ -190,7 +190,7 @@
           # タイムスタンプ名（数字のみ.md）のファイルだけ対象
           if [[ "$basename" =~ ^[0-9]+\.md$ ]]; then
             local title
-            title=$(obsidian read path="$filepath" 2>/dev/null | command head -1 | command sed 's/^#\+ //')
+            title=$(obsidian read path="$filepath" 2>/dev/null | command head -1 | command sed -E 's/^#+ //')
             if [[ -n "$title" && "$title" != "" ]]; then
               # タイトルをファイル名に使える形に変換
               local safe_name
