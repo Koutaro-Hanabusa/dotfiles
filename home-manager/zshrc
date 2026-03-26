@@ -136,6 +136,44 @@ git() {
   return $exit_code
 }
 
+# Claude Code ワークツリー同期（cwt: cd to worktree, cwt back: 元に戻る）
+cwt() {
+  local state_file="$HOME/.claude/.worktree-state"
+  if [[ ! -f "$state_file" ]]; then
+    echo "アクティブなワークツリーがありません"
+    return 1
+  fi
+  case "${1:-}" in
+    back)
+      local orig
+      orig=$(jq -r '.original_dir // empty' "$state_file")
+      if [[ -n "$orig" && -d "$orig" ]]; then
+        cd "$orig"
+        echo "戻りました: $orig"
+      else
+        echo "元のディレクトリが見つかりません"
+        return 1
+      fi
+      ;;
+    "")
+      local wt
+      wt=$(jq -r '.worktree_dir // empty' "$state_file")
+      if [[ -n "$wt" && -d "$wt" ]]; then
+        cd "$wt"
+        echo "ワークツリー: $wt"
+      else
+        echo "ワークツリーが見つかりません"
+        return 1
+      fi
+      ;;
+    *)
+      echo "使い方: cwt [back]"
+      echo "  cwt      - ワークツリーに移動"
+      echo "  cwt back - 元のディレクトリに戻る"
+      ;;
+  esac
+}
+
 # Chrome - 新しいウィンドウで開く
 alias chrome='open -na "Google Chrome" --args --new-window'
 
