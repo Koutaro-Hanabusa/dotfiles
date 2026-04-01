@@ -1,3 +1,11 @@
+# .env ファイルから Grafana Cloud のシークレットを読み込む
+# ~/dotfiles/home-manager/claude-otel-monitoring/.env に以下を定義:
+#   GRAFANA_CLOUD_API_KEY=...
+#   GRAFANA_LOKI_URL=...
+#   GRAFANA_LOKI_USER=...
+#   GRAFANA_PROMETHEUS_URL=...
+#   GRAFANA_PROMETHEUS_USER=...
+
 services:
   # OpenTelemetry Collector → Grafana Cloud
   otel-collector:
@@ -5,13 +13,17 @@ services:
     container_name: claude-otel-collector
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ~/dotfiles/home-manager/claude-otel-monitoring/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
       - "4317:4317"  # OTLP gRPC receiver
       - "4318:4318"  # OTLP HTTP receiver
       - "8888:8888"  # Prometheus metrics exposed by the collector
     environment:
       - GRAFANA_CLOUD_API_KEY=${GRAFANA_CLOUD_API_KEY}
+      - GRAFANA_LOKI_URL=${GRAFANA_LOKI_URL}
+      - GRAFANA_LOKI_USER=${GRAFANA_LOKI_USER}
+      - GRAFANA_PROMETHEUS_URL=${GRAFANA_PROMETHEUS_URL}
+      - GRAFANA_PROMETHEUS_USER=${GRAFANA_PROMETHEUS_USER}
     restart: unless-stopped
 
   # Promtail - Hooks log shipper → Grafana Cloud Loki
@@ -20,8 +32,10 @@ services:
     container_name: claude-promtail
     command: -config.file=/etc/promtail/config.yaml -config.expand-env=true
     volumes:
-      - ./promtail-config.yaml:/etc/promtail/config.yaml
-      - ./logs:/var/log/claude-hooks
+      - ~/dotfiles/home-manager/claude-otel-monitoring/promtail-config.yaml:/etc/promtail/config.yaml
+      - ~/dotfiles/home-manager/claude-otel-monitoring/logs:/var/log/claude-hooks
     environment:
       - GRAFANA_CLOUD_API_KEY=${GRAFANA_CLOUD_API_KEY}
+      - GRAFANA_LOKI_URL=${GRAFANA_LOKI_URL}
+      - GRAFANA_LOKI_USER=${GRAFANA_LOKI_USER}
     restart: unless-stopped
