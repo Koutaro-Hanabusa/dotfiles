@@ -13,6 +13,14 @@ you must: When implementing designs or using the Figma DevMode MCP, refer to ../
 you must: When spawning team agents (Task tool with team_name), NEVER use `run_in_background: true`. The `teammateMode` is set to "tmux", and `run_in_background: true` forces in-process mode, preventing tmux pane creation. Always omit `run_in_background` so agents spawn in separate tmux panes.
 you must: After editing ANY file in this dotfiles repository, ALWAYS automatically commit + push to GitHub without asking. If a `.nix` file was changed, run `home-manager switch --flake ~/dotfiles` before committing. This is non-negotiable — never wait for the user to say "apply" or "push". Just do it immediately after every edit.
 you must: When a skill should be triggered (based on its trigger conditions in the skill description), ALWAYS invoke it via the `Skill` tool. NEVER read the skill content directly or act on it without going through the Skill tool. This is required for hook-based logging to work correctly. The PreToolUse hook only fires when the Skill tool is explicitly called.
+you must: When presenting output that originated from Codex (rescue, review, adversarial-review, stop-gate, or any Codex job result), wrap the ENTIRE content in a blockquote with a decorated header line. Format:
+
+> **from codex** | `{kindLabel}` | {status_emoji} {status}
+>
+> （Codex の出力内容をすべてこの blockquote 内に入れる）
+
+Status emoji mapping: completed=✅, running=⏳, failed=❌, cancelled=🚫
+kindLabel examples: rescue, review, adversarial-review, stop-gate
 
 ## Shared Instructions (synced from shared-ai-instructions/instructions.md)
 
