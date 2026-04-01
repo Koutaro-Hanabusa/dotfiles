@@ -64,6 +64,10 @@
     # Claude Code
     ".claude".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude";
 
+    # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
+    ".codex/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/codex/config.toml";
+    ".codex/instructions.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/codex/instructions.md";
+
     # Claude OTel Monitoring
     ".config/claude-otel-monitoring".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude-otel-monitoring";
 
