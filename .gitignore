@@ -18,6 +18,13 @@ home-manager/claude/paste-cache/
 home-manager/claude/sessions/
 home-manager/claude/session-env/
 home-manager/claude/plans/
+home-manager/claude/.credentials.json
+home-manager/claude/.worktree-state
+home-manager/claude/settings.local.json
+home-manager/claude/tasks/
+home-manager/claude/telemetry/
+home-manager/claude/plugins/data/
+home-manager/claude/plugins/install-counts-cache.json
 
 # Claude OTel Monitoring logs
 home-manager/claude-otel-monitoring/logs/
