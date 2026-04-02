@@ -71,8 +71,8 @@
     # Claude OTel Monitoring
     ".config/claude-otel-monitoring".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude-otel-monitoring";
 
-    # gh-dash
-    ".config/gh-dash".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/gh-dash";
+    # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
+    ".config/gh-dash/config.yml".source = ../home-manager/gh-dash/config.yml;
   };
 
   programs.home-manager.enable = true;
