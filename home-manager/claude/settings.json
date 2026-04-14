@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -134,7 +131,6 @@
     "nb env *",
     "mcp__time__get_current_time"
   ],
-  "teammateMode": "tmux",
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
   }
