@@ -17,7 +17,7 @@
 
       # 開発ツール
       sail = "bash vendor/bin/sail";
-      claude = "command claude --mcp-config ~/.claude/mcp.json";
+      claude = "cmux claude-teams -- --mcp-config ~/.claude/mcp.json";
       vim = "nvc";
       gg = "ghq-get-cd";
 
@@ -89,7 +89,7 @@
         ghq get "$@" && cd "$(ghq list -p | fzf --query "''${@##*/}" --select-1)"
       }
 
-      # nvim起動（シンプルに直接起動）
+      # nvim起動（Claude Codeはcmux claude-teamsで別途起動）
       nvc() {
         local target="''${1:-.}"
         command nvim "$target"

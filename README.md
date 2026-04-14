@@ -109,28 +109,14 @@ neovim, neovim-remote, stylua, tig, fd, ghq, glow, go, go-task, curl, nmap, pand
 
 ## nvim + Claude Code 統合環境
 
-`vim`や`nvc`コマンドでnvimとClaude Codeが左右分割で起動する。
-
-```
-┌────────────────────────────┬───────┐
-│                            │       │
-│           nvim             │Claude │
-│           (75%)            │ Code  │
-│                            │ (25%) │
-│                            │       │
-└────────────────────────────┴───────┘
-```
+cmux claude-teams でClaude Codeを起動し、nvimはcmux内で別途起動する。
 
 ### 起動コマンド
 
 | コマンド | 動作 |
 |----------|------|
-| `vim` | nvim + Claude Code 起動 |
-| `nvc` | 同上 |
-
-### 終了
-
-nvimで`:q`すれば終了する。
+| `claude` | cmux claude-teams でClaude Codeを起動 |
+| `vim` / `nvc` | nvimを起動 |
 
 ### Claude Code連携キーバインド（claudecode.nvim）
 
