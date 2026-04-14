@@ -89,12 +89,25 @@
         ghq get "$@" && cd "$(ghq list -p | fzf --query "''${@##*/}" --select-1)"
       }
 
-      # nvim起動（cmux環境なら右にターミナルを分割）
+      # nvim起動（cmux環境なら右30%にターミナルを分割、フォーカスは左に戻す）
       nvc() {
         local target="''${1:-.}"
         if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
+          local orig_surface="$CMUX_SURFACE_ID"
+          local split_output
+          split_output=$(cmux new-split right 2>&1)
           local split_surface
-          split_surface=$(cmux new-split right 2>&1 | command grep -o 'surface:[0-9]*' | head -1)
+          split_surface=$(echo "$split_output" | command grep -o 'surface:[0-9]*' | head -1)
+          local split_pane
+          split_pane=$(echo "$split_output" | command grep -o 'pane:[0-9]*' | head -1)
+          # 右paneを縮小して約30%にする（左に向かってリサイズ）
+          if [[ -n "$split_pane" ]]; then
+            local cols=$COLUMNS
+            local shrink=$(( cols * 20 / 100 ))  # 50%→30%にするため20%分縮小
+            cmux resize-pane --pane "$split_pane" -L --amount "$shrink" 2>/dev/null
+          fi
+          # フォーカスを元の左側に戻す
+          [[ -n "$orig_surface" ]] && cmux focus-pane --pane "$orig_surface" 2>/dev/null
           command nvim "$target"
           [[ -n "$split_surface" ]] && cmux close-surface --surface "$split_surface" 2>/dev/null
         else
