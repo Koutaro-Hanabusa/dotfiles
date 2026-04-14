@@ -1,5 +1,5 @@
 #!/bin/bash
-# worktree-sync.sh - Claude Code ワークツリー変更時に tmux 内の nvim を自動同期
+# worktree-sync.sh - Claude Code ワークツリー変更時に nvim を自動同期
 # PostToolUse hook for EnterWorktree / ExitWorktree
 
 set -euo pipefail
@@ -8,21 +8,6 @@ STATE_FILE="$HOME/.claude/.worktree-state"
 input=$(cat)
 
 tool_name=$(printf '%s' "$input" | jq -r '.tool_name // empty')
-
-# 現在の tmux セッション内の nvim ペインに :cd を送信
-sync_nvim_panes() {
-  local target_dir="$1"
-  [ -z "${TMUX:-}" ] && return 0
-
-  local session
-  session=$(tmux display-message -p '#{session_name}')
-
-  tmux list-panes -s -t "$session" -F '#{pane_id} #{pane_current_command}' 2>/dev/null | while read -r pane_id cmd; do
-    if [[ "$cmd" == "nvim" || "$cmd" == "vim" ]]; then
-      tmux send-keys -t "$pane_id" Escape ":cd $target_dir" Enter ":echo 'Worktree: $target_dir'" Enter
-    fi
-  done
-}
 
 case "$tool_name" in
   EnterWorktree)
@@ -65,15 +50,10 @@ case "$tool_name" in
     jq -cn --arg orig "$original_dir" --arg wt "$worktree_dir" \
       '{original_dir: $orig, worktree_dir: $wt, created_at: (now | todate)}' > "$STATE_FILE"
 
-    sync_nvim_panes "$worktree_dir"
     ;;
 
   ExitWorktree)
     if [ -f "$STATE_FILE" ]; then
-      original_dir=$(jq -r '.original_dir // empty' "$STATE_FILE")
-      if [ -n "$original_dir" ] && [ -d "$original_dir" ]; then
-        sync_nvim_panes "$original_dir"
-      fi
       rm -f "$STATE_FILE"
     fi
     ;;
