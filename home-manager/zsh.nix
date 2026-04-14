@@ -17,7 +17,7 @@
 
       # 開発ツール
       sail = "bash vendor/bin/sail";
-      claude = "cmux claude-teams -- --mcp-config ~/.claude/mcp.json";
+      claude = "cmux claude-teams";
       vim = "nvc";
       gg = "ghq-get-cd";
 
