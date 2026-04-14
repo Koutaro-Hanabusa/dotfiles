@@ -1,9 +1,6 @@
 # Ghostty / cmux 共通Config
 # cmuxもこのファイルを読み込む（~/.config/ghostty/config）
 
-# tmuxセッション自動接続（Claude Code agent teams split panes対応）
-command = ~/.config/ghostty/tmux-auto.sh
-
 theme = Kanagawa Dragon
 background = #181616
 foreground = #c8c093
