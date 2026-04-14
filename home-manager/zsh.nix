@@ -99,13 +99,12 @@
           split_output=$(cmux new-split right 2>&1)
           local split_surface
           split_surface=$(echo "$split_output" | command grep -o 'surface:[0-9]*' | head -1)
-          local split_pane
-          split_pane=$(echo "$split_output" | command grep -o 'pane:[0-9]*' | head -1)
           # 右paneを縮小して約30%にする（左に向かってリサイズ）
-          if [[ -n "$split_pane" ]]; then
-            local cols=$COLUMNS
+          if [[ -n "$split_surface" ]]; then
+            local cols
+            cols=$(tput cols 2>/dev/null || echo 80)
             local shrink=$(( cols * 20 / 100 ))  # 50%→30%にするため20%分縮小
-            cmux resize-pane --pane "$split_pane" -L --amount "$shrink" 2>/dev/null
+            [[ $shrink -gt 0 ]] && cmux resize-pane --surface "$split_surface" -L --amount "$shrink" 2>/dev/null
           fi
           # フォーカスを元の左側に戻す
           [[ -n "$orig_pane" ]] && cmux focus-pane --pane "$orig_pane" 2>/dev/null
