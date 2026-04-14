@@ -6,7 +6,5 @@
   home.file = {
     ".config/ghostty/config".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/ghostty/config";
-    ".config/ghostty/tmux-auto.sh".source =
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/ghostty/tmux-auto.sh";
   };
 }
