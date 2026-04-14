@@ -28,7 +28,6 @@ allowed-tools:
 └── home-manager/
     ├── home.nix                 # メイン（imports, home.packages, home.file）
     ├── zsh.nix                  # programs.zsh
-    ├── tmux.nix                 # programs.tmux
     ├── git.nix                  # programs.lazygit, programs.gh
     ├── cli-tools.nix            # programs.bat, eza, fzf, zoxide, ripgrep
     ├── ghostty.nix              # Ghostty（home.file のみ）
@@ -114,7 +113,6 @@ programs.新しいツール = {
 ```nix
 imports = [
   ./zsh.nix
-  ./tmux.nix
   # ...
   ./新しいモジュール.nix
 ];

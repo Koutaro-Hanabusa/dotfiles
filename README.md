@@ -43,7 +43,6 @@ touch ~/.is_work_pc
 home-manager/
 ├── home.nix          # メイン（imports + home.packages + 残りのhome.file）
 ├── zsh.nix           # programs.zsh（エイリアス、関数、プロンプト）
-├── tmux.nix          # programs.tmux（prefix、ペイン操作、ステータスバー）
 ├── git.nix           # programs.lazygit + programs.gh
 ├── cli-tools.nix     # programs.bat, eza, fzf, zoxide, ripgrep
 ├── ghostty.nix       # Ghostty設定（home.file）
@@ -84,7 +83,6 @@ git add -A && git commit -m "update zsh config" && git push
 | モジュール | 管理対象 |
 |-----------|---------|
 | `zsh.nix` | zsh, zsh-autosuggestions, zsh-syntax-highlighting |
-| `tmux.nix` | tmux |
 | `git.nix` | lazygit, gh |
 | `cli-tools.nix` | bat, eza, fzf, zoxide, ripgrep |
 
@@ -132,7 +130,7 @@ neovim, neovim-remote, stylua, tig, fd, ghq, glow, go, go-task, curl, nmap, pand
 
 ### 終了
 
-nvimで`:q`すればtmuxセッションごと終了する。
+nvimで`:q`すれば終了する。
 
 ### Claude Code連携キーバインド（claudecode.nvim）
 
@@ -140,28 +138,10 @@ nvim内でClaude Codeと連携するためのキーバインド。
 
 | キー | 動作 |
 |------|------|
-| `Space` `ac` | tmux右分割ターミナルを開く（40%幅） |
 | `Space` `ar` | Claude Codeセッション再開（ピッカー） |
 | `Space` `ao` | 直前のセッションを継続 |
 | `Space` `as` | 選択範囲をClaudeに送信（Visual mode） |
 | `Space` `aa` | 現在のファイルをClaudeに追加 |
-
----
-
-## tmux操作
-
-prefixキーは `Ctrl+a`
-
-| キー | 動作 |
-|------|------|
-| `Ctrl+a` `h/j/k/l` | ペイン移動 |
-| `Ctrl+a` `H/J/K/L` | ペインリサイズ |
-| `Ctrl+a` `\|` | 縦分割 |
-| `Ctrl+a` `-` | 横分割 |
-| `Ctrl+a` `M` | マウスモード ON/OFF |
-| `Ctrl+a` `d` | デタッチ（セッション維持） |
-| `tmux attach` | セッションに再接続 |
-| マウス | ペイン選択・リサイズ可 |
 
 ---
 
