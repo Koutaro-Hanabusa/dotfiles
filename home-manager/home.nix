@@ -3,7 +3,6 @@
 {
   imports = [
     ./zsh.nix
-    ./tmux.nix
     ./git.nix
     ./cli-tools.nix
     ./ghostty.nix
