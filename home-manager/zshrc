@@ -73,7 +73,7 @@ ghq-get-cd() {
 }
 alias gg='ghq-get-cd'
 
-# nvim起動（シンプルに直接起動）
+# nvim起動（Claude Codeはcmux claude-teamsで別途起動）
 nvc() {
   local target="${1:-.}"
   command nvim "$target"
