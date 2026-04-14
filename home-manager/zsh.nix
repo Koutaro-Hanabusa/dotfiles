@@ -89,10 +89,17 @@
         ghq get "$@" && cd "$(ghq list -p | fzf --query "''${@##*/}" --select-1)"
       }
 
-      # nvim起動（Claude Codeはcmux claude-teamsで別途起動）
+      # nvim起動（cmux環境なら右にターミナルを分割）
       nvc() {
         local target="''${1:-.}"
-        command nvim "$target"
+        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
+          local split_surface
+          split_surface=$(cmux new-split right 2>&1 | command grep -o 'surface:[0-9]*' | head -1)
+          command nvim "$target"
+          [[ -n "$split_surface" ]] && cmux close-surface --surface "$split_surface" 2>/dev/null
+        else
+          command nvim "$target"
+        fi
       }
 
       # マークダウン表示（cmux > glow > less）
