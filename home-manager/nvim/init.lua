@@ -1,3 +1,9 @@
+-- mise管理のランタイム(node等)をLSPから参照可能にする
+local mise_shims = vim.fn.expand("$HOME/.local/share/mise/shims")
+if vim.fn.isdirectory(mise_shims) == 1 and not string.find(vim.env.PATH or "", mise_shims, 1, true) then
+  vim.env.PATH = mise_shims .. ":" .. vim.env.PATH
+end
+
 -- MDXをmarkdownとして扱う
 vim.filetype.add({
   extension = {
