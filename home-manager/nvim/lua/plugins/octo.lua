@@ -44,20 +44,12 @@ return {
     vim.keymap.set("n", "<leader>otr", "<cmd>Octo thread resolve<CR>", { desc = "Octo: Resolve thread" })
     vim.keymap.set("n", "<leader>otu", "<cmd>Octo thread unresolve<CR>", { desc = "Octo: Unresolve thread" })
 
-    -- :Review [pr_number] — PRを開いてocto reviewを開始
+    -- :Review [pr_number] — PRを開いてファイル差分一覧を表示+レビューモード
     vim.api.nvim_create_user_command("Review", function(opts)
       local pr_number = opts.args ~= "" and opts.args or nil
 
-      -- 既にoctoバッファにいる場合はそのままレビュー開始
-      if vim.bo.filetype == "octo" then
-        vim.cmd("Octo review start")
-        return
-      end
-
-      if pr_number then
-        -- PR番号指定: 直接開いてレビュー開始
-        vim.cmd("Octo pr " .. pr_number)
-        -- octoバッファが開いたらレビュー開始
+      -- PR開いた後にchanges + review startを実行するヘルパー
+      local function start_review_flow()
         local group = vim.api.nvim_create_augroup("ReviewAutoStart", { clear = true })
         vim.api.nvim_create_autocmd("FileType", {
           group = group,
@@ -65,17 +57,35 @@ return {
           once = true,
           callback = function()
             vim.defer_fn(function()
+              -- レビューモード開始（コメント可能に）
               pcall(vim.cmd, "Octo review start")
+              -- 少し待ってからファイル差分一覧を表示
+              vim.defer_fn(function()
+                pcall(vim.cmd, "Octo pr changes")
+              end, 800)
             end, 1500)
           end,
         })
+      end
+
+      -- 既にoctoバッファにいる場合はそのまま
+      if vim.bo.filetype == "octo" then
+        pcall(vim.cmd, "Octo review start")
+        vim.defer_fn(function()
+          pcall(vim.cmd, "Octo pr changes")
+        end, 500)
+        return
+      end
+
+      if pr_number then
+        start_review_flow()
+        vim.cmd("Octo pr " .. pr_number)
       else
-        -- PR番号なし: PR一覧を表示
         vim.cmd("Octo pr list")
       end
     end, {
       nargs = "?",
-      desc = "Start PR review (optionally specify PR number)",
+      desc = "Start PR review with diff list (optionally specify PR number)",
     })
 
     -- :ReviewSubmit
