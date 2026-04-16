@@ -58,8 +58,13 @@ defaults:
                 width: 20
                 hidden: true
     refetchIntervalMinutes: 30
-keybindings: {}
-repoPaths: {}
+keybindings:
+    prs:
+        - key: v
+          command: >
+              cd {{.RepoPath}} && nvim -c "Review {{.PrNumber}}"
+repoPaths:
+    Koutaro-Hanabusa/*: ~/sen/*
 theme:
     ui:
         sectionsShowCount: true
