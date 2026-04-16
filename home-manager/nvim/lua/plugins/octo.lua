@@ -44,11 +44,11 @@ return {
     vim.keymap.set("n", "<leader>otr", "<cmd>Octo thread resolve<CR>", { desc = "Octo: Resolve thread" })
     vim.keymap.set("n", "<leader>otu", "<cmd>Octo thread unresolve<CR>", { desc = "Octo: Unresolve thread" })
 
-    -- :Review [pr_number] — PRを開いてファイル差分一覧を表示+レビューモード
+    -- :Review [pr_number] — PRをcheckout→ファイル差分一覧を表示+レビューモード
     vim.api.nvim_create_user_command("Review", function(opts)
       local pr_number = opts.args ~= "" and opts.args or nil
 
-      -- PR開いた後にchanges + review startを実行するヘルパー
+      -- PR開いた後にcheckout + changes + review startを実行するヘルパー
       local function start_review_flow()
         local group = vim.api.nvim_create_augroup("ReviewAutoStart", { clear = true })
         vim.api.nvim_create_autocmd("FileType", {
@@ -57,23 +57,30 @@ return {
           once = true,
           callback = function()
             vim.defer_fn(function()
-              -- レビューモード開始（コメント可能に）
-              pcall(vim.cmd, "Octo review start")
-              -- 少し待ってからファイル差分一覧を表示
+              -- まずPRをcheckout（ローカルブランチを切り替える）
+              pcall(vim.cmd, "Octo pr checkout")
+              -- checkout完了を待ってからレビュー開始
               vim.defer_fn(function()
-                pcall(vim.cmd, "Octo pr changes")
-              end, 800)
+                pcall(vim.cmd, "Octo review start")
+                -- さらに待ってから差分一覧を表示
+                vim.defer_fn(function()
+                  pcall(vim.cmd, "Octo pr changes")
+                end, 800)
+              end, 1500)
             end, 1500)
           end,
         })
       end
 
-      -- 既にoctoバッファにいる場合はそのまま
+      -- 既にoctoバッファにいる場合はcheckoutから
       if vim.bo.filetype == "octo" then
-        pcall(vim.cmd, "Octo review start")
+        pcall(vim.cmd, "Octo pr checkout")
         vim.defer_fn(function()
-          pcall(vim.cmd, "Octo pr changes")
-        end, 500)
+          pcall(vim.cmd, "Octo review start")
+          vim.defer_fn(function()
+            pcall(vim.cmd, "Octo pr changes")
+          end, 500)
+        end, 1500)
         return
       end
 
@@ -85,7 +92,7 @@ return {
       end
     end, {
       nargs = "?",
-      desc = "Start PR review with diff list (optionally specify PR number)",
+      desc = "Checkout PR and start review with diff list",
     })
 
     -- :ReviewSubmit
