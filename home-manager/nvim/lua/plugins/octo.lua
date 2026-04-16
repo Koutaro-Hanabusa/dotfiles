@@ -30,12 +30,9 @@ return {
     vim.keymap.set("n", "<leader>om", "<cmd>Octo pr merge<CR>", { desc = "Octo: PR merge" })
     vim.keymap.set("n", "<leader>ok", "<cmd>Octo pr checks<CR>", { desc = "Octo: PR checks" })
 
-    -- Review workflow
-    vim.keymap.set("n", "<leader>rs", "<cmd>Octo review start<CR>", { desc = "Octo: Start review" })
-    vim.keymap.set("n", "<leader>ru", "<cmd>Octo review submit<CR>", { desc = "Octo: Submit review" })
+    -- Review workflow (main entry: :Review command in review.lua)
     vim.keymap.set("n", "<leader>rr", "<cmd>Octo review resume<CR>", { desc = "Octo: Resume review" })
     vim.keymap.set("n", "<leader>rc", "<cmd>Octo review comments<CR>", { desc = "Octo: Review comments" })
-    vim.keymap.set("n", "<leader>rd", "<cmd>Octo review discard<CR>", { desc = "Octo: Discard review" })
 
     -- Comments & threads
     vim.keymap.set("n", "<leader>oa", "<cmd>Octo comment add<CR>", { desc = "Octo: Add comment" })
