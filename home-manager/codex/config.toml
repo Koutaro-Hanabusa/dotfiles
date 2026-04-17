@@ -1,2 +1,11 @@
 [projects."/Users/hanabusa.kotaro"]
 trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/sen/work-cheese"]
+trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/sen/work-photo-frontend"]
+trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/dotfiles"]
+trust_level = "trusted"
