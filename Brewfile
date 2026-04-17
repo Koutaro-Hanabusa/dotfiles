@@ -27,7 +27,6 @@ brew "pygments"
 # ====================
 # Cask (GUI Apps)
 # ====================
-cask "claude-code"
 cask "cmux"
 cask "ghostty"
 
