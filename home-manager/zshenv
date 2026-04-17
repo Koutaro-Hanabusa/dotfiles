@@ -6,6 +6,15 @@
 # miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
+# npmグローバルバイナリをPATHに追加（Claude Codeのnpm install -g向け）
+if command -v npm >/dev/null 2>&1; then
+  NPM_GLOBAL_BIN="$(npm prefix -g 2>/dev/null)/bin"
+  case ":$PATH:" in
+    *":$NPM_GLOBAL_BIN:"*) ;;
+    *) export PATH="$NPM_GLOBAL_BIN:$PATH" ;;
+  esac
+fi
+
 # zoxide - 全シェルコンテキストで確実に初期化（フルパス指定）
 # .zshrcだけでは非ログインシェルでPATHが不完全なため初期化失敗するケースがある
 if [[ -x /opt/homebrew/bin/zoxide ]]; then

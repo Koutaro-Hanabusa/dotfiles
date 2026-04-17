@@ -17,6 +17,9 @@ nix run home-manager -- switch --flake .
 
 # 2回目以降は home-manager が PATH に入るので直接実行可能
 home-manager switch --flake .
+
+# Claude Code は npm で管理
+npm install -g @anthropic-ai/claude-code
 ```
 
 ### 仕事用PCの場合
@@ -369,6 +372,9 @@ vimhelp
 ## Claude Code 設定
 
 `.claude/` ディレクトリでClaude Codeをカスタマイズ。
+
+Claude Code本体は `brew` ではなく `npm install -g @anthropic-ai/claude-code` で管理する。
+`home-manager/zshenv` で npm グローバルバイナリを PATH に追加しているため、非対話シェルからも `claude` を解決できる。
 
 ### カスタムエージェント
 
