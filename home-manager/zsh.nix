@@ -17,7 +17,7 @@
 
       # 開発ツール
       sail = "bash vendor/bin/sail";
-      claude = "cmux claude-teams --mcp-config ~/.claude/mcp.json";
+      claude = "CMUX_CUSTOM_CLAUDE_PATH=$HOME/.local/bin/claude cmux claude-teams -- --mcp-config ~/.claude/mcp.json";
       vim = "nvc";
       gg = "ghq-get-cd";
 
@@ -45,6 +45,9 @@
     };
 
     envExtra = ''
+      # Claude Code native binary
+      export PATH="$HOME/.local/bin:$PATH"
+      export CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude"
       # miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
       export PATH="$HOME/.local/share/mise/shims:$PATH"
       # node_modules/.bin をPATHに追加（npxなしでローカルCLIを実行可能に）

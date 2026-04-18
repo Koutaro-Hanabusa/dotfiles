@@ -21,7 +21,7 @@ PROMPT='%n@%m %F{blue}%~%f %F{208}$(__git_ps1 "(%s)")%f%# '
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Claude Code - cmux claude-teamsでビルトインagent teamsを使用
-alias claude='cmux claude-teams -- --mcp-config ~/.claude/mcp.json'
+alias claude='CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude" cmux claude-teams -- --mcp-config ~/.claude/mcp.json'
 
 # Claude Code - OpenTelemetry モニタリング (→ Grafana Cloud)
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
