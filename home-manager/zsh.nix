@@ -17,7 +17,6 @@
 
       # 開発ツール
       sail = "bash vendor/bin/sail";
-      claude = "CMUX_CUSTOM_CLAUDE_PATH=$HOME/.local/bin/claude cmux claude-teams -- --mcp-config ~/.claude/mcp.json";
       vim = "nvc";
       gg = "ghq-get-cd";
 
@@ -60,6 +59,18 @@
 
       # Go バイナリへのパス
       export PATH="$HOME/go/bin:$PATH"
+
+      # Vite+ (vp): PATH + vp関数ラッパー + zsh補完
+      [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
+
+      # `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
+      claude() {
+        if [[ -n "$CMUX_SOCKET_PATH" ]]; then
+          command "$HOME/.local/bin/claude" "$@"
+        else
+          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude" command cmux claude-teams -- --mcp-config ~/.claude/mcp.json "$@"
+        fi
+      }
 
       # Git公式のgit-prompt.shを使用してブランチ名を表示（Nix管理のgitパッケージから読み込み）
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
