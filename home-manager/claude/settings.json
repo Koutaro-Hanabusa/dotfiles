@@ -51,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3"
+            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3"
           }
         ]
       },
@@ -60,7 +60,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
+            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
           }
         ]
       },
@@ -69,7 +69,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "marker=/tmp/.claude-nb-reminded; now=$(date +%s); if [ -f \"$marker\" ]; then last=$(stat -f %m \"$marker\"); if [ $(( now - last )) -lt 60 ]; then exit 0; fi; fi; touch \"$marker\"; if [ -f \"$HOME/.is_work_pc\" ]; then notebook=\"work\"; else notebook=\"home\"; fi; echo \"[nb-knowledge] Record session learnings if any (Q&A, bug fixes, design decisions). Use: nb add ${notebook}:knowledge/ -c 'content'. Skip if nothing to record or already recorded.\""
+            "command": "bash ~/.claude/scripts/nb-knowledge-stop-hook.sh"
           }
         ]
       }
