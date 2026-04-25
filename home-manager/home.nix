@@ -6,6 +6,7 @@
     ./git.nix
     ./cli-tools.nix
     ./ghostty.nix
+    ./direnv.nix
   ];
 
   home.username = username;
