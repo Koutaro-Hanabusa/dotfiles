@@ -6,8 +6,9 @@ description: >
   counter-intuitive learnings, or corrected misconceptions. Fire during or right after the response
   that contains the insight — NOT in a later reflection step. Skip: trivial lookups (current time,
   version numbers), restated facts already in docs, boilerplate confirmations, and responses that
-  merely summarize known information without new findings. Always uses `nb add` with
-  run_in_background so the user never waits.
+  merely summarize known information without new findings. Always uses the Write tool with a
+  descriptive kebab-case filename, then commits via direct git commands. Never use `nb add` (it
+  produces timestamp-only filenames and has been observed to hang).
 ---
 
 > **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
@@ -19,8 +20,11 @@ This skill manages automatic knowledge recording to nb notebooks throughout ever
 
 ## Recording Rules
 
-- All nb recording MUST be run in the background (`run_in_background: true` in Bash). Never block the main conversation flow.
-- No user confirmation is needed for nb writes — always record automatically.
+- **Always use the Write tool** to create notes. Do NOT use `nb add`.
+- Reasons: `nb add` auto-generates timestamp-only filenames (e.g., `20260429153423.md`) which destroy discoverability, AND `nb add` has been observed to hang leaving zombie processes.
+- Sync to remote via direct git commands (`git add` + `git commit` + `git push`), not via `nb sync`.
+- No user confirmation is needed for note creation — always record automatically.
+- `git push` may be blocked by the harness's permission gate; if so, ask the user to push manually.
 
 ## What to Record
 
@@ -32,33 +36,53 @@ This skill manages automatic knowledge recording to nb notebooks throughout ever
 
 ## How to Record
 
-1. Detect work PC vs personal PC:
-   - Work PC: `~/.is_work_pc` exists → use `work:knowledge/`
-   - Personal PC: use `home:knowledge/`
+### 1. Detect work PC vs personal PC
+- Work PC: `~/.is_work_pc` exists → notebook is `work`, path is `~/.nb/work/knowledge/`
+- Personal PC: notebook is `home`, path is `~/.nb/home/knowledge/`
 
-2. Create new notes:
+### 2. Choose a descriptive filename (kebab-case)
 
-```bash
-# Work PC
-nb add work:knowledge/ -c "content"
+The filename must reflect the content. Search/recall depends on it.
 
+Good examples:
+- `tanstack-router-philosophy.md`
+- `oauth-pkce-flow-pitfall.md`
+- `react-suspense-fallback-quirk.md`
+- `postgres-jsonb-index-tradeoffs.md`
+
+Bad examples:
+- `20260429153423.md` (timestamp only — `nb add` does this)
+- `notes.md`, `learning.md` (too generic)
+- `tanstack.md` (too broad)
+
+### 3. Create the note via Write tool
+
+```
 # Personal PC
-nb add home:knowledge/ -c "content"
+Write tool → /Users/<user>/.nb/home/knowledge/<kebab-case-title>.md
+
+# Work PC
+Write tool → /Users/<user>/.nb/work/knowledge/<kebab-case-title>.md
 ```
 
-3. To update existing notes, directly edit the file with the Edit tool, then run `nb sync` to push changes:
-   - Home: `~/.nb/home/knowledge/<filename>`
-   - Work: `~/.nb/work/knowledge/<filename>`
-   - NEVER use `nb edit` — it opens nvim and hangs in non-interactive environments.
+Use the Note Format below for the content.
 
-4. When running `nb sync`, ensure the active notebook has a remote configured.
-   The `work` notebook may not have a remote. Switch to the correct notebook first:
+### 4. Commit and push via direct git
 
 ```bash
-nb use home && nb sync
-# or
-nb use work && nb sync
+cd ~/.nb/<notebook> && \
+  git add knowledge/<kebab-case-title>.md && \
+  git commit -m "Add <topic-summary>" && \
+  git push
 ```
+
+If `git push` is blocked by permission gate, tell the user:
+> push できなかった。手動で `! cd ~/.nb/<notebook> && git push` してくれ
+
+### 5. Updating existing notes
+
+- Use the Edit tool directly on the file (not `nb edit` — it opens nvim and hangs).
+- Then sync with the same git commands as step 4.
 
 ## Note Format
 
@@ -77,6 +101,8 @@ nb use work && nb sync
 
 ## Important
 
-- Always run in the background — the user should never wait for nb operations.
-- Group related learnings into a single note rather than creating many small files.
-- Use descriptive topic titles for easy retrieval later.
+- **Write tool is mandatory; `nb add` is forbidden.** Direct file write is reliable; `nb add` hangs.
+- **Filename = discoverability.** Generic / timestamp filenames are unsearchable later.
+- Group related learnings into a single note rather than many tiny files.
+- Verify the file actually exists after Write (do not trust without confirming).
+- The remote sync (push) is a separate concern from creation. Creation can succeed locally even if push fails.
