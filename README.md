@@ -112,13 +112,13 @@ neovim, neovim-remote, stylua, tig, fd, ghq, glow, go, go-task, curl, nmap, pand
 
 ## nvim + Claude Code 統合環境
 
-cmux claude-teams でClaude Codeを起動し、nvimはcmux内で別途起動する。
+`claude` は通常シェルでは `cmux claude-teams` を起動し、cmux 内では実バイナリに委譲する。これで普段は team モードで入りつつ、cmux 内でも `claude` をそのまま使える。nvim は cmux 内で別途起動する。
 
 ### 起動コマンド
 
 | コマンド | 動作 |
 |----------|------|
-| `claude` | cmux claude-teams でClaude Codeを起動 |
+| `claude` | 通常シェルでは cmux claude-teams、cmux 内では Claude Code ネイティブ CLI |
 | `vim` / `nvc` | nvimを起動 |
 
 ### Claude Code連携キーバインド（claudecode.nvim）

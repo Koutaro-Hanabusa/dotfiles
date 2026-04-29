@@ -85,7 +85,8 @@
     "figma@claude-plugins-official": true,
     "codex@openai-codex": true,
     "skill-creator@claude-plugins-official": true,
-    "reviewing-skills@sen-marketplace": true
+    "reviewing-skills@sen-marketplace": true,
+    "cloudflare@cloudflare": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -99,10 +100,17 @@
         "source": "github",
         "repo": "sen-corporation/claude-code-plugins"
       }
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "theme": "light-daltonized",
   "preferredNotifChannel": "terminal_bell",
   "bash_patterns_to_allow": [
     "find *",

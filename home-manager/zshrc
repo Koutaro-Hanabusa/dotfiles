@@ -20,8 +20,14 @@ PROMPT='%n@%m %F{blue}%~%f %F{208}$(__git_ps1 "(%s)")%f%# '
 # コマンド補完候補を薄い文字で表示
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Claude Code - cmux claude-teamsでビルトインagent teamsを使用
-alias claude='CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude" cmux claude-teams -- --mcp-config ~/.claude/mcp.json'
+# `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
+claude() {
+  if [[ -n "$CMUX_SOCKET_PATH" ]]; then
+    command "$HOME/.local/bin/claude" "$@"
+  else
+    CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude" command cmux claude-teams -- --mcp-config ~/.claude/mcp.json "$@"
+  fi
+}
 
 # Claude Code - OpenTelemetry モニタリング (→ Grafana Cloud)
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
