@@ -37,6 +37,14 @@
       "env": {
         "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
       }
+    },
+    "home-memo": {
+      "type": "http",
+      "url": "https://home-memo-mcp.burio16.com/mcp",
+      "headers": {
+        "CF-Access-Client-Id": "${CF_ACCESS_CLIENT_ID}",
+        "CF-Access-Client-Secret": "${CF_ACCESS_CLIENT_SECRET}"
+      }
     }
   }
 }
