@@ -4,9 +4,23 @@ return {
   config = function()
     local lint = require("lint")
 
+    -- プロジェクト同梱の node_modules/.bin/<name> を優先
+    local function find_local_bin(name)
+      local file = vim.api.nvim_buf_get_name(0)
+      local start = file ~= "" and vim.fs.dirname(file) or (vim.uv or vim.loop).cwd()
+      local root = vim.fs.root(start, "node_modules")
+      if root then
+        local candidate = root .. "/node_modules/.bin/" .. name
+        if vim.fn.executable(candidate) == 1 then
+          return candidate
+        end
+      end
+      return name
+    end
+
     -- textlintのカスタムリンター定義
     lint.linters.textlint = {
-      cmd = "textlint",
+      cmd = function() return find_local_bin("textlint") end,
       stdin = false,
       args = { "--format", "json", "--no-color", "--ignore-path", vim.fn.expand("~/.textlintignore") },
       ignore_exitcode = true,
@@ -57,13 +71,15 @@ return {
     -- 現在のファイルをtextlintで自動修正
     vim.keymap.set("n", "<leader>lf", function()
       local file = vim.fn.expand("%:p")
-      vim.cmd("!textlint --fix --ignore-path ~/.textlintignore " .. vim.fn.shellescape(file))
+      local bin = find_local_bin("textlint")
+      vim.cmd("!" .. vim.fn.shellescape(bin) .. " --fix --ignore-path ~/.textlintignore " .. vim.fn.shellescape(file))
       vim.cmd("edit!")
     end, { desc = "Textlint fix current file" })
 
     -- リポジトリ全体のmd,ts,tsx,js,jsxファイルをチェック (quickfixに出力)
     vim.keymap.set("n", "<leader>la", function()
-      local result = vim.fn.system('textlint --format unix --ignore-path ~/.textlintignore "**/*.md" "**/*.ts" "**/*.tsx" "**/*.js" "**/*.jsx" 2>/dev/null')
+      local bin = find_local_bin("textlint")
+      local result = vim.fn.system(vim.fn.shellescape(bin) .. ' --format unix --ignore-path ~/.textlintignore "**/*.md" "**/*.ts" "**/*.tsx" "**/*.js" "**/*.jsx" 2>/dev/null')
       vim.fn.setqflist({}, "r", { lines = vim.split(result, "\n"), title = "Textlint" })
       vim.cmd("copen")
     end, { desc = "Textlint all files" })
