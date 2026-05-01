@@ -120,6 +120,39 @@ return {
       vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
       vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Find references" })
+
+      -- Document highlight: highlight references of the symbol under cursor
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client or not client:supports_method("textDocument/documentHighlight") then
+            return
+          end
+
+          local bufnr = args.buf
+          local hl_group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+
+          vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            group = hl_group,
+            buffer = bufnr,
+            callback = vim.lsp.buf.document_highlight,
+          })
+          vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave" }, {
+            group = hl_group,
+            buffer = bufnr,
+            callback = vim.lsp.buf.clear_references,
+          })
+          vim.api.nvim_create_autocmd("LspDetach", {
+            group = hl_group,
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.clear_references()
+              vim.api.nvim_clear_autocmds({ group = hl_group, buffer = bufnr })
+            end,
+          })
+        end,
+      })
     end,
   },
 }
