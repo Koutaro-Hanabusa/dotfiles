@@ -93,7 +93,7 @@ git add -A && git commit -m "update zsh config" && git push
 
 設定ファイルが不要なツールは `home.packages` でインストールのみ管理。
 
-neovim, neovim-remote, stylua, tig, fd, ghq, glow, go, go-task, curl, nmap, pandoc
+neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 
 ### home.file で管理している設定
 
@@ -553,18 +553,6 @@ Obsidianで開けばグラフビューやリンク管理などGUIの機能も使
 | `p` | プッシュ |
 | `P` | プル |
 | `]` / `[` | 次/前のタブ |
-
-### tig
-
-テキストモードのGitインターフェース。コミットログの閲覧やdiff表示に優れる。
-
-| コマンド | 動作 |
-|---------|------|
-| `tig` | コミットログを表示 |
-| `tig blame file.txt` | ファイルのblameを表示 |
-| `tig status` | ステータスビュー |
-| `tig stash` | stash一覧 |
-| `tig refs` | ブランチ・タグ一覧 |
 
 ### thefuck（コマンド自動修正）
 
