@@ -309,16 +309,6 @@ textlint "docs/**/*.md"
 
 ---
 
-## Vim / Neovim 操作ガイド
-
-詳細は `vimhelp` コマンドで表示できます。
-
-```bash
-vimhelp
-```
-
----
-
 ## Karabiner（Mouse Keys Mode）
 
 `d`キーを押しながら他のキーでマウス操作ができる。マウスに手を伸ばさずに操作可能。
@@ -444,7 +434,6 @@ Claude Codeとの連携で、Q&Aのやり取りが自動的にナレッジとし
 | `nbo home/tech` | techフォルダをブラウズ |
 | `nbs "キーワード"` | home + work 両方を全文検索 → glowで閲覧 |
 | `nbe` | fzfでブラウズ → nvimで編集 |
-| `nb-organize` | タイムスタンプ名ファイルをタイトルで自動リネーム |
 
 fzfの右ペインにglowプレビューが表示されるので、ノートの中身を見ながら選べる。
 
