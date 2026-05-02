@@ -21,9 +21,6 @@
     neovim-remote
     stylua
 
-    # Git
-    tig
-
     # Modern CLI Tools
     fd
     ghq
