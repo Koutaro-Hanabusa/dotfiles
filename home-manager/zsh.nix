@@ -16,17 +16,8 @@
       grep = "rg";
 
       # 開発ツール
-      sail = "bash vendor/bin/sail";
       vim = "nvc";
       gg = "ghq-get-cd";
-
-      # マークダウン表示
-      md = "_show_md";
-      dothelp = "_show_md ~/dotfiles/README.md";
-      vimhelp = "_show_md ~/.config/nvim/doc/README.md";
-
-      # その他
-      chrome = ''open -na "Google Chrome" --args --new-window'';
     };
 
     sessionVariables = {
@@ -226,30 +217,6 @@
         [[ -n "$file" ]] && command nvim "$file"
       }
 
-      # nbのタイムスタンプ名ファイルにタイトルをリネーム
-      nb-organize() {
-        local folder="''${1:-nb-home-knowledge}"
-        local count=0
-        obsidian files folder="$folder" | while read -r filepath; do
-          local basename="''${filepath##*/}"
-          # タイムスタンプ名（数字のみ.md）のファイルだけ対象
-          if [[ "$basename" =~ ^[0-9]+\.md$ ]]; then
-            local title
-            title=$(obsidian read path="$filepath" 2>/dev/null | command head -1 | command sed -E 's/^#+ //')
-            if [[ -n "$title" && "$title" != "" ]]; then
-              # タイトルをファイル名に使える形に変換
-              local safe_name
-              safe_name=$(echo "$title" | command sed 's/[\/\\:*?"<>|]/-/g' | command sed 's/  */ /g' | command head -c 80)
-              if [[ -n "$safe_name" ]]; then
-                obsidian rename path="$filepath" name="$safe_name" 2>/dev/null && \
-                  print -P "%F{green}✓%f $basename → $safe_name.md" && \
-                  ((count++))
-              fi
-            fi
-          fi
-        done
-        print -P "\n%F{blue}$count 件リネームしました%f"
-      }
     '';
   };
 }
