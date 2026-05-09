@@ -42,6 +42,8 @@
       export PATH="$HOME/.local/share/mise/shims:$PATH"
       # node_modules/.bin をPATHに追加（npxなしでローカルCLIを実行可能に）
       export PATH="./node_modules/.bin:$PATH"
+      # ~/bin（waza 等の手動インストールバイナリ）
+      export PATH="$HOME/bin:$PATH"
     '';
 
     initContent = ''
