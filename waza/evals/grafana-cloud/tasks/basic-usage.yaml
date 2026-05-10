@@ -11,6 +11,6 @@ inputs:
     - path: sample.py
 expected:
   output_contains:
-    - "function"
+    - "Mock response"
   outcomes:
     - type: task_completed
