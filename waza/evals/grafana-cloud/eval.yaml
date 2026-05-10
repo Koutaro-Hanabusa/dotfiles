@@ -23,6 +23,6 @@ graders:
     name: relevant_content
     config:
       regex_match:
-        - "(?i)(explain|describe|analyze|implement)"
+        - "Mock response for"
 tasks:
   - "tasks/*.yaml"
