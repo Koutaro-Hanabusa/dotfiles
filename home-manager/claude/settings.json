@@ -82,11 +82,13 @@
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
     "codex@openai-codex": true,
     "skill-creator@claude-plugins-official": true,
     "reviewing-skills@sen-marketplace": true,
     "cloudflare@cloudflare": true,
-    "slack@claude-plugins-official": true
+    "slack@claude-plugins-official": true,
+    "cheese-design-system@sen-marketplace": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
