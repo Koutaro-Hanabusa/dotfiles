@@ -86,7 +86,7 @@
     "skill-creator@claude-plugins-official": true,
     "reviewing-skills@sen-marketplace": true,
     "cloudflare@cloudflare": true,
-    "slack@claude-plugins-official": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
