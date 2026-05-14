@@ -82,13 +82,14 @@
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
     "codex@openai-codex": true,
     "skill-creator@claude-plugins-official": true,
     "reviewing-skills@sen-marketplace": true,
     "cloudflare@cloudflare": true,
     "slack@claude-plugins-official": true,
-    "cheese-design-system@sen-marketplace": true
+    "cheese-design-system@sen-marketplace": false,
+    "frontend-design@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -143,5 +144,6 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
-  }
+  },
+  "editorMode": "vim"
 }
