@@ -1,5 +1,10 @@
-{ config, pkgs, username, isWork, ... }:
+{ config, pkgs, username, ... }:
 
+let
+  dotfilesDir = "${config.home.homeDirectory}/dotfiles/home-manager";
+  # ~/dotfiles/home-manager/<rel> への out-of-store symlink を作る（編集が即時反映される）
+  mkLink = rel: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${rel}";
+in
 {
   imports = [
     ./zsh.nix
@@ -34,45 +39,46 @@
     curl
     nmap
     pandoc
+    jq # claude/scripts・grafana-cloud skill 等のフック/スクリプトが依存
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
   home.file = {
     # nb
-    ".nbrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nbrc";
+    ".nbrc".source = mkLink "nbrc";
 
     # Prettier
-    ".prettierrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/prettierrc";
+    ".prettierrc".source = mkLink "prettierrc";
 
     # textlint
-    ".textlintrc.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlintrc.json";
-    ".textlintignore".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlintignore";
-    ".textlint-rules".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/textlint-rules";
+    ".textlintrc.json".source = mkLink "textlintrc.json";
+    ".textlintignore".source = mkLink "textlintignore";
+    ".textlint-rules".source = mkLink "textlint-rules";
 
     # Neovim
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/nvim";
+    ".config/nvim".source = mkLink "nvim";
 
     # Karabiner
-    ".config/karabiner".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/karabiner";
+    ".config/karabiner".source = mkLink "karabiner";
 
     # Keymap (Vial)
-    ".config/keymap.vil".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/keymap.vil";
+    ".config/keymap.vil".source = mkLink "keymap.vil";
 
     # Claude Code
-    ".claude".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude";
+    ".claude".source = mkLink "claude";
 
     # Claude Code MCP（user スコープとして読まれる ~/.mcp.json）
-    ".mcp.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/mcp.json";
+    ".mcp.json".source = mkLink "mcp.json";
 
     # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
-    ".codex/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/codex/config.toml";
-    ".codex/instructions.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/codex/instructions.md";
+    ".codex/config.toml".source = mkLink "codex/config.toml";
+    ".codex/instructions.md".source = mkLink "codex/instructions.md";
 
     # Claude OTel Monitoring
-    ".config/claude-otel-monitoring".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home-manager/claude-otel-monitoring";
+    ".config/claude-otel-monitoring".source = mkLink "claude-otel-monitoring";
 
     # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
-    ".config/gh-dash/config.yml".source = ../home-manager/gh-dash/config.yml;
+    ".config/gh-dash/config.yml".source = ./gh-dash/config.yml;
   };
 
   programs.home-manager.enable = true;
