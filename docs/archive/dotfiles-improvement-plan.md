@@ -1,3 +1,6 @@
+> ⚠️ **ARCHIVED — 旧 chezmoi 時代のスナップショット**
+> このリポジトリは chezmoi → Nix Home Manager へ移行済み。本書の大半（mise/fzf/ghq/zoxide/glow 導入、nvm 競合解消など）は移行で解決済みであり、`chezmoi apply` / `brew install` / `dot_` パス前提の手順はもう当てはまらない。未実装アイデア（git-delta, starship, atuin, btop など）の参照用としてのみ残す。
+
 # Dotfiles 改善・新規ツール導入計画
 
 > 作成日: 2026-02-11
