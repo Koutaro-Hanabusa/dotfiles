@@ -28,3 +28,14 @@ home-manager/claude/plugins/install-counts-cache.json
 
 # Claude OTel Monitoring logs
 home-manager/claude-otel-monitoring/logs/
+
+# Claude OTel Monitoring secrets (Grafana Cloud API key 等。実体は .env / ~/.zsh_secrets に置く)
+home-manager/claude-otel-monitoring/.env
+home-manager/claude-otel-monitoring/.env.*
+
+# Claude Code - その他のランタイムファイル
+home-manager/claude/.last-cleanup
+home-manager/claude/plugins/plugin-catalog-cache.json
+
+# macOS Finder metadata
+.DS_Store

@@ -16,7 +16,7 @@ brew "mise"                           # ランタイム管理 (node/python/go等
 brew "uv"                             # Python パッケージマネージャ
 brew "pipx"                           # Python アプリインストーラ
 brew "python@3.12"                    # uv 等の依存
-brew "php"                            # Laravel sail エイリアス用
+brew "php"                            # nvim PHP: intelephense LSP / pint formatter 用
 
 # ====================
 # CLI / Shell

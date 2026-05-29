@@ -2,6 +2,8 @@
 
 Nix Home Manager で管理している dotfiles
 
+> 📦 元々は chezmoi で管理していたが Nix Home Manager へ移行済み。現在は Nix が唯一の信頼できる情報源（single source of truth）。`docs/archive/` 配下の旧計画書や `dot_` プレフィックス・`chezmoi apply` への言及は歴史的経緯として残しているだけで、現行の手順ではない。
+
 ## セットアップ
 
 ```bash
@@ -390,11 +392,19 @@ Claude Code本体は公式ネイティブインストーラーで管理する。
 
 ### インストール済みプラグイン
 
+有効なプラグインは `home-manager/claude/settings.json` の `enabledPlugins` を正とする（ドリフト防止のためここでは一覧のみ）。
+
 | プラグイン | 機能 |
 |-----------|------|
 | `typescript-lsp` | TypeScript言語サーバー連携 |
 | `pr-review-toolkit` | PRレビュー支援 |
 | `figma` | Figma DevMode連携 |
+| `codex` | Codex 連携（rescue/review 等） |
+| `skill-creator` | スキル作成支援 |
+| `reviewing-skills` | スキルレビュー |
+| `cloudflare` | Cloudflare 開発支援 |
+| `slack` | Slack 連携 |
+| `cheese-design-system` | Cheese デザインシステム |
 
 ### その他の設定
 
