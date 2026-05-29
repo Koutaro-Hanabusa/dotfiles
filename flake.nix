@@ -27,6 +27,9 @@
         };
     in
     {
+      # `nix fmt` で Nix ファイルを整形（nixfmt = RFC 166 スタイル）
+      formatter.${system} = pkgs.nixfmt;
+
       homeConfigurations."1126buri" = mkHome {
         username = "1126buri";
       };

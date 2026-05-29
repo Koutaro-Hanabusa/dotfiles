@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
   # Ghostty は macOS 向け Nix パッケージが未対応のため、
