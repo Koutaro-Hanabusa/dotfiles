@@ -35,9 +35,11 @@
     };
 
     envExtra = ''
-      # Claude Code native binary
+      # Claude Code は vite-plus(vp) 管理の install に一本化
       export PATH="$HOME/.local/bin:$PATH"
-      export CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude"
+      export CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude"
+      # 多数の同時セッションが共有prefixを奪い合い自動更新が暴走するため無効化（更新は手動 `claude update`）
+      export DISABLE_AUTOUPDATER="1"
       # miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
       export PATH="$HOME/.local/share/mise/shims:$PATH"
       # node_modules/.bin をPATHに追加（npxなしでローカルCLIを実行可能に）
@@ -59,9 +61,9 @@
       # `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
       claude() {
         if [[ -n "$CMUX_SOCKET_PATH" ]]; then
-          command "$HOME/.local/bin/claude" "$@"
+          command "$HOME/.vite-plus/bin/claude" "$@"
         else
-          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.local/bin/claude" command cmux claude-teams -- --mcp-config ~/.claude/mcp.json "$@"
+          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude" command cmux claude-teams -- --mcp-config ~/.claude/mcp.json "$@"
         fi
       }
 
