@@ -26,10 +26,7 @@
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--autoConnect"],
-      "env": {
-        "PATH": "${HOME}/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
-      }
+      "args": ["chrome-devtools-mcp@latest", "--autoConnect"]
     },
     "drawio": {
       "command": "npx",
