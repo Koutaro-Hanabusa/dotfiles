@@ -67,7 +67,14 @@ in
     # Claude Code
     ".claude".source = mkLink "claude";
 
-    # Claude Code MCP（user スコープとして読まれる ~/.mcp.json）
+    # Claude Code MCP のサーバー定義（source of truth）。
+    # 注意: ~/.mcp.json は **project スコープ**で、CWD がホームのときだけ拾われる。
+    # 全プロジェクトで効く user スコープは ~/.claude.json の top-level mcpServers
+    # （Nix 管理外の可変ファイル）に登録する必要がある。新マシンや mcp.json 更新時は
+    # 下記を再実行して user スコープへ反映する:
+    #   cd ~ && for name in $(jq -r '.mcpServers | keys[]' ~/dotfiles/home-manager/mcp.json); do
+    #     claude mcp add-json -s user "$name" "$(jq -c ".mcpServers[\"$name\"]" ~/dotfiles/home-manager/mcp.json)"
+    #   done
     ".mcp.json".source = mkLink "mcp.json";
 
     # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
