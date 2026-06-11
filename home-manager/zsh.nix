@@ -35,6 +35,12 @@
     };
 
     envExtra = ''
+      # zoxide doctor の誤検知警告を抑止
+      # （home-manager は zoxide 初期化を zshrc 先頭に置くが、その後 direnv 等の
+      #  chpwd フックが登録されるため「最後に初期化しろ」と毎回警告が出る。zoxide
+      #  自体は正常動作しており機能影響はないため、公式の抑止フラグで黙らせる）
+      export _ZO_DOCTOR=0
+
       # Claude Code は vite-plus(vp) 管理の install に一本化
       export PATH="$HOME/.local/bin:$PATH"
       export CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude"
