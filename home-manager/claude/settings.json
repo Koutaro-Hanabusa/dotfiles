@@ -88,7 +88,8 @@
     "reviewing-skills@sen-marketplace": true,
     "cloudflare@cloudflare": true,
     "slack@claude-plugins-official": true,
-    "cheese-design-system@sen-marketplace": true
+    "cheese-design-system@sen-marketplace": true,
+    "gopls-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -111,8 +112,11 @@
     }
   },
   "alwaysThinkingEnabled": true,
+  "tui": "default",
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "light-daltonized",
+  "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
   "bash_patterns_to_allow": [
     "find *",
@@ -143,6 +147,5 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
-  },
-  "editorMode": "vim"
+  }
 }

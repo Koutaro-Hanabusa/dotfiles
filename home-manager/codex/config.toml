@@ -1,3 +1,5 @@
+notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
 [projects."/Users/hanabusa.kotaro"]
 trust_level = "trusted"
 
@@ -19,8 +21,148 @@ trust_level = "trusted"
 [projects."/Users/hanabusa.kotaro/sen/rebuild-docs"]
 trust_level = "trusted"
 
+[projects."/Users/hanabusa.kotaro/sen/leader.8122.jp"]
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens"]
+status_line_use_colors = true
+
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-04T07:34:50Z"
+source_type = "local"
+source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.claude-plugins-official]
+last_updated = "2026-06-10T02:22:54Z"
+last_revision = "de573bd84695c6657b28f05ffe32c37bb54d1f55"
+source_type = "git"
+source = "https://github.com/anthropics/claude-plugins-official.git"
+
+[marketplaces.cloudflare]
+last_updated = "2026-06-10T00:13:51Z"
+last_revision = "c5b7b06b073fa0b4abbd63964630f97d81da69c4"
+source_type = "git"
+source = "https://github.com/cloudflare/skills.git"
+
+[marketplaces.openai-codex]
+last_updated = "2026-06-04T07:35:13Z"
+last_revision = "807e03ac9d5aa23bc395fdec8c3767500a86b3cf"
+source_type = "git"
+source = "https://github.com/openai/codex-plugin-cc.git"
+
+[marketplaces.sen-marketplace]
+last_updated = "2026-06-10T00:13:56Z"
+last_revision = "e3a19d074fc43fd493945d3609c6e1cd4959b8f1"
+source_type = "git"
+source = "https://github.com/sen-corporation/claude-code-plugins.git"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-04T08:21:00Z"
+source_type = "local"
+source = "/Users/hanabusa.kotaro/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."figma@claude-plugins-official"]
+enabled = true
+
+[plugins."pr-review-toolkit@claude-plugins-official"]
+enabled = true
+
+[plugins."skill-creator@claude-plugins-official"]
+enabled = true
+
+[plugins."slack@claude-plugins-official"]
+enabled = true
+
+[plugins."codex@openai-codex"]
+enabled = true
+
+[plugins."cheese-design-system@sen-marketplace"]
+enabled = true
+
+[plugins."reviewing-skills@sen-marketplace"]
+enabled = true
+
+[plugins."code-simplifier@claude-plugins-official"]
+enabled = true
+
+[plugins."commit-commands@claude-plugins-official"]
+enabled = true
+
+[plugins."context7@claude-plugins-official"]
+enabled = true
+
+[plugins."frontend-design@claude-plugins-official"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[features]
+js_repl = false
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/hanabusa.kotaro/.codex"
+CODEX_HOME = "/Users/hanabusa.kotaro/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4b6bfaf4ed2ce9b5cd68e60a61642eb4927a36306ba8c8993f6058607b3530fb"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+
+[desktop.open-in-target-preferences]
+global = "ghostty"
+
+[desktop.open-in-target-preferences.perPath]
+"/Users/hanabusa.kotaro/sen/8122-cheese" = "ghostty"
+
+[hooks.state]
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:f1e26280afc0ec966dcb188e3f6f45b1a471a0deec1b98b95d94b752d4396459"
+enabled = true
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:455eceb190310c300dfca0a97f24ed46d8f589629b07a3aaf63084920b22f67a"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:f86cf4e85fbd9cf37d237d80844aa1b4518bbdc58729adf1457f6044d78b16f3"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:185bab103ecbc5b2ef4f280c36406bae6fe1b0dc2bb4090b4bc85d5f9b7e9284"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:stop:1:0"]
+trusted_hash = "sha256:c707dc06bfa92f23b0bbb36b299ae01cb434174abac5a546c6815fefc129ae7e"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:stop:2:0"]
+trusted_hash = "sha256:74276e502f90e3a49682dbab5b3c84906ae8e47239d092ae6a5c357845386c6d"
+
+[hooks.state."codex@openai-codex:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:e6b9df143de11443eb576c38874cf6e0c48358f948170948fdf630f1c047c098"
+
+[hooks.state."codex@openai-codex:hooks/hooks.json:stop:0:0"]
+trusted_hash = "sha256:3dfaa7e4f022570b260b8a8cf4ac7585c986175256b887a4723fac4f358a482f"
