@@ -63,7 +63,7 @@
         if [[ -n "$CMUX_SOCKET_PATH" ]]; then
           command "$HOME/.vite-plus/bin/claude" "$@"
         else
-          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude" command cmux claude-teams -- --mcp-config ~/.claude/mcp.json "$@"
+          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude" command cmux claude-teams -- --mcp-config ~/.mcp.json "$@"
         fi
       }
 
