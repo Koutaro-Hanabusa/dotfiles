@@ -61,7 +61,7 @@
       # `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
       claude() {
         if [[ -n "$CMUX_SOCKET_PATH" ]]; then
-          command "$HOME/.vite-plus/bin/claude" "$@"
+          command "$HOME/.vite-plus/bin/claude" --mcp-config ~/.mcp.json "$@"
         else
           CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude" command cmux claude-teams -- --mcp-config ~/.mcp.json "$@"
         fi
