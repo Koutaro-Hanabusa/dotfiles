@@ -12,6 +12,7 @@ in
     ./cli-tools.nix
     ./ghostty.nix
     ./direnv.nix
+    ./karabiner.nix
   ];
 
   home.username = username;
@@ -59,8 +60,7 @@ in
     # Neovim
     ".config/nvim".source = mkLink "nvim";
 
-    # Karabiner
-    ".config/karabiner".source = mkLink "karabiner";
+    # Karabiner: karabiner.json は ./karabiner.nix で Nix から生成
 
     # Keymap (Vial)
     ".config/keymap.vil".source = mkLink "keymap.vil";
