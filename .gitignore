@@ -26,6 +26,18 @@ home-manager/claude/telemetry/
 home-manager/claude/plugins/data/
 home-manager/claude/plugins/install-counts-cache.json
 
+# Claude Code daemon / jobs ランタイム（バックグラウンド daemon が生成）
+home-manager/claude/daemon/
+home-manager/claude/daemon.log
+home-manager/claude/daemon.lock
+home-manager/claude/daemon.status.json
+home-manager/claude/daemon-auth-status.json
+home-manager/claude/daemon-auth-cooldown
+home-manager/claude/jobs/
+home-manager/claude/.last-cleanup
+home-manager/claude/.last-update-result.json
+home-manager/claude/plugins/.last_inuse_sweep
+
 # Claude OTel Monitoring logs
 home-manager/claude-otel-monitoring/logs/
 
