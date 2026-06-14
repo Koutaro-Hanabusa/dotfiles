@@ -7,10 +7,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { nixpkgs, home-manager, hunk, ... }:
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -22,7 +26,10 @@
         }:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit isWork username; };
+          extraSpecialArgs = {
+            inherit isWork username;
+            hunkPkg = hunk.packages.${system}.default;
+          };
           modules = [ ./home-manager/home.nix ] ++ extraModules;
         };
     in

@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, isWork, hunkPkg, ... }:
 
 let
   dotfilesDir = "${config.home.homeDirectory}/dotfiles/home-manager";
@@ -30,6 +30,7 @@ in
     fd
     ghq
     glow
+    hunkPkg
 
     # Development Languages / Runtimes
     go

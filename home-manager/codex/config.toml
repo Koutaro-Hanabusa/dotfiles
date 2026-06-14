@@ -1,3 +1,5 @@
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [projects."/Users/hanabusa.kotaro"]
@@ -24,6 +26,12 @@ trust_level = "trusted"
 [projects."/Users/hanabusa.kotaro/sen/leader.8122.jp"]
 trust_level = "trusted"
 
+[projects."/Users/1126buri/dev/mySlides"]
+trust_level = "trusted"
+
+[projects."/Users/1126buri/dev"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens"]
 status_line_use_colors = true
@@ -33,6 +41,7 @@ status_line_use_colors = true
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.4" = "gpt-5.5"
 
 [marketplaces.openai-bundled]
 last_updated = "2026-06-04T07:34:50Z"
