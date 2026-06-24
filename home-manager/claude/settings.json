@@ -121,12 +121,28 @@
   "permissions": {
     "allow": [
       "Bash(nb:*)",
+      "Bash(git:*)",
       "Bash(find:*)",
       "Bash(mkdir:*)",
       "Bash(curl:*)",
       "Bash(grep:*)",
       "Bash(sed:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(jq:*)",
+      "Bash(rg:*)",
+      "Write(/Users/1126buri/.nb/**)",
+      "Edit(/Users/1126buri/.nb/**)",
+      "Write(/Users/1126buri/dotfiles/**)",
+      "Edit(/Users/1126buri/dotfiles/**)",
       "mcp__time__get_current_time"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(rm -rf:*)"
     ]
   },
   "feedbackSurveyState": {
