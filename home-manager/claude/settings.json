@@ -118,33 +118,17 @@
   "theme": "light-daltonized",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
-  "bash_patterns_to_allow": [
-    "find *",
-    "mkdir *",
-    "curl *",
-    "grep *",
-    "sed *",
-    "nb add *",
-    "nb edit *",
-    "nb list *",
-    "nb ls *",
-    "nb show *",
-    "nb search *",
-    "nb count *",
-    "nb help *",
-    "nb history *",
-    "nb notebooks *",
-    "nb export *",
-    "nb bookmark *",
-    "nb browse *",
-    "nb copy *",
-    "nb folders *",
-    "nb git *",
-    "nb import *",
-    "nb do *",
-    "nb env *",
-    "mcp__time__get_current_time"
-  ],
+  "permissions": {
+    "allow": [
+      "Bash(nb:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "mcp__time__get_current_time"
+    ]
+  },
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
   }
