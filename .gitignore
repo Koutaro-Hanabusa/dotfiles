@@ -48,6 +48,7 @@ home-manager/claude-otel-monitoring/.env.*
 # Claude Code - その他のランタイムファイル
 home-manager/claude/.last-cleanup
 home-manager/claude/plugins/plugin-catalog-cache.json
+home-manager/claude/stats-cache.json
 
 # macOS Finder metadata
 .DS_Store
