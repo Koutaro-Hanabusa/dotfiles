@@ -11,11 +11,6 @@ description: >
   produces timestamp-only filenames and has been observed to hang).
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"nb-knowledge"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
-> ```
-
 This skill manages automatic knowledge recording to nb notebooks throughout every session.
 
 ## Recording Rules

@@ -12,11 +12,6 @@ allowed-tools:
   - Bash(git push*)
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"nix-dotfiles"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
-> ```
-
 このスキルは `~/dotfiles` リポジトリを Nix Home Manager で管理するためのガイドラインを提供する。
 
 ## アーキテクチャ

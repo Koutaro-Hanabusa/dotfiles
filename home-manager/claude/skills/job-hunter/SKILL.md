@@ -6,11 +6,6 @@ description: >
   "ファンテック 企業", "採用ページ", "求人検索", または /job-hunter コマンド実行時。
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"job-hunter"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
-> ```
-
 # Job Hunter — ファンテック転職支援スキル
 
 ## ユーザープロフィール

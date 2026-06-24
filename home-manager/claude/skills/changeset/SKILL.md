@@ -6,11 +6,6 @@ description: >
   "generate changeset", or wants to prepare changesets before a release. Works with @changesets/cli format.
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"changeset"}' >> ~/.config/claude-otel-monitoring/logs/claude-hooks.log
-> ```
-
 # Changeset Generator
 
 monorepo の git diff を解析し、`.changeset/` ファイルを下書き生成するスキル。
