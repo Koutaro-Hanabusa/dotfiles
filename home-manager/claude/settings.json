@@ -1,28 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "input=$(cat); timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ); session_id=$(echo \"$input\" | jq -r '.session_id // empty'); cwd=$(echo \"$input\" | jq -r '.cwd // empty'); prompt=$(echo \"$input\" | jq -r '.prompt // empty'); prompt_length=${#prompt}; project=$(basename \"$cwd\"); summary=$(echo \"$prompt\" | head -c 100); log_dir=\"$HOME/.config/claude-otel-monitoring/logs\"; mkdir -p \"$log_dir\"; jq -cn --arg ts \"$timestamp\" --arg et \"user_prompt\" --arg sid \"$session_id\" --arg cwd \"$cwd\" --arg proj \"$project\" --argjson plen \"${prompt_length:-0}\" --arg sum \"$summary\" '{timestamp: $ts, event_type: $et, session_id: $sid, cwd: $cwd, project: $proj, prompt_length: $plen, summary: $sum}' >> \"$log_dir/claude-hooks.log\""
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Task|Skill|mcp__.*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "input=$(cat); timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ); tool_name=$(printf '%s' \"$input\" | jq -r '.tool_name // empty'); session_id=$(printf '%s' \"$input\" | jq -r '.session_id // empty'); if [ \"$tool_name\" = \"Skill\" ]; then event_type=\"skill_call\"; elif [ \"$tool_name\" = \"Task\" ]; then event_type=\"subagent_spawn\"; elif printf '%s' \"$tool_name\" | grep -q '^mcp__'; then event_type=\"mcp_call\"; else event_type=\"tool_call\"; fi; mcp_server=\"\"; if [ \"$event_type\" = \"mcp_call\" ]; then mcp_server=$(printf '%s' \"$tool_name\" | sed 's/^mcp__//; s/__.*//'); fi; subagent_type=$(printf '%s' \"$input\" | jq -r '.tool_input.subagent_type // empty'); skill=$(printf '%s' \"$input\" | jq -r '.tool_input.skill // empty'); description=$(printf '%s' \"$input\" | jq -r '.tool_input.description // empty'); prompt=$(printf '%s' \"$input\" | jq -r '.tool_input.prompt // empty' | head -c 200); args=$(printf '%s' \"$input\" | jq -r '.tool_input.args // empty'); log_dir=\"$HOME/.config/claude-otel-monitoring/logs\"; mkdir -p \"$log_dir\"; jq -cn --arg ts \"$timestamp\" --arg et \"$event_type\" --arg tn \"$tool_name\" --arg sid \"$session_id\" --arg sat \"$subagent_type\" --arg sk \"$skill\" --arg desc \"$description\" --arg pr \"$prompt\" --arg ar \"$args\" --arg ms \"$mcp_server\" '{timestamp: $ts, event_type: $et, tool_name: $tn, session_id: (if $sid != \"\" then $sid else null end), subagent_type: (if $sat != \"\" then $sat else null end), skill: (if $sk != \"\" then $sk else null end), mcp_server: (if $ms != \"\" then $ms else null end), description: (if $desc != \"\" then $desc else null end), prompt: (if $pr != \"\" then $pr else null end), args: (if $ar != \"\" then $ar else null end)}' >> \"$log_dir/claude-hooks.log\""
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
         "matcher": "EnterWorktree|ExitWorktree",
@@ -61,15 +39,6 @@
           {
             "type": "command",
             "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/nb-knowledge-stop-hook.sh"
           }
         ]
       }
@@ -132,10 +101,8 @@
       "Bash(echo:*)",
       "Bash(jq:*)",
       "Bash(rg:*)",
-      "Write(/Users/1126buri/.nb/**)",
-      "Edit(/Users/1126buri/.nb/**)",
-      "Write(/Users/1126buri/dotfiles/**)",
-      "Edit(/Users/1126buri/dotfiles/**)",
+      "Write(~/.nb/**)",
+      "Edit(~/.nb/**)",
       "mcp__time__get_current_time"
     ],
     "deny": [
