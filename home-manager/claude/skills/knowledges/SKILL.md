@@ -1,19 +1,23 @@
 ---
 name: knowledges
 description: >
-  Koutaro が蓄積した個人ナレッジノート（nb の home / work 両ノートブック）を、回答する前に検索するためのスキル。
-  home(~/.nb/home/knowledge/) は個人・キャリア・dotfiles・汎用技術、work(~/.nb/work/knowledge/) は業務・
-  8122/cameraman/leader 等の案件知見。どちらも Cloudflare AI Search でインデックスされ、それぞれ
-  `mcp__home-memo__search_knowledge` / `mcp__work-memo__search_knowledge` ツールとして公開されている。
-  さらにローカルの markdown を直接 grep する手段もあり、本スキルは「いつ MCP セマンティック検索を使い、いつ
-  grep を使うか」の使い分けも内蔵する。Trigger eagerly when the user asks about: 過去に調べた/まとめた技術トピック
-  (TanStack/React/Hono/Cloudflare/Nix/MCP/dotfiles 等)、過去の設計判断・アーキテクチャ、業務案件の調査結果
-  (8122・cameraman・leader・IDOR 監査・API 認可など)、キャリア/転職/Findy/ファンテック、過去の Q&A や学び
-  ("前に調べた"/"メモから"/"ノートに"/"知識から探して"/"あの記事"/"前にまとめた")、過去にハマったバグ、または
-  ユーザー自身の過去ノートが回答を豊かにしうる質問全般。明示呼び出し `/knowledges`・"knowledges で〜"・
-  "ナレッジから〜"・"メモ検索して" でも発火。Skip ONLY for: 現在時刻・最新バージョン・今日のニュース・株価/為替の
-  ような一発リアルタイム照会、ソースを読めば即解決する純粋なコードベース内部質問、ユーザーが明示的に
-  「外部/最新情報だけ欲しい」と言っている場合。
+  Koutaro の非公開ナレッジノート（nb の home / work 両ノートブック。Cloudflare AI Search 経由の
+  mcp__home-memo__search_knowledge / mcp__work-memo__search_knowledge、加えてローカル markdown の grep）を
+  回答前に検索するスキル。これは「ユーザー個人の過去」に関する問いの初手。モデルが自力で答えられそうに見えても、
+  想起・参照のニュアンス（過去の自分の作業・調査・設計判断・メモ・ハマりを思い出す/参照する）が少しでもあれば、
+  自力回答の誘惑に負けず必ずまず検索すること。答えはユーザーの私的ノートにしか無く、発火しないと一般論や
+  ハルシネーションで誤答する。発火すべき強いシグナル — 想起表現（「〜だったっけ」「どうしてた」「覚えてる」
+  「思い出したい」「前に」「以前」「〜したやつ」）、過去にまとめた/見たいメモ・方針メモ・調査結果の要求、
+  固有の案件名や文脈（8122 / cameraman / leader / sen / IDOR 監査 / API 認証認可 / 配信基盤 / Terraform /
+  Findy / ファンテック / 転職）、自分の dotfiles・Nix・各種設定の意図、過去に触った技術トピック
+  （TanStack / React / Hono / Cloudflare / Workers / MCP / Nix 等）で「前に」のニュアンスを伴うもの、
+  過去にハマったバグやエラーの対処。home=個人/キャリア/dotfiles/汎用技術、work=業務案件。迷うトピックは両方検索。
+  本スキルは MCP セマンティック検索と grep の使い分けも内蔵（言語跨ぎ・概念は MCP、完全一致・網羅は grep、
+  推奨は MCP→grep）。明示呼び出し `/knowledges`・「ナレッジから〜」「メモ検索して」でも発火。
+  Skip ONLY for: 現在時刻・最新/現在のバージョン・今日のニュース・株価/為替のリアルタイム照会、目の前のソースや
+  diff を読めば済む純粋なコードベース操作（ファイルを開いて説明・diff レビュー・新規コードの実装）、ノートへの
+  書き込み依頼（「nb で保存」等は nb-knowledge の担当）、純粋な運用作業（gh secret 設定・カレンダー確認等）、
+  ユーザーが明示的に「最新/外部情報だけ欲しい」と言っている場合。
 ---
 
 > **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
