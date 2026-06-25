@@ -32,6 +32,7 @@ trust_level = "trusted"
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens"]
 status_line_use_colors = true
+pet = "null-signal"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
@@ -45,20 +46,20 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-06-16T04:04:51Z"
-last_revision = "578b490d4bba80630e65880fc938fe6a78894244"
+last_updated = "2026-06-24T01:12:29Z"
+last_revision = "bb335391eb831a044ce74d5bd4e30e46fc695096"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
 [marketplaces.cloudflare]
-last_updated = "2026-06-16T04:04:53Z"
-last_revision = "8ff55f2a574f498bbf89675279d92b7a61f4d521"
+last_updated = "2026-06-23T00:57:48Z"
+last_revision = "27ce0c0e159225caa7ed30ebefd4107aa6c52497"
 source_type = "git"
 source = "https://github.com/cloudflare/skills.git"
 
 [marketplaces.openai-codex]
-last_updated = "2026-06-04T07:35:13Z"
-last_revision = "807e03ac9d5aa23bc395fdec8c3767500a86b3cf"
+last_updated = "2026-06-24T00:04:53Z"
+last_revision = "80c31f99570876c3ef40327838b0a2ca1ae2cd9c"
 source_type = "git"
 source = "https://github.com/openai/codex-plugin-cc.git"
 
@@ -123,6 +124,7 @@ enabled = true
 
 [features]
 js_repl = false
+terminal_resize_reflow = true
 
 [mcp_servers.node_repl]
 args = []
