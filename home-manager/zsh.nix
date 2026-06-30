@@ -64,10 +64,7 @@
       # Vite+ (vp): PATH + vp関数ラッパー + zsh補完
       [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
 
-      # Codex CLI は vite-plus(vp) 管理の Node runtime に一本化
-      codex() {
-        command "$HOME/.vite-plus/js_runtime/node/24.14.0/bin/codex" "$@"
-      }
+      # Codex CLI は vite-plus(vp) の PATH 解決に任せる（~/.vite-plus/bin/codex -> vp）
 
       # `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
       claude() {
