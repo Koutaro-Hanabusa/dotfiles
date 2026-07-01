@@ -30,15 +30,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
           }
         ]
