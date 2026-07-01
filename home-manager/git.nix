@@ -12,7 +12,7 @@ let
     fi
 
     echo "🤖 AI がコミットメッセージを生成中..." >&2
-    msg=$(claude -p --model haiku "以下のgit diffを見て、Conventional Commits形式のコミットメッセージを1行だけ生成してください。メッセージ本文のみを出力してください。形式: <type>(<scope>): <説明> typeは feat/fix/docs/style/refactor/test/chore/ci/perf/build のいずれか。scopeは変更されたパッケージ名(packages/やapps/配下のディレクトリ名)を使ってください。複数パッケージにまたがる場合は主要なものを1つ選んでください。ルート直下の設定ファイルのみの変更はscopeなしでOKです。日本語で書いてください。$(git diff --cached)" < /dev/null)
+    msg=$(claude -p --model haiku "以下のgit diffを見て、Conventional Commits形式の変更のWHYを記載したコミットメッセージを1行だけ生成してください。メッセージ本文のみを出力してください。形式: <type>(<scope>): <説明> typeは feat/fix/docs/style/refactor/test/chore/ci/perf/build のいずれか。scopeは変更されたパッケージ名(packages/やapps/配下のディレクトリ名)を使ってください。複数パッケージにまたがる場合は主要なものを1つ選んでください。ルート直下の設定ファイルのみの変更はscopeなしでOKです。日本語で書いてください。$(git diff --cached)" < /dev/null)
 
     if [ -z "$msg" ]; then
       echo "❌ メッセージ生成に失敗しました" >&2
