@@ -145,6 +145,14 @@ BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
 BROWSER_USE_CODEX_APP_VERSION = "26.609.41114"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
+[mcp_servers.cheese]
+command = "npx"
+args = ["-y", "@sen-corporation/cheese-mcp-server@latest"]
+cwd = "/tmp"
+startup_timeout_sec = 30
+enabled = true
+env_vars = ["GITHUB_TOKEN", "NPM_TOKEN"]
+
 [desktop.open-in-target-preferences]
 global = "ghostty"
 
