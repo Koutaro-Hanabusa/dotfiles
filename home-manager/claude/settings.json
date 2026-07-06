@@ -1,86 +1,93 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "sonnet",
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "EnterWorktree|ExitWorktree",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/worktree-sync.sh"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "permission_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux notify --title 'Claude Code' --body '許可が必要です' 2>/dev/null || true"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.cwd'); user=$(whoami); host=$(hostname -s); display_dir=\"${cwd/#$HOME/~}\"; git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" --no-optional-locks branch --show-current 2>/dev/null || echo \"\"); if [ -n \"$branch\" ]; then dirty=\"\"; staged=\"\"; untracked=\"\"; if ! git -C \"$cwd\" --no-optional-locks diff --quiet 2>/dev/null; then dirty=\"*\"; fi; if ! git -C \"$cwd\" --no-optional-locks diff --cached --quiet 2>/dev/null; then staged=\"+\"; fi; if [ -n \"$(git -C \"$cwd\" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)\" ]; then untracked=\"%\"; fi; git_info=\" $(printf '\\033[38;5;208m')($branch$dirty$staged$untracked)$(printf '\\033[0m')\"; fi; fi; printf \"%s@%s $(printf '\\033[34m')%s$(printf '\\033[0m')%s \" \"$user\" \"$host\" \"$display_dir\" \"$git_info\""
-  },
+  "agentPushNotifEnabled": true,
+  "alwaysThinkingEnabled": true,
+  "editorMode": "vim",
+  "effortLevel": "xhigh",
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
-    "codex@openai-codex": true,
-    "skill-creator@claude-plugins-official": true,
-    "reviewing-skills@sen-marketplace": true,
-    "cloudflare@cloudflare": true,
-    "slack@claude-plugins-official": true,
     "cheese-design-system@sen-marketplace": true,
-    "gopls-lsp@claude-plugins-official": true
+    "cloudflare@cloudflare": true,
+    "codex@openai-codex": true,
+    "figma@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "reviewing-skills@sen-marketplace": true,
+    "skill-creator@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
+    "cloudflare": {
+      "source": {
+        "repo": "cloudflare/skills",
+        "source": "github"
+      }
+    },
     "openai-codex": {
       "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
+        "repo": "openai/codex-plugin-cc",
+        "source": "github"
       }
     },
     "sen-marketplace": {
       "source": {
-        "source": "github",
-        "repo": "sen-corporation/claude-code-plugins"
-      }
-    },
-    "cloudflare": {
-      "source": {
-        "source": "github",
-        "repo": "cloudflare/skills"
+        "repo": "sen-corporation/claude-code-plugins",
+        "source": "github"
       }
     }
   },
+  "feedbackSurveyState": {
+    "lastShownTime": 1754061737891
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux notify --title 'Claude Code' --body '許可が必要です' 2>/dev/null || true",
+            "type": "command"
+          }
+        ],
+        "matcher": "permission_prompt"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash ~/.claude/scripts/worktree-sync.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "EnterWorktree|ExitWorktree"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/hanabusa.kotaro/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ]
+  },
   "language": "日本語",
-  "alwaysThinkingEnabled": true,
-  "tui": "default",
-  "skipDangerousModePermissionPrompt": true,
-  "skipWorkflowUsageWarning": true,
-  "theme": "light-daltonized",
-  "editorMode": "vim",
-  "preferredNotifChannel": "terminal_bell",
-  "agentPushNotifEnabled": true,
+  "model": "claude-fable-5[1m]",
   "permissions": {
     "allow": [
       "Bash(nb:*)",
@@ -106,7 +113,13 @@
       "Bash(rm -rf:*)"
     ]
   },
-  "feedbackSurveyState": {
-    "lastShownTime": 1754061737891
-  }
+  "preferredNotifChannel": "terminal_bell",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "statusLine": {
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.cwd'); user=$(whoami); host=$(hostname -s); display_dir=\"${cwd/#$HOME/~}\"; git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" --no-optional-locks branch --show-current 2>/dev/null || echo \"\"); if [ -n \"$branch\" ]; then dirty=\"\"; staged=\"\"; untracked=\"\"; if ! git -C \"$cwd\" --no-optional-locks diff --quiet 2>/dev/null; then dirty=\"*\"; fi; if ! git -C \"$cwd\" --no-optional-locks diff --cached --quiet 2>/dev/null; then staged=\"+\"; fi; if [ -n \"$(git -C \"$cwd\" --no-optional-locks ls-files --others --exclude-standard 2>/dev/null)\" ]; then untracked=\"%\"; fi; git_info=\" $(printf '\\033[38;5;208m')($branch$dirty$staged$untracked)$(printf '\\033[0m')\"; fi; fi; printf \"%s@%s $(printf '\\033[34m')%s$(printf '\\033[0m')%s \" \"$user\" \"$host\" \"$display_dir\" \"$git_info\"",
+    "type": "command"
+  },
+  "theme": "light-daltonized",
+  "tui": "default"
 }
