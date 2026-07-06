@@ -1,6 +1,7 @@
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 model = "gpt-5.5"
 model_reasoning_effort = "xhigh"
+personality = "pragmatic"
 
 [projects."/Users/hanabusa.kotaro"]
 trust_level = "trusted"
@@ -29,10 +30,14 @@ trust_level = "trusted"
 [projects."/Users/hanabusa.kotaro/sen/8122-ec"]
 trust_level = "trusted"
 
+[projects."/Users/hanabusa.kotaro/sen/idp-front"]
+trust_level = "trusted"
+
 [tui]
-status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens"]
+status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens", "model", "branch-changes", "context-remaining", "context-used", "five-hour-limit", "task-progress"]
 status_line_use_colors = true
 pet = "null-signal"
+theme = "monokai-extended"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
@@ -46,13 +51,13 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-06-24T01:12:29Z"
-last_revision = "bb335391eb831a044ce74d5bd4e30e46fc695096"
+last_updated = "2026-07-06T23:42:54Z"
+last_revision = "b47ef13563948b2e5fa99451b3ead4f670a3bef8"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
 [marketplaces.cloudflare]
-last_updated = "2026-06-23T00:57:48Z"
+last_updated = "2026-07-06T08:38:39Z"
 last_revision = "27ce0c0e159225caa7ed30ebefd4107aa6c52497"
 source_type = "git"
 source = "https://github.com/cloudflare/skills.git"
@@ -64,8 +69,8 @@ source_type = "git"
 source = "https://github.com/openai/codex-plugin-cc.git"
 
 [marketplaces.sen-marketplace]
-last_updated = "2026-06-10T00:13:56Z"
-last_revision = "e3a19d074fc43fd493945d3609c6e1cd4959b8f1"
+last_updated = "2026-07-02T05:16:45Z"
+last_revision = "ac449756e84506d2e836ec2c55ad2d9246c0b463"
 source_type = "git"
 source = "https://github.com/sen-corporation/claude-code-plugins.git"
 
@@ -122,28 +127,41 @@ enabled = true
 [plugins."pdf@openai-primary-runtime"]
 enabled = true
 
+[plugins."gopls-lsp@claude-plugins-official"]
+enabled = true
+
+[plugins."typescript-lsp@claude-plugins-official"]
+enabled = true
+
+[plugins."cloudflare@cloudflare"]
+enabled = true
+
+[plugins."php-lsp@claude-plugins-official"]
+enabled = true
+
 [features]
+hooks = true
 js_repl = false
 terminal_resize_reflow = true
+memories = true
 
 [mcp_servers.node_repl]
-args = []
 command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120
+startup_timeout_sec = 120.0
 
 [mcp_servers.node_repl.env]
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/hanabusa.kotaro/.codex"
-CODEX_HOME = "/Users/hanabusa.kotaro/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
 BROWSER_USE_CODEX_APP_VERSION = "26.609.41114"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+CODEX_HOME = "/Users/hanabusa.kotaro/.codex"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/hanabusa.kotaro/.codex"
 
 [mcp_servers.cheese]
 command = "npx"
@@ -152,6 +170,18 @@ cwd = "/tmp"
 startup_timeout_sec = 30
 enabled = true
 env_vars = ["GITHUB_TOKEN", "NPM_TOKEN"]
+
+[mcp_servers.cheese.tools.list_components]
+approval_mode = "approve"
+
+[mcp_servers.cheese.tools.get_component]
+approval_mode = "approve"
+
+[mcp_servers.cheese.tools.search]
+approval_mode = "approve"
+
+[mcp_servers.cheese.tools.get_figma_code_connect]
+approval_mode = "approve"
 
 [desktop.open-in-target-preferences]
 global = "ghostty"
@@ -185,3 +215,27 @@ trusted_hash = "sha256:e6b9df143de11443eb576c38874cf6e0c48358f948170948fdf630f1c
 
 [hooks.state."codex@openai-codex:hooks/hooks.json:stop:0:0"]
 trusted_hash = "sha256:3dfaa7e4f022570b260b8a8cf4ac7585c986175256b887a4723fac4f358a482f"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:a7737395be80facd2f58b2cf68167b9af1c1fc5e198229e2a9705f5d1be86911"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:1:0"]
+trusted_hash = "sha256:c6deef9f2728c36dbf613f0ee34ef542f2c218a8672aad2468631cd25606fd6e"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:2:0"]
+trusted_hash = "sha256:0b8547c4f1dd59e93b37cc160af78724da9282101950e191feabeff1e3d55cf1"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:6df0b9e6d5c2f0652515eb4dc38b1f62ca0baaf40f2abcf8b33f0c22ddea44aa"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:1:0"]
+trusted_hash = "sha256:bb75b84318d3eb1486d8ddfd27721bd759a2aceddb6c8f613d358d3853fb131c"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:2:0"]
+trusted_hash = "sha256:9266f842adebb95a8efcc8052e9fbee53775fd6b380256622d9a2f712164403c"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:f2c52795f1c7ce9c3d5dcf707b32c2e772d522ccabd4cc4b29031b62e9b5a189"
+
+[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:b0db1f41a74201aff79dc4ac7bf6660654e5c5a6f5ebf6c0b0647a97b765f31d"
