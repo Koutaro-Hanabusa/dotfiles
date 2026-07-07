@@ -74,7 +74,9 @@
         command -v jq >/dev/null 2>&1 || return 0
         command herdr pane edges --current 2>/dev/null | command jq -e '.result.edges.right == true' >/dev/null 2>&1 || return 0
 
-        command herdr pane split --current --direction right --ratio 0.4 --cwd "$PWD" --no-focus >/dev/null 2>&1 || true
+        local split_output
+        split_output=$(command herdr pane split --current --direction right --ratio 0.7 --cwd "$PWD" --no-focus 2>/dev/null) || return 0
+        printf '%s' "$split_output" | command jq -r '.result.pane.pane_id // empty' 2>/dev/null
       }
 
       nvim() {
@@ -83,8 +85,14 @@
             command nvim "$@"
             ;;
           *)
-            _open_herdr_editor_split
+            local herdr_editor_split_pane_id
+            herdr_editor_split_pane_id=$(_open_herdr_editor_split)
             command nvim "$@"
+            local nvim_status=$?
+            if [[ -n "$herdr_editor_split_pane_id" ]]; then
+              command herdr pane close "$herdr_editor_split_pane_id" >/dev/null 2>&1 || true
+            fi
+            return $nvim_status
             ;;
         esac
       }

@@ -117,15 +117,15 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 
 `claude` コマンドは常に実バイナリ（`~/.vite-plus/bin/claude`）を `--mcp-config ~/.mcp.json` 付きで起動する。
 
-ターミナルワークスペースの管理には [herdr](https://herdr.dev)（AI コーディングエージェント向けのターミナルワークスペースマネージャ）を使い、nvim は herdr のワークスペース内で起動する。herdr は nix profile でインストールし、設定は `home-manager/herdr/config.toml` を `~/.config/herdr/config.toml` に symlink して管理する。キーバインドの prefix は `ctrl+space`。
+ターミナルワークスペースの管理には [herdr](https://herdr.dev)（AI コーディングエージェント向けのターミナルワークスペースマネージャ）を使い、nvim は herdr のワークスペース内で起動する。herdr は nix profile でインストールし、設定は `home-manager/herdr/config.toml` を `~/.config/herdr/config.toml` に symlink して管理する。キーバインドの prefix は `ctrl+b`。
 
 ### 起動コマンド
 
 | コマンド | 動作 |
 |----------|------|
 | `claude` | Claude Code ネイティブ CLI（実バイナリ + `--mcp-config ~/.mcp.json`） |
-| `nvim` | nvimを起動（herdr内では右側が空いていれば shell split も開く） |
-| `vim` | nvimを起動（herdr内では右側が空いていれば shell split も開く） |
+| `nvim` | nvimを起動（herdr内では右側が空いていれば 30% 幅の shell split を開き、終了時に閉じる） |
+| `vim` | nvimを起動（herdr内では右側が空いていれば 30% 幅の shell split を開き、終了時に閉じる） |
 
 ## Git関連ツール
 
