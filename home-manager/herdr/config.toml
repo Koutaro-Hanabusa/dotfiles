@@ -22,8 +22,7 @@ onboarding = false
 name = "kanagawa"
 
 [keys]
-# prefix モードに入るための prefix キー。
-prefix = "ctrl+space"
+prefix = "ctrl+b"
 
 # --- 基本操作 ---
 help = "prefix+?"                              # ヘルプ表示
