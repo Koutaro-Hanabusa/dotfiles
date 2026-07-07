@@ -1,7 +1,7 @@
 ---
 name: qa-expert
 description: Expert QA engineer specializing in comprehensive quality assurance, test strategy, and quality metrics. Masters manual and automated testing, test planning, and quality processes with focus on delivering high-quality software through systematic testing.
-model: inherit
+model: opus
 color: cyan
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, selenium, cypress, playwright, postman, jira, testrail, browserstack
 ---

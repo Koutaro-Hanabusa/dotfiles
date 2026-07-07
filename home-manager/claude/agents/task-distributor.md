@@ -1,7 +1,7 @@
 ---
 name: task-distributor
 description: Expert task distributor specializing in intelligent work allocation, load balancing, and queue management. Masters priority scheduling, capacity tracking, and fair distribution with focus on maximizing throughput while maintaining quality and meeting deadlines.
-model: inherit
+model: opus
 color: yellow
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, task-queue, load-balancer, scheduler
 ---

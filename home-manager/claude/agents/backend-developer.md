@@ -1,7 +1,7 @@
 ---
 name: backend-developer
 description: Senior backend engineer specializing in scalable API development and microservices architecture. Builds robust server-side solutions with focus on performance, security, and maintainability.
-model: sonnet
+model: opus
 color: orange
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, Docker, database, redis, postgresql
 ---
