@@ -72,8 +72,10 @@
         [[ -n "''${HERDR_PANE_ID:-}" ]] || return 0
         command -v herdr >/dev/null 2>&1 || return 0
         command -v jq >/dev/null 2>&1 || return 0
-        command herdr pane edges --current 2>/dev/null | command jq -e '.result.edges.right == true' >/dev/null 2>&1 || return 0
 
+        # `herdr pane split --current --direction right` は現在の pane を分割するため、
+        # ワークスペースの右端かどうかに関わらず常に成功する。
+        # ratio 0.7 → 元 pane が 70%、右 split が 30% になる。
         local split_output
         split_output=$(command herdr pane split --current --direction right --ratio 0.7 --cwd "$PWD" --no-focus 2>/dev/null) || return 0
         printf '%s' "$split_output" | command jq -r '.result.pane.pane_id // empty' 2>/dev/null
