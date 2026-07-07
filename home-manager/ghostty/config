@@ -1,5 +1,4 @@
-# Ghostty / cmux 共通Config
-# cmuxもこのファイルを読み込む（~/.config/ghostty/config）
+# Ghostty Config（~/.config/ghostty/config に symlink される）
 
 theme = Kanagawa Dragon
 background = #181616

@@ -82,6 +82,9 @@ in
     ".codex/config.toml".source = mkLink "codex/config.toml";
     ".codex/instructions.md".source = mkLink "codex/instructions.md";
 
+    # Herdr（config.toml のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
+    ".config/herdr/config.toml".source = mkLink "herdr/config.toml";
+
     # Claude OTel Monitoring
     ".config/claude-otel-monitoring".source = mkLink "claude-otel-monitoring";
 

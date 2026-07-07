@@ -44,7 +44,7 @@
       {
         "hooks": [
           {
-            "command": "export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux notify --title 'Claude Code' --body '許可が必要です' 2>/dev/null || true",
+            "command": "herdr notification show 'Claude Code' --body '許可が必要です' --sound request 2>/dev/null || true",
             "type": "command"
           }
         ],
@@ -78,7 +78,7 @@
       {
         "hooks": [
           {
-            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true",
+            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; herdr notification show 'Claude Code' --body '作業が完了しました' --sound done 2>/dev/null || true",
             "type": "command"
           }
         ],

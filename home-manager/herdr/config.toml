@@ -1,0 +1,75 @@
+# Herdr 設定ファイル（dotfiles 管理）
+#
+# このファイルは dotfiles リポジトリで管理され、home-manager switch により
+# ~/.config/herdr/config.toml へ out-of-store symlink される（編集が即時反映される）。
+# ~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため、
+# ディレクトリ丸ごとではなく config.toml 単体を symlink している。
+#
+# 設定変更の反映方法:
+#   - `herdr server reload-config` を実行する
+#   - もしくは herdr 上で prefix+shift+r（reload_config）を押す
+#
+# キーバインドはデフォルト値を明示的に書き下している（挙動は変えていない）。
+# 変更したい場合は該当行の値を編集する。
+
+# 起動時のオンボーディング（初回セットアップ通知）を表示しない。
+onboarding = false
+
+[theme]
+# ghostty（Kanagawa Dragon）に合わせて kanagawa テーマを使用する。
+# 他の組み込みテーマ: catppuccin, terminal, tokyo-night, dracula, nord,
+#                     gruvbox, one-dark, solarized, rose-pine, vesper
+name = "kanagawa"
+
+[keys]
+# prefix モードに入るための prefix キー（tmux 同様）。
+prefix = "ctrl+b"
+
+# --- 基本操作 ---
+help = "prefix+?"                              # ヘルプ表示
+settings = "prefix+s"                          # 設定画面
+detach = "prefix+q"                            # デタッチ（セッションから抜ける）
+reload_config = "prefix+shift+r"               # 設定リロード（このファイルの再読み込み）
+open_notification_target = "prefix+o"          # 通知元のペイン/ワークスペースを開く
+goto = "prefix+g"                              # goto（クイックジャンプ）
+toggle_sidebar = "prefix+b"                    # サイドバーの表示/非表示
+
+# --- ワークスペース ---
+workspace_picker = "prefix+w"                  # ワークスペース選択
+new_workspace = "prefix+shift+n"               # 新規ワークスペース
+new_worktree = "prefix+shift+g"                # 新規 git worktree ワークスペース
+rename_workspace = "prefix+shift+w"            # ワークスペース名変更
+close_workspace = "prefix+shift+d"             # ワークスペースを閉じる
+# 以下はデフォルト未割り当て（例示。使いたければ値を設定する）:
+# previous_workspace = ""                      # 前のワークスペースへ
+# next_workspace = ""                          # 次のワークスペースへ
+# switch_workspace = ""                        # インデックス指定（例: "prefix+shift+1..9"）
+# open_worktree = ""                           # worktree を開く
+# remove_worktree = ""                         # worktree を削除（確認あり）
+# focus_agent = ""                             # エージェント行にフォーカス（例: "prefix+alt+1..9"）
+# previous_agent = ""                          # 前のエージェントへ
+# next_agent = ""                              # 次のエージェントへ
+
+# --- タブ ---
+new_tab = "prefix+c"                           # 新規タブ
+rename_tab = "prefix+shift+t"                  # タブ名変更
+previous_tab = "prefix+p"                      # 前のタブへ
+next_tab = "prefix+n"                          # 次のタブへ
+switch_tab = "prefix+1..9"                     # 番号でタブ切り替え
+close_tab = "prefix+shift+x"                   # タブを閉じる
+
+# --- ペイン ---
+rename_pane = "prefix+shift+p"                 # ペイン名変更
+edit_scrollback = "prefix+e"                   # スクロールバックをエディタで開く
+focus_pane_left = "prefix+h"                   # 左のペインへフォーカス
+focus_pane_down = "prefix+j"                   # 下のペインへフォーカス
+focus_pane_up = "prefix+k"                     # 上のペインへフォーカス
+focus_pane_right = "prefix+l"                  # 右のペインへフォーカス
+cycle_pane_next = "prefix+tab"                 # 次のペインへ巡回
+cycle_pane_previous = "prefix+shift+tab"       # 前のペインへ巡回
+split_vertical = "prefix+v"                    # 垂直分割
+split_horizontal = "prefix+minus"              # 水平分割
+close_pane = "prefix+x"                         # ペインを閉じる
+zoom = "prefix+z"                              # ペインのズーム（全画面トグル）
+resize_mode = "prefix+r"                       # リサイズモード
+# last_pane = ""                               # 直前のペインへ（デフォルト未割り当て）
