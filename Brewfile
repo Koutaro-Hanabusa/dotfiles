@@ -55,7 +55,6 @@ brew "poppler"                        # PDF処理
 # ====================
 # Cask (GUI Apps)
 # ====================
-cask "cmux"
 cask "ghostty"
 
 # ====================

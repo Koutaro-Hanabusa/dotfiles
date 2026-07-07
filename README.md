@@ -108,20 +108,23 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 - `.claude` — Claude Code
 - `.config/claude-otel-monitoring` — Claude OTel Monitoring
 - `.config/gh-dash` — gh-dash
+- `.config/herdr/config.toml` — Herdr
 - `.nbrc`, `.prettierrc`, `.textlintrc.json` 等
 
 ---
 
 ## nvim + Claude Code 統合環境
 
-`claude` は通常シェルでは `cmux claude-teams` を起動し、cmux 内では実バイナリに委譲する。これで普段は team モードで入りつつ、cmux 内でも `claude` をそのまま使える。nvim は cmux 内で別途起動する。
+`claude` コマンドは常に実バイナリ（`~/.vite-plus/bin/claude`）を `--mcp-config ~/.mcp.json` 付きで起動する。
+
+ターミナルワークスペースの管理には [herdr](https://herdr.dev)（AI コーディングエージェント向けのターミナルワークスペースマネージャ）を使い、nvim は herdr のワークスペース内で起動する。herdr は nix profile でインストールし、設定は `home-manager/herdr/config.toml` を `~/.config/herdr/config.toml` に symlink して管理する。キーバインドの prefix は `ctrl+b`。
 
 ### 起動コマンド
 
 | コマンド | 動作 |
 |----------|------|
-| `claude` | 通常シェルでは cmux claude-teams、cmux 内では Claude Code ネイティブ CLI |
-| `vim` / `nvc` | nvimを起動 |
+| `claude` | Claude Code ネイティブ CLI（実バイナリ + `--mcp-config ~/.mcp.json`） |
+| `vim` | nvimを起動 |
 
 ### Claude Code連携キーバインド（claudecode.nvim）
 

@@ -16,8 +16,7 @@
       grep = "rg";
 
       # 開発ツール
-      vim = "nvc";
-      gg = "ghq-get-cd";
+      vim = "nvim";
     };
 
     sessionVariables = {
@@ -43,7 +42,6 @@
 
       # Claude Code は vite-plus(vp) 管理の install に一本化
       export PATH="$HOME/.local/bin:$PATH"
-      export CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude"
       # 多数の同時セッションが共有prefixを奪い合い自動更新が暴走するため無効化（更新は手動 `claude update`）
       export DISABLE_AUTOUPDATER="1"
       # miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
@@ -66,13 +64,9 @@
 
       # Codex CLI は vite-plus(vp) の PATH 解決に任せる（~/.vite-plus/bin/codex -> vp）
 
-      # `claude` は外では cmux teams を起動し、cmux 内では実バイナリに委譲する
+      # `claude` は常に実バイナリを起動（user スコープ外の MCP 定義を明示読み込み）
       claude() {
-        if [[ -n "$CMUX_SOCKET_PATH" ]]; then
-          command "$HOME/.vite-plus/bin/claude" --mcp-config ~/.mcp.json "$@"
-        else
-          CMUX_CUSTOM_CLAUDE_PATH="$HOME/.vite-plus/bin/claude" command cmux claude-teams -- --mcp-config ~/.mcp.json "$@"
-        fi
+        command "$HOME/.vite-plus/bin/claude" --mcp-config ~/.mcp.json "$@"
       }
 
       # Git公式のgit-prompt.shを使用してブランチ名を表示（Nix管理のgitパッケージから読み込み）
@@ -101,42 +95,9 @@
       zle -N ghq-fzf
       bindkey '^G' ghq-fzf
 
-      # ghqで取得してすぐcdするショートカット
-      ghq-get-cd() {
-        ghq get "$@" && cd "$(ghq list -p | fzf --query "''${@##*/}" --select-1)"
-      }
-
-      # nvim起動（cmux環境なら右30%にターミナルを分割、フォーカスは左に戻す）
-      nvc() {
-        local target="''${1:-.}"
-        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          local orig_pane
-          orig_pane=$(cmux identify 2>/dev/null | command grep -o '"pane_ref" *: *"pane:[0-9]*"' | head -1 | command grep -o 'pane:[0-9]*')
-          local split_output
-          split_output=$(cmux new-split right 2>&1)
-          local split_surface
-          split_surface=$(echo "$split_output" | command grep -o 'surface:[0-9]*' | head -1)
-          # 右paneを縮小して約30%にする（左に向かってリサイズ）
-          if [[ -n "$split_surface" ]]; then
-            local cols
-            cols=$(tput cols 2>/dev/null || echo 80)
-            local shrink=$(( cols * 20 / 100 ))  # 50%→30%にするため20%分縮小
-            [[ $shrink -gt 0 ]] && cmux resize-pane --surface "$split_surface" -L --amount "$shrink" 2>/dev/null
-          fi
-          # フォーカスを元の左側に戻す
-          [[ -n "$orig_pane" ]] && cmux focus-pane --pane "$orig_pane" 2>/dev/null
-          command nvim "$target"
-          [[ -n "$split_surface" ]] && cmux close-surface --surface "$split_surface" 2>/dev/null
-        else
-          command nvim "$target"
-        fi
-      }
-
-      # マークダウン表示（cmux > glow > less）
+      # マークダウン表示（glow > less）
       _show_md() {
-        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          cmux markdown open "$1"
-        elif command -v glow &> /dev/null; then
+        if command -v glow &> /dev/null; then
           glow -p "$1"
         else
           less "$1"
@@ -180,7 +141,7 @@
 
       # ── nb ナレッジ（ターミナル完結: fzf + glow/nvim） ──
 
-      # nbナレッジをfzfでブラウズ → 左nvim + 右cmuxビューア
+      # nbナレッジをfzfでブラウズして閲覧
       nbo() {
         local file
         if [[ -n "$1" ]]; then
@@ -189,44 +150,7 @@
           file=$({ fd -e md . "$HOME/.nb/home/knowledge" 2>/dev/null; fd -e md . "$HOME/.nb/work/knowledge" 2>/dev/null; } | fzf --preview "glow -s dark {}" --preview-window=right:60%)
         fi
         [[ -z "$file" ]] && return
-
-        if [[ -n "$CMUX_SOCKET_PATH" ]] && command -v cmux &> /dev/null; then
-          # cmux出力からsurface:Nを抽出するヘルパー
-          _extract_surface() { echo "$1" | command grep -o 'surface:[0-9]*' | head -1; }
-          # 右にcmuxビューアを開く
-          local viewer_surface
-          viewer_surface=$(_extract_surface "$(cmux markdown open "$file" 2>&1)")
-          # ビューアの下にターミナルを開く
-          local term_surface
-          term_surface=$(_extract_surface "$(cmux new-split down --surface "$viewer_surface" 2>&1)")
-          # nvimで編集、終了時にビューアとターミナルを閉じる
-          command nvim "$file"
-          [[ -n "$term_surface" ]] && cmux close-surface --surface "$term_surface" 2>/dev/null
-          [[ -n "$viewer_surface" ]] && cmux close-surface --surface "$viewer_surface" 2>/dev/null
-          unfunction _extract_surface
-        else
-          _show_md "$file"
-        fi
-      }
-
-      # nbナレッジを全文検索してcmux/glowで閲覧
-      nbs() {
-        local query="''${1:?Usage: nbs <検索ワード>}"
-        local file
-        file=$(rg -l "$query" "$HOME/.nb/home/knowledge" "$HOME/.nb/work/knowledge" 2>/dev/null | \
-          fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        [[ -n "$file" ]] && _show_md "$file"
-      }
-
-      # nbナレッジをfzfで選んでnvimで編集
-      nbe() {
-        local file
-        if [[ -n "$1" ]]; then
-          file=$(fd -e md . "$HOME/.nb/$1" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        else
-          file=$({ fd -e md . "$HOME/.nb/home/knowledge" 2>/dev/null; fd -e md . "$HOME/.nb/work/knowledge" 2>/dev/null; } | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        fi
-        [[ -n "$file" ]] && command nvim "$file"
+        _show_md "$file"
       }
 
     '';
