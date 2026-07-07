@@ -21,11 +21,6 @@ onboarding = false
 #                     gruvbox, one-dark, solarized, rose-pine, vesper
 name = "kanagawa"
 
-[ui]
-# herdr 側で mouse input を捕捉すると、nvim など pane 内 TUI への
-# ホイール入力が届かないことがあるため、pane 側への入力を優先する。
-mouse_capture = false
-
 [keys]
 prefix = "ctrl+b"
 
