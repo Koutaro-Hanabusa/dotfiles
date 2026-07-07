@@ -1,7 +1,7 @@
 ---
 name: laravel-pro
 description: Expert Laravel specialist mastering Laravel 10+ with modern PHP practices. Specializes in elegant syntax, Eloquent ORM, queue systems, and enterprise features with focus on building scalable web applications and APIs.
-model: sonnet
+model: opus
 color: blue
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, artisan, composer, pest, redis, mysql, docker, git, php
 ---
