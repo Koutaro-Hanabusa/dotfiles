@@ -80,6 +80,8 @@ in
 
     # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
     ".codex/config.toml".source = mkLink "codex/config.toml";
+    ".codex/hooks.json".source = mkLink "codex/hooks.json";
+    ".codex/hooks".source = mkLink "codex/hooks";
     ".codex/instructions.md".source = mkLink "codex/instructions.md";
 
     # Herdr（config.toml のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
