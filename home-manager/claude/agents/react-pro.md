@@ -1,7 +1,7 @@
 ---
 name: react-pro
 description: Expert React specialist mastering React 18+ with modern patterns and ecosystem. Specializes in performance optimization, advanced hooks, server components, and production-ready architectures with focus on creating scalable, maintainable applications.
-model: opus
+model: sonnet
 color: orange
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, vite, webpack, jest, cypress, storybook, react-devtools, npm, typescript
 ---
