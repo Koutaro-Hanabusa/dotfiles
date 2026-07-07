@@ -15,8 +15,6 @@
       tree = "eza --tree --icons";
       grep = "rg";
 
-      # 開発ツール
-      vim = "nvim";
     };
 
     sessionVariables = {
@@ -67,6 +65,32 @@
       # `claude` は常に実バイナリを起動（user スコープ外の MCP 定義を明示読み込み）
       claude() {
         command "$HOME/.vite-plus/bin/claude" --mcp-config ~/.mcp.json "$@"
+      }
+
+      _open_herdr_editor_split() {
+        [[ -o interactive && -t 0 && -t 1 ]] || return 0
+        [[ -n "''${HERDR_PANE_ID:-}" ]] || return 0
+        command -v herdr >/dev/null 2>&1 || return 0
+        command -v jq >/dev/null 2>&1 || return 0
+        command herdr pane edges --current 2>/dev/null | command jq -e '.result.edges.right == true' >/dev/null 2>&1 || return 0
+
+        command herdr pane split --current --direction right --ratio 0.4 --cwd "$PWD" --no-focus >/dev/null 2>&1 || true
+      }
+
+      nvim() {
+        case " $* " in
+          *" --headless "*|*" --version "*|*" --help "*|*" -v "*|*" -h "*)
+            command nvim "$@"
+            ;;
+          *)
+            _open_herdr_editor_split
+            command nvim "$@"
+            ;;
+        esac
+      }
+
+      vim() {
+        nvim "$@"
       }
 
       # Git公式のgit-prompt.shを使用してブランチ名を表示（Nix管理のgitパッケージから読み込み）
