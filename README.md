@@ -113,7 +113,7 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 
 ---
 
-## nvim + Claude Code 統合環境
+## nvim + Claude Code CLI 環境
 
 `claude` コマンドは常に実バイナリ（`~/.vite-plus/bin/claude`）を `--mcp-config ~/.mcp.json` 付きで起動する。
 
@@ -125,19 +125,6 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 |----------|------|
 | `claude` | Claude Code ネイティブ CLI（実バイナリ + `--mcp-config ~/.mcp.json`） |
 | `vim` | nvimを起動 |
-
-### Claude Code連携キーバインド（claudecode.nvim）
-
-nvim内でClaude Codeと連携するためのキーバインド。
-
-| キー | 動作 |
-|------|------|
-| `Space` `ar` | Claude Codeセッション再開（ピッカー） |
-| `Space` `ao` | 直前のセッションを継続 |
-| `Space` `as` | 選択範囲をClaudeに送信（Visual mode） |
-| `Space` `aa` | 現在のファイルをClaudeに追加 |
-
----
 
 ## Git関連ツール
 
@@ -612,6 +599,5 @@ lazy.nvimで管理。1日1回バックグラウンドで更新チェックし、
 |-----------|------|
 | telescope.nvim | ファジーファインダー |
 | toggleterm.nvim | ターミナル管理 |
-| claudecode.nvim | Claude Code統合 |
 | img-clip.nvim | クリップボードから画像ペースト（`Space` `p`） |
 | image.nvim | ターミナル内画像表示 |

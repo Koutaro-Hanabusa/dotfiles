@@ -90,17 +90,16 @@
 - `dothelp`/`vimhelp` コマンドが意図通りに動かない
 - **対策**: Brewfileにglow追加
 
-### 🟢 優先度: 低（7件）
+### 🟢 優先度: 低（6件）
 
 | # | 問題 | ファイル |
 |---|------|----------|
 | 16 | nvc()関数にコメントアウトが散在 | dot_zshrc:69-90 |
 | 17 | `vim.loop.fs_stat` は deprecated (→ `vim.uv`) | init.lua:103 |
 | 18 | yazi.nvim が `enabled=false` で残っている | plugins/yazi.lua:3 |
-| 19 | toggleterm と claudecode のターミナル機能が重複 | toggleterm.lua / claudecode.lua |
-| 20 | conform.nvim の timeout_ms=500 が短い（大きなファイルでタイムアウト） | conform.lua:20 |
-| 21 | lazygit の設定ファイルが chezmoi 管理外 | ~/.config/lazygit/ |
-| 22 | gitconfig の core.editor が nvim でなく vim | ~/.gitconfig |
+| 19 | conform.nvim の timeout_ms=500 が短い（大きなファイルでタイムアウト） | conform.lua:20 |
+| 20 | lazygit の設定ファイルが chezmoi 管理外 | ~/.config/lazygit/ |
+| 21 | gitconfig の core.editor が nvim でなく vim | ~/.gitconfig |
 
 ---
 
