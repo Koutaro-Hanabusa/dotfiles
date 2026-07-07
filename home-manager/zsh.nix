@@ -68,7 +68,10 @@
       }
 
       _open_herdr_editor_split() {
-        [[ -o interactive && -t 0 && -t 1 ]] || return 0
+        # 注意: interactive / -t チェックは入れない。
+        # nvim() から `$()` 経由で呼ばれた subshell は非インタラクティブかつ stdout がパイプ
+        # なので、それらを条件にすると split が絶対に生えない。
+        # HERDR_PANE_ID は herdr pane 内でしか set されないので、これだけで判定に十分。
         [[ -n "''${HERDR_PANE_ID:-}" ]] || return 0
         command -v herdr >/dev/null 2>&1 || return 0
         command -v jq >/dev/null 2>&1 || return 0
