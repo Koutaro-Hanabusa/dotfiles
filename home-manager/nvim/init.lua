@@ -149,22 +149,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
-local function open_startup_terminal()
-  if #vim.api.nvim_list_uis() == 0 then return end
-
-  local source_win = vim.api.nvim_get_current_win()
-  local width = math.max(math.floor(vim.o.columns * 0.4), 40)
-
-  vim.cmd("botright vertical new")
-  vim.cmd("vertical resize " .. width)
-  vim.cmd("terminal")
-
-  if vim.api.nvim_win_is_valid(source_win) then
-    vim.api.nvim_set_current_win(source_win)
-    vim.cmd("stopinsert")
-  end
-end
-
 -- Auto-open layout on startup
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -175,10 +159,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
       -- Move to the main window (not nvim-tree)
       vim.defer_fn(function()
         vim.cmd("wincmd l")
-        open_startup_terminal()
       end, 100)
-    else
-      vim.defer_fn(open_startup_terminal, 100)
     end
   end,
 })

@@ -9,7 +9,7 @@
 #   - `herdr server reload-config` を実行する
 #   - もしくは herdr 上で prefix+shift+r（reload_config）を押す
 #
-# キーバインドはデフォルト値を明示的に書き下している（挙動は変えていない）。
+# 主要キーバインドは dotfiles 側で管理する。
 # 変更したい場合は該当行の値を編集する。
 
 # 起動時のオンボーディング（初回セットアップ通知）を表示しない。
@@ -22,8 +22,8 @@ onboarding = false
 name = "kanagawa"
 
 [keys]
-# prefix モードに入るための prefix キー（tmux 同様）。
-prefix = "ctrl+b"
+# prefix モードに入るための prefix キー。
+prefix = "ctrl+space"
 
 # --- 基本操作 ---
 help = "prefix+?"                              # ヘルプ表示
