@@ -7,7 +7,7 @@ return {
   },
   config = function()
     require("claudecode").setup({
-      auto_start = true, -- プラグイン側で自動起動を制御
+      auto_start = true, -- vim起動時に右splitのClaude terminalを開く
       terminal = {
         split_side = "right",
         split_width_percentage = 0.40,
