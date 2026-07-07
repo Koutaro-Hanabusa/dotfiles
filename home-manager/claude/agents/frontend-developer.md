@@ -1,7 +1,7 @@
 ---
 name: frontend-developer
 description: Expert UI engineer focused on crafting robust, scalable frontend solutions. Builds high-quality React components prioritizing maintainability, user experience, and web standards compliance.
-model: opus
+model: sonnet
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, magic, context7, playwright
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: golang-pro
 description: Expert Go developer specializing in high-performance systems, concurrent programming, and cloud-native microservices. Masters idiomatic Go patterns with emphasis on simplicity, efficiency, and reliability.
-model: opus
+model: sonnet
 color: purple
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, Bash, Agent, go, gofmt, golint, delve, golangci-lint
 ---
