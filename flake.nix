@@ -24,7 +24,13 @@
         # claude はソース非公開なので unfree 明示許可（他パッケージには波及させない）
         config.allowUnfreePredicate =
           pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude" ];
-        overlays = [ nix-claude-code.overlays.default ];
+        overlays = [
+          nix-claude-code.overlays.default
+          # Codex CLI（公式 pre-built バイナリのインライン overlay）
+          (_final: prev: {
+            codex-cli = prev.callPackage ./home-manager/codex-cli.nix { };
+          })
+        ];
       };
       mkHome =
         {

@@ -47,6 +47,10 @@ in
     # Anthropic 公式の pre-built バイナリ（overlay は flake.nix で適用）。
     # 実行本体は zsh.nix の claude() ラッパー経由で --mcp-config を注入する。
     claude-code
+    # OpenAI Codex CLI（./codex-cli.nix の inline overlay）。
+    # vp shim (~/.vite-plus/bin/codex) が PATH で先勝ちするため、
+    # zsh.nix の codex() ラッパーで Nix ストア実体を直接叩く。
+    codex-cli
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
