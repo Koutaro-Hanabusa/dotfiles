@@ -38,9 +38,10 @@
       #  自体は正常動作しており機能影響はないため、公式の抑止フラグで黙らせる）
       export _ZO_DOCTOR=0
 
-      # Claude Code は vite-plus(vp) 管理の install に一本化
+      # Claude Code は Nix (nix-claude-code overlay) 管理に移行済み。
+      # 実バイナリは ~/.nix-profile/bin/claude、ラッパーは下の claude() 関数を参照。
       export PATH="$HOME/.local/bin:$PATH"
-      # 多数の同時セッションが共有prefixを奪い合い自動更新が暴走するため無効化（更新は手動 `claude update`）
+      # nix-claude-code の makeWrapper でも設定済みだが、shell 直起動の互換のため残す
       export DISABLE_AUTOUPDATER="1"
       # miseのshimsをPATHに追加（Claude Code等の非インタラクティブ環境用）
       export PATH="$HOME/.local/share/mise/shims:$PATH"
@@ -58,13 +59,13 @@
       export PATH="$HOME/go/bin:$PATH"
 
       # Vite+ (vp): PATH + vp関数ラッパー + zsh補完
+      # Codex CLI はここ経由で解決（~/.vite-plus/bin/codex -> vp）。
+      # Claude は Nix 管理に移行したので vp shim (~/.vite-plus/bin/claude) は使わない。
       [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
 
-      # Codex CLI は vite-plus(vp) の PATH 解決に任せる（~/.vite-plus/bin/codex -> vp）
-
-      # `claude` は常に実バイナリを起動（user スコープ外の MCP 定義を明示読み込み）
+      # `claude` は Nix ストアの実バイナリを直接叩く（vp shim をバイパス、MCP 定義を明示読み込み）
       claude() {
-        command "$HOME/.vite-plus/bin/claude" --mcp-config ~/.mcp.json "$@"
+        command ${pkgs.claude-code}/bin/claude --mcp-config ~/.mcp.json "$@"
       }
 
       _open_herdr_editor_split() {

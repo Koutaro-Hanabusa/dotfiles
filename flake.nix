@@ -11,13 +11,21 @@
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Claude Code CLI（Anthropic 公式の pre-built バイナリを毎時追随）
+    nix-claude-code.url = "github:ryoppippi/nix-claude-code";
   };
 
   outputs =
-    { nixpkgs, home-manager, hunk, ... }:
+    { nixpkgs, home-manager, hunk, nix-claude-code, ... }:
     let
       system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        # claude はソース非公開なので unfree 明示許可（他パッケージには波及させない）
+        config.allowUnfreePredicate =
+          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude" ];
+        overlays = [ nix-claude-code.overlays.default ];
+      };
       mkHome =
         {
           username,
