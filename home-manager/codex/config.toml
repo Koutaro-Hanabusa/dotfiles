@@ -52,8 +52,8 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-07-07T00:04:41Z"
-last_revision = "6659d4e4e5911f0df8bced4d23afac54716ecd53"
+last_updated = "2026-07-08T01:21:27Z"
+last_revision = "72a63d5d082937f3af121354e0c168bee1be4b56"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
@@ -64,8 +64,8 @@ source_type = "git"
 source = "https://github.com/cloudflare/skills.git"
 
 [marketplaces.openai-codex]
-last_updated = "2026-06-24T00:04:53Z"
-last_revision = "80c31f99570876c3ef40327838b0a2ca1ae2cd9c"
+last_updated = "2026-07-08T01:21:29Z"
+last_revision = "db52e28f4d9ded852ab3942cea316258ae4ef346"
 source_type = "git"
 source = "https://github.com/openai/codex-plugin-cc.git"
 
@@ -240,3 +240,9 @@ trusted_hash = "sha256:f2c52795f1c7ce9c3d5dcf707b32c2e772d522ccabd4cc4b29031b62e
 
 [hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:b0db1f41a74201aff79dc4ac7bf6660654e5c5a6f5ebf6c0b0647a97b765f31d"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:676511144a2fe67045a7698361d9fe3f296a0afc00bd52ede0a389db609b562d"
+
+[hooks.state."/Users/hanabusa.kotaro/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:e6f9daa418561e00da7e4487c6f4f8eeedb4d7c7ed54fab27178f3de214a1e2a"
