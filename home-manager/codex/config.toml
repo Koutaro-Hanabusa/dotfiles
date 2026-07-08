@@ -1,7 +1,8 @@
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 model = "gpt-5.5"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 personality = "pragmatic"
+approvals_reviewer = "auto_review"
 
 [projects."/Users/hanabusa.kotaro"]
 trust_level = "trusted"
