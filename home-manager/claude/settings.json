@@ -119,9 +119,11 @@
   "tui": "default",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "theme": "light-daltonized",
+  "theme": "dark",
   "editorMode": "vim",
+  "verbose": true,
   "preferredNotifChannel": "terminal_bell",
+  "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
