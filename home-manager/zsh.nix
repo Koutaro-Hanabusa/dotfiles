@@ -59,13 +59,18 @@
       export PATH="$HOME/go/bin:$PATH"
 
       # Vite+ (vp): PATH + vp関数ラッパー + zsh補完
-      # Codex CLI はここ経由で解決（~/.vite-plus/bin/codex -> vp）。
-      # Claude は Nix 管理に移行したので vp shim (~/.vite-plus/bin/claude) は使わない。
+      # Claude / Codex は Nix 管理に移行済みだが、vp 自体（Node ランタイム管理等）は残す。
+      # 下記の関数ラッパーで ~/.vite-plus/bin/{claude,codex} shim をバイパスする。
       [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
 
       # `claude` は Nix ストアの実バイナリを直接叩く（vp shim をバイパス、MCP 定義を明示読み込み）
       claude() {
         command ${pkgs.claude-code}/bin/claude --mcp-config ~/.mcp.json "$@"
+      }
+
+      # `codex` も同様に Nix ストア実体を直起動（vp shim をバイパス）
+      codex() {
+        command ${pkgs.codex-cli}/bin/codex "$@"
       }
 
       _open_herdr_editor_split() {
