@@ -42,6 +42,11 @@ in
     nmap
     pandoc
     jq # claude/scripts・grafana-cloud skill 等のフック/スクリプトが依存
+
+    # AI CLI
+    # Anthropic 公式の pre-built バイナリ（overlay は flake.nix で適用）。
+    # 実行本体は zsh.nix の claude() ラッパー経由で --mcp-config を注入する。
+    claude-code
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
