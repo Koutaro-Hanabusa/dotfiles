@@ -9,7 +9,6 @@ you must: When receiving instructions or questions from the user, always delegat
 - @.backend-developer
 - @.laravel-pro
 
-you must: When implementing designs or using the Figma DevMode MCP, refer to ../skills/frontend-design/SKILL.md for implementation.
 you must: After editing ANY file in this dotfiles repository, ALWAYS automatically commit + push to GitHub without asking. If a `.nix` file was changed, run `home-manager switch --flake ~/dotfiles` before committing. This is non-negotiable — never wait for the user to say "apply" or "push". Just do it immediately after every edit.
 you must: When a skill should be triggered (based on its trigger conditions in the skill description), ALWAYS invoke it via the `Skill` tool. NEVER read the skill content directly or act on it without going through the Skill tool. This is required for hook-based logging to work correctly. The PreToolUse hook only fires when the Skill tool is explicitly called.
 you must: When presenting output that originated from Codex (rescue, review, adversarial-review, stop-gate, or any Codex job result), wrap the ENTIRE content in a blockquote with a decorated header line. Format:
