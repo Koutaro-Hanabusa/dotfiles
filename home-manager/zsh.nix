@@ -63,14 +63,14 @@
       # 下記の関数ラッパーで ~/.vite-plus/bin/{claude,codex} shim をバイパスする。
       [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
 
-      # `claude` は Nix ストアの実バイナリを直接叩く（vp shim をバイパス、MCP 定義を明示読み込み）
+      # `claude` は現在の Home Manager profile 経由で実行する（vp shim をバイパス、MCP 定義を明示読み込み）
       claude() {
-        command ${pkgs.claude-code}/bin/claude --mcp-config ~/.mcp.json "$@"
+        command "$HOME/.nix-profile/bin/claude" --mcp-config ~/.mcp.json "$@"
       }
 
-      # `codex` も同様に Nix ストア実体を直起動（vp shim をバイパス）
+      # `codex` も同様に現在の Home Manager profile 経由で実行する（vp shim をバイパス）
       codex() {
-        command ${pkgs.codex-cli}/bin/codex "$@"
+        command "$HOME/.nix-profile/bin/codex" "$@"
       }
 
       _open_herdr_editor_split() {
