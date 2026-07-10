@@ -9,6 +9,8 @@ return {
     { "<leader>tv", desc = "Vertical terminal" },
     { "<leader>tf", desc = "Float terminal" },
     { "<leader>gh", desc = "Open gh-dash" },
+    { "<leader>hd", desc = "Review working tree with Hunk" },
+    { "<leader>hp", desc = "Review pull request with Hunk" },
   },
   config = function()
     require("toggleterm").setup({
@@ -71,5 +73,39 @@ return {
     end
 
     keymap("n", "<leader>gh", ghdash_toggle, { desc = "Open gh-dash" })
+
+    local hunk_worktree = Terminal:new({
+      cmd = "hunk diff --watch",
+      count = 2,
+      dir = "git_dir",
+      direction = "float",
+      float_opts = {
+        border = "curved",
+      },
+    })
+
+    keymap("n", "<leader>hd", function()
+      hunk_worktree:toggle()
+    end, { desc = "Review working tree with Hunk" })
+
+    keymap("n", "<leader>hp", function()
+      vim.ui.input({ prompt = "PR number / URL / branch (blank = current): " }, function(target)
+        if target == nil then
+          return
+        end
+
+        local target_arg = target == "" and "" or " " .. vim.fn.shellescape(target)
+        local hunk_pr = Terminal:new({
+          cmd = "gh pr diff" .. target_arg .. " --patch | hunk patch -",
+          count = 3,
+          dir = "git_dir",
+          direction = "float",
+          float_opts = {
+            border = "curved",
+          },
+        })
+        hunk_pr:toggle()
+      end)
+    end, { desc = "Review pull request with Hunk" })
   end,
 }
