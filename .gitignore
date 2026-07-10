@@ -51,6 +51,9 @@ home-manager/claude/.last-cleanup
 home-manager/claude/plugins/plugin-catalog-cache.json
 home-manager/claude/stats-cache.json
 
+# Claude Code - Chrome native messaging host（マシン固有パスを含む自動生成ラッパー）
+home-manager/claude/chrome/
+
 # Hunk skill: home.nix の activation で Nix ストア内 skill への symlink を貼る
 home-manager/claude/skills/hunk-review
 
