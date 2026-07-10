@@ -147,6 +147,39 @@ Diffview内でのコンフリクト解決:
 | `Space` `cb` | baseを選択 |
 | `Space` `ca` | allを選択 |
 
+### Hunk（対話的 diff レビュー）
+
+[Hunk](https://github.com/modem-dev/hunk) は agent 前提のターミナル diff ビューア。TUI で差分を眺めつつ、nvim や Claude Code から `hunk session *` サブコマンドで同じセッションを操作できる（ローカルデーモン経由）。
+
+**起動系（float ターミナルで TUI を開く）**
+
+| キー | 動作 |
+|------|------|
+| `Space` `hd` | `hunk diff --watch` — 作業ツリーをレビュー（変更を自動リロード） |
+| `Space` `hp` | `gh pr diff \| hunk patch -` — PR 番号 / URL / ブランチを入力してレビュー |
+
+TUI 内は `?` で操作一覧、`q` で終了。
+
+**セッション操作系（nvim → live daemon、TUI に反映）**
+
+Hunk ウィンドウを開いた状態で使う。nvim のカーソル位置がそのまま TUI 側の focus / コメント対象になる。
+
+| キー | 動作 |
+|------|------|
+| `Space` `hn` | 現在ファイル・現在行に navigate（TUI の focus を移動） |
+| `Space` `hc` | 現在行にコメント追加（`vim.ui.input` で summary を入力、`--focus` 付き） |
+| `Space` `hN` | 次のコメントへ移動 |
+| `Space` `hP` | 前のコメントへ移動 |
+| `Space` `hR` | セッションを `hunk diff` で reload |
+| `Space` `hL` | コメント一覧を `vim.notify` で表示 |
+
+**Claude Code との連携**
+
+`home-manager switch` すると activation が `hunk` パッケージ内の `skills/hunk-review/SKILL.md` を `~/.claude/skills/hunk-review` にシンボリックリンクする。Hunk セッションが起動していると Claude Code の `hunk-review` スキルが自動でトリガーされ、`hunk session list / review / navigate / comment add / comment apply` を使ってレビューを進められる。
+
+- スキル本体のパスを確認: `hunk skill path`
+- symlink 再生成: `home-manager switch --flake ~/dotfiles` を再実行
+
 ### Octo（GitHub連携）
 
 nvim内でGitHubのPR/Issueを操作。
