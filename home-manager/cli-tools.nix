@@ -21,8 +21,8 @@
       "--preview 'bat --style=numbers --color=always --line-range :300 {}'"
       "--preview-window=right:50%"
     ];
-    fileWidgetCommand = "fd --type f --hidden --follow --exclude .git";
-    changeDirWidgetCommand = "fd --type d --hidden --follow --exclude .git";
+    fileWidget.command = "fd --type f --hidden --follow --exclude .git";
+    changeDirWidget.command = "fd --type d --hidden --follow --exclude .git";
   };
 
   programs.zoxide = {
