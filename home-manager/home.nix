@@ -1,4 +1,4 @@
-{ config, pkgs, username, isWork, hunkPkg, ... }:
+{ config, pkgs, lib, username, isWork, hunkPkg, ... }:
 
 let
   dotfilesDir = "${config.home.homeDirectory}/dotfiles/home-manager";
@@ -104,4 +104,14 @@ in
   };
 
   programs.home-manager.enable = true;
+
+  # Hunk の SKILL.md を Claude Code のスキルとして参照可能にする。
+  # `.claude` は mkLink で out-of-store symlink なので、その配下は dotfiles ツリー側に
+  # 実体を置く必要がある。activation で Nix ストア内の skill を指すシンボリックリンクを
+  # 貼り直し、hunk のバージョンアップに追従する。gitignore 済み。
+  home.activation.linkHunkSkill = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "$HOME/dotfiles/home-manager/claude/skills"
+    run ln -sfn "${hunkPkg}/skills/hunk-review" \
+      "$HOME/dotfiles/home-manager/claude/skills/hunk-review"
+  '';
 }
