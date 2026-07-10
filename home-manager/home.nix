@@ -51,6 +51,9 @@ in
     # vp shim (~/.vite-plus/bin/codex) が PATH で先勝ちするため、
     # zsh.nix の codex() ラッパーで Nix ストア実体を直接叩く。
     codex-cli
+    # Herdr（Agent multiplexer）。config は home-manager/herdr/config.toml で管理済み。
+    # zsh.nix の _open_herdr_editor_split が `command -v herdr` で存在チェックしてから使う。
+    herdr
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
