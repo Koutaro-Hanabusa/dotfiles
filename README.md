@@ -156,7 +156,7 @@ Diffview内でのコンフリクト解決:
 | キー | 動作 |
 |------|------|
 | `Space` `hd` | `hunk diff --watch` — 作業ツリーをレビュー（変更を自動リロード） |
-| `Space` `hp` | `gh pr diff \| hunk patch -` — PR 番号 / URL / ブランチを入力してレビュー |
+| `Space` `hp` | `gh pr diff \| hunk patch -` — 現在ブランチの PR をレビュー（Octo の `octo://…/pull/<N>` バッファ上なら、その PR を優先） |
 
 TUI 内は `?` で操作一覧、`q` で終了。
 

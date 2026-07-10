@@ -99,26 +99,31 @@ return {
       hunk_worktree:toggle()
     end, { desc = "Review working tree with Hunk" })
 
-    keymap("n", "<leader>hp", function()
-      vim.ui.input({ prompt = "PR number / URL / branch (blank = current): " }, function(target)
-        if target == nil then
-          return
-        end
+    -- Octo の PR バッファ（`octo://owner/repo/pull/<N>`）を開いていればその番号、
+    -- そうでなければ nil（= 現在ブランチにひもづく PR を gh に解決させる）。
+    local function octo_pr_number()
+      local name = vim.fn.bufname()
+      local n = name:match("^octo://[^/]+/[^/]+/pull/(%d+)")
+      return n and tonumber(n) or nil
+    end
 
-        local target_arg = target == "" and "" or " " .. vim.fn.shellescape(target)
-        local hunk_pr = Terminal:new({
-          cmd = "gh pr diff" .. target_arg .. " --patch | hunk patch -",
-          count = 3,
-          dir = "git_dir",
-          direction = "float",
-          on_open = notify_hunk_controls,
-          float_opts = {
-            border = "curved",
-          },
-        })
-        hunk_pr:toggle()
-      end)
-    end, { desc = "Review pull request with Hunk" })
+    local function open_hunk_pr(target)
+      local target_arg = target and (" " .. tostring(target)) or ""
+      Terminal:new({
+        cmd = "gh pr diff" .. target_arg .. " --patch | hunk patch -",
+        count = 3,
+        dir = "git_dir",
+        direction = "float",
+        on_open = notify_hunk_controls,
+        float_opts = {
+          border = "curved",
+        },
+      }):toggle()
+    end
+
+    keymap("n", "<leader>hp", function()
+      open_hunk_pr(octo_pr_number())
+    end, { desc = "Review PR with Hunk (Octo buffer or current branch)" })
 
     -- Hunk session controls: nvim ↔ live hunk daemon
     local function hunk_repo_root()
