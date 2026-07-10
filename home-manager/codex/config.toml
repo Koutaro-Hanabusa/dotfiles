@@ -19,6 +19,15 @@ trust_level = "trusted"
 [projects."/Users/1126buri/dotfiles"]
 trust_level = "trusted"
 
+[projects."/Users/1126buri/dev"]
+trust_level = "trusted"
+
+[projects."/Users/1126buri/dev/mySlides"]
+trust_level = "trusted"
+
+[projects."/Users/1126buri/dev/burio.com"]
+trust_level = "trusted"
+
 [projects."/Users/hanabusa.kotaro/sen/cameraman.8122.jp"]
 trust_level = "trusted"
 
