@@ -74,11 +74,16 @@ return {
 
     keymap("n", "<leader>gh", ghdash_toggle, { desc = "Open gh-dash" })
 
+    local function notify_hunk_controls()
+      vim.notify("Hunk: ? = 操作一覧, q = 終了", vim.log.levels.INFO)
+    end
+
     local hunk_worktree = Terminal:new({
       cmd = "hunk diff --watch",
       count = 2,
       dir = "git_dir",
       direction = "float",
+      on_open = notify_hunk_controls,
       float_opts = {
         border = "curved",
       },
@@ -100,6 +105,7 @@ return {
           count = 3,
           dir = "git_dir",
           direction = "float",
+          on_open = notify_hunk_controls,
           float_opts = {
             border = "curved",
           },

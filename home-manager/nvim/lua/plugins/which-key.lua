@@ -1,6 +1,15 @@
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show("<leader>")
+      end,
+      desc = "Show keymaps",
+    },
+  },
   opts = {
     delay = 300,
     icons = {
