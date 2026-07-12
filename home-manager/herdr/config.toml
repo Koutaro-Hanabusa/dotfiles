@@ -72,3 +72,28 @@ close_pane = "prefix+x"                         # ペインを閉じる
 zoom = "prefix+z"                              # ペインのズーム（全画面トグル）
 resize_mode = "prefix+r"                       # リサイズモード
 # last_pane = ""                               # 直前のペインへ（デフォルト未割り当て）
+
+[ui]
+# "spaces"（= "workspaces" エイリアス）: ワークスペース単位でグループ化。
+# "priority"（attention queue）: 人間の返事待ち・完了通知など「次に触るべきエージェント」順。
+# cmux の Inbox 的な体験が欲しいので priority を採用する。
+agent_panel_sort = "priority"
+
+# バックグラウンドのポップアップ通知配送。
+# off = 出さない（herdr のデフォルト。これが未設定だと通知は完全に沈黙する）
+# herdr = 画面内トースト
+# terminal = outer terminal（ghostty）に OS 通知を委譲
+# system = herdr が直接 macOS 通知センターへ（cmux ライク）
+[ui.toast]
+delivery = "system"
+delay_seconds = 1
+
+# 背景ワークスペースのエージェント状態変化で音を鳴らす。デフォルト true だが明示しておく。
+[ui.sound]
+enabled = true
+
+[experimental]
+# prefix mode に入っている間だけ macOS のキーボード入力ソースを ASCII 系に切り替える。
+# CJK IME（日本語入力）中に prefix+n などが効かなくなる問題への回避策。
+# prefix mode を抜けたら元の入力ソースに自動で戻る。macOS only, best-effort。
+switch_ascii_input_source_in_prefix = true
