@@ -1,11 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-fable-5",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-7"
-  },
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "Bash(nb:*)",
       "Bash(git:*)",
@@ -28,9 +23,15 @@
       "Bash(git push -f:*)",
       "Bash(git reset --hard:*)",
       "Bash(rm -rf:*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
-  "model": "opusplan",
+  "model": "claude-opus-4-7",
+  "skillOverrides": {
+    "grafana-cloud": "off",
+    "empirical-prompt-tuning": "off",
+    "frontend-design": "off"
+  },
   "hooks": {
     "Notification": [
       {
@@ -93,11 +94,6 @@
     "skill-creator@claude-plugins-official": false,
     "slack@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true
-  },
-  "skillOverrides": {
-    "grafana-cloud": "off",
-    "empirical-prompt-tuning": "off",
-    "frontend-design": "off"
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
