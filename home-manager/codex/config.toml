@@ -227,28 +227,28 @@ trusted_hash = "sha256:e6b9df143de11443eb576c38874cf6e0c48358f948170948fdf630f1c
 [hooks.state."codex@openai-codex:hooks/hooks.json:stop:0:0"]
 trusted_hash = "sha256:3dfaa7e4f022570b260b8a8cf4ac7585c986175256b887a4723fac4f358a482f"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:0:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:a7737395be80facd2f58b2cf68167b9af1c1fc5e198229e2a9705f5d1be86911"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:1:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:1:0"]
 trusted_hash = "sha256:c6deef9f2728c36dbf613f0ee34ef542f2c218a8672aad2468631cd25606fd6e"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:2:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:pre_tool_use:2:0"]
 trusted_hash = "sha256:0b8547c4f1dd59e93b37cc160af78724da9282101950e191feabeff1e3d55cf1"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:0:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:0:0"]
 trusted_hash = "sha256:6df0b9e6d5c2f0652515eb4dc38b1f62ca0baaf40f2abcf8b33f0c22ddea44aa"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:1:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:1:0"]
 trusted_hash = "sha256:bb75b84318d3eb1486d8ddfd27721bd759a2aceddb6c8f613d358d3853fb131c"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:2:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:post_tool_use:2:0"]
 trusted_hash = "sha256:9266f842adebb95a8efcc8052e9fbee53775fd6b380256622d9a2f712164403c"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:session_start:0:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:f2c52795f1c7ce9c3d5dcf707b32c2e772d522ccabd4cc4b29031b62e9b5a189"
 
-[hooks.state."/Users/hanabusa.kotaro/sen/8122-photo-frontend/.codex/hooks.json:user_prompt_submit:0:0"]
+[hooks.state."~/sen/8122-photo-frontend/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:b0db1f41a74201aff79dc4ac7bf6660654e5c5a6f5ebf6c0b0647a97b765f31d"
 
 [hooks.state."~/.codex/hooks.json:session_start:0:0"]
