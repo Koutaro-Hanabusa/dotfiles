@@ -57,5 +57,11 @@ home-manager/claude/chrome/
 # Hunk skill: home.nix の activation で Nix ストア内 skill への symlink を貼る
 home-manager/claude/skills/hunk-review
 
+# home-manager switch のたびに /nix/store のハッシュ違いで symlink 先が変わる
+home-manager/karabiner/karabiner.json
+
+# Claude Code ランタイム自動生成
+home-manager/claude/remote-settings.json
+
 # macOS Finder metadata
 .DS_Store
