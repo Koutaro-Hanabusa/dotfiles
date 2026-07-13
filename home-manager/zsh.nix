@@ -31,6 +31,12 @@
       OTEL_EXPORTER_OTLP_ENDPOINT = "http://localhost:4317";
     };
 
+    profileExtra = ''
+      # Homebrew（旧 ~/.zprofile から移植。home-manager が .zprofile を生成するように
+      # なった際に -b backup で退避されたため、ここで管理する）
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    '';
+
     envExtra = ''
       # zoxide doctor の誤検知警告を抑止
       # （home-manager は zoxide 初期化を zshrc 先頭に置くが、その後 direnv 等の
