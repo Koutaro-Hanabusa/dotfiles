@@ -85,10 +85,19 @@
       hunk() {
         if [[ "$1" == "diff" ]]; then
           shift
-          local arg has_target=0
+          local arg skip_value=0 has_target=0
           for arg in "$@"; do
+            if (( skip_value )); then
+              skip_value=0
+              continue
+            fi
             [[ "$arg" == "--" ]] && break
             [[ "$arg" == "--staged" || "$arg" == "--cached" ]] && has_target=1 && break
+            # 値を取るオプションの値を比較対象と誤認しないようスキップ
+            if [[ "$arg" == "--mode" || "$arg" == "--theme" || "$arg" == "--agent-context" ]]; then
+              skip_value=1
+              continue
+            fi
             [[ "$arg" != -* ]] && has_target=1 && break
           done
           if (( has_target )); then
