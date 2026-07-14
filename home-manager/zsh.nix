@@ -79,6 +79,28 @@
         command "$HOME/.nix-profile/bin/codex" "$@"
       }
 
+      # `hunk diff`（ターゲットなし）は unstaged のみ表示で、git add した変更が
+      # 差分から消えてしまう。HEAD 比較なら staged + unstaged の両方が見えるので、
+      # ターゲット未指定かつ --staged/--cached でない場合だけ HEAD を自動挿入する。
+      hunk() {
+        if [[ "$1" == "diff" ]]; then
+          shift
+          local arg has_target=0
+          for arg in "$@"; do
+            [[ "$arg" == "--" ]] && break
+            [[ "$arg" == "--staged" || "$arg" == "--cached" ]] && has_target=1 && break
+            [[ "$arg" != -* ]] && has_target=1 && break
+          done
+          if (( has_target )); then
+            command hunk diff "$@"
+          else
+            command hunk diff HEAD "$@"
+          fi
+        else
+          command hunk "$@"
+        fi
+      }
+
       _open_herdr_editor_split() {
         # 注意: interactive / -t チェックは入れない。
         # nvim() から `$()` 経由で呼ばれた subshell は非インタラクティブかつ stdout がパイプ
