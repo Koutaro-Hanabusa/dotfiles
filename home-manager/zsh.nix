@@ -79,22 +79,6 @@
         command "$HOME/.nix-profile/bin/codex" "$@"
       }
 
-      # Claude Code CLI を CLIProxyAPI 経由で GPT-5.6-sol にルーティングして起動する。
-      # env をインラインで渡すので、通常の `claude` は Anthropic 本家のまま。
-      # 事前に `brew install cliproxyapi && brew services start cliproxyapi` と
-      # `cliproxyapi --claude-login` / `--codex-login` の OAuth を済ませておくこと。
-      # AUTH_TOKEN は CLIProxyAPI 側で api-keys を設定していない場合 sk-dummy で通る。
-      # 実キーを設定した場合は ~/.zsh_secrets で CLIPROXY_AUTH_TOKEN を export。
-      claudex() {
-        local -x ANTHROPIC_BASE_URL="http://127.0.0.1:8317"
-        local -x ANTHROPIC_AUTH_TOKEN="''${CLIPROXY_AUTH_TOKEN:-sk-dummy}"
-        local -x CLAUDE_CODE_SUBAGENT_MODEL="gpt-5.6-sol"
-        local -x CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1
-        local -x CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3
-        local -x ENABLE_TOOL_SEARCH=false
-        claude --model gpt-5.6-sol "$@"
-      }
-
       # `hunk diff`（ターゲットなし）は unstaged のみ表示で、git add した変更が
       # 差分から消えてしまう。HEAD 比較なら staged + unstaged の両方が見えるので、
       # ターゲット未指定かつ --staged/--cached でない場合だけ HEAD を自動挿入する。
