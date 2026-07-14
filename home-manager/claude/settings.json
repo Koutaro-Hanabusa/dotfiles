@@ -27,6 +27,9 @@
     "defaultMode": "auto"
   },
   "model": "claude-opus-4-7",
+  "env": {
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-7"
+  },
   "skillOverrides": {
     "grafana-cloud": "off",
     "empirical-prompt-tuning": "off",
