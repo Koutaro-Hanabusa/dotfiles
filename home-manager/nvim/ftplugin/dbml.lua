@@ -6,7 +6,12 @@
 
 vim.bo.commentstring = "// %s"
 
--- 現在バッファの状態管理: 直近の preview 画像オブジェクトを持っておいて再描画時に破棄する
+-- プレビュー状態:
+--   preview_active — ユーザーが「プレビューを見たい」意思表示中か。
+--                    <leader>dv で true、プレビューウィンドウを閉じたら false。
+--                    保存時の自動再描画はこのフラグだけを見る (last_image は見ない)。
+--   last_image     — image.nvim のハンドル。差し替え / 破棄用。
+local preview_active = false
 local last_image = nil
 
 local function notify_err(msg)
@@ -22,6 +27,13 @@ local function ensure_image_lib()
   return image
 end
 
+local function clear_current_image()
+  if last_image then
+    pcall(function() last_image:clear() end)
+    last_image = nil
+  end
+end
+
 local function preview_current()
   local input = vim.fn.expand("%:p")
   if input == "" then
@@ -29,10 +41,12 @@ local function preview_current()
     return
   end
 
-  -- render 実行 (SVG を tempfile へ)
   local output = vim.fn.tempname() .. ".svg"
   local result = vim.system({ "dbml-language-server", "render", input, "-o", output }, { text = true }):wait()
   if result.code ~= 0 then
+    -- 古い ER 図が残ると「今の DBML の絵」だと誤解されるので即消す。
+    -- preview_active は維持 → syntax を直して次に保存したら自動再描画される。
+    clear_current_image()
     notify_err("dbml render 失敗: " .. (result.stderr or "unknown"))
     return
   end
@@ -40,11 +54,7 @@ local function preview_current()
   local image = ensure_image_lib()
   if not image then return end
 
-  -- 既存プレビュー画像を先に消す (再描画対応)
-  if last_image then
-    pcall(function() last_image:clear() end)
-    last_image = nil
-  end
+  clear_current_image()
 
   -- プレビュー用の縦分割を用意 (既に開いていれば再利用)
   local preview_bufname = "dbml-preview://" .. input
@@ -72,9 +82,21 @@ local function preview_current()
     vim.bo[buf].bufhidden = "wipe"
     vim.bo[buf].swapfile = false
     vim.bo[buf].filetype = "dbml-preview"
-    -- プレビューウィンドウを閉じたら元のウィンドウに戻す用の keymap
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, silent = true })
+
+    -- プレビューを閉じたら「もう表示したくない」と解釈し、
+    -- 保存時の自動再描画を止める。bufhidden=wipe なので :close で確実に発火する。
+    vim.api.nvim_create_autocmd("BufWipeout", {
+      buffer = buf,
+      once = true,
+      callback = function()
+        preview_active = false
+        clear_current_image()
+      end,
+    })
   end
+
+  preview_active = true
 
   local img = image.from_file(output, {
     window = win,
@@ -94,11 +116,12 @@ vim.keymap.set("n", "<leader>dv", preview_current, {
   desc = "DBML: preview ER diagram (SVG in split)",
 })
 
--- 保存時にプレビュー開いてたら自動で再描画
+-- 保存時、プレビューが「見たい」状態のときだけ再描画。
+-- 閉じた後 (preview_active=false) は勝手に開かない。
 vim.api.nvim_create_autocmd("BufWritePost", {
   buffer = 0,
   callback = function()
-    if last_image then
+    if preview_active then
       preview_current()
     end
   end,
