@@ -13,10 +13,15 @@
     };
     # Claude Code CLI（Anthropic 公式の pre-built バイナリを毎時追随）
     nix-claude-code.url = "github:ryoppippi/nix-claude-code";
+    # DBML Language Server（自作 fork。ER 図プレビュー用 render サブコマンド入り）
+    dbml-language-server = {
+      url = "github:Koutaro-Hanabusa/dbml-language-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, home-manager, hunk, nix-claude-code, ... }:
+    { nixpkgs, home-manager, hunk, nix-claude-code, dbml-language-server, ... }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -43,6 +48,7 @@
           extraSpecialArgs = {
             inherit isWork username;
             hunkPkg = hunk.packages.${system}.default;
+            dbmlLspPkg = dbml-language-server.packages.${system}.default;
           };
           modules = [ ./home-manager/home.nix ] ++ extraModules;
         };

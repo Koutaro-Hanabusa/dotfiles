@@ -8,6 +8,7 @@ end
 vim.filetype.add({
   extension = {
     mdx = "markdown",
+    dbml = "dbml",
   },
 })
 
