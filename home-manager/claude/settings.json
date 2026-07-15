@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-7"
+  },
   "permissions": {
     "allow": [
       "Bash(nb:*)",
@@ -25,10 +28,6 @@
       "Bash(rm -rf:*)"
     ],
     "defaultMode": "auto"
-  },
-  "model": "claude-opus-4-7",
-  "env": {
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-7"
   },
   "skillOverrides": {
     "grafana-cloud": "off",
@@ -126,7 +125,7 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "editorMode": "vim",
-  "verbose": true,
+  "verbose": false,
   "preferredNotifChannel": "terminal_bell",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,

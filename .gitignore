@@ -54,6 +54,9 @@ home-manager/claude/stats-cache.json
 # Claude Code - Chrome native messaging host（マシン固有パスを含む自動生成ラッパー）
 home-manager/claude/chrome/
 
+# Claude Code - 画像貼り付け/スクリーンショットキャッシュ（セッション固有・個人情報を含む）
+home-manager/claude/image-cache/
+
 # Hunk skill: home.nix の activation で Nix ストア内 skill への symlink を貼る
 home-manager/claude/skills/hunk-review
 
