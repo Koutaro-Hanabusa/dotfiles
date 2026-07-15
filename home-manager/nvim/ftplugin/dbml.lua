@@ -8,7 +8,7 @@ vim.bo.commentstring = "// %s"
 
 -- プレビュー状態:
 --   preview_active — ユーザーが「プレビューを見たい」意思表示中か。
---                    <leader>dv で true、プレビューウィンドウを閉じたら false。
+--                    :Dv で true、プレビューウィンドウを閉じたら false。
 --                    保存時の自動再描画はこのフラグだけを見る (last_image は見ない)。
 --   last_image     — image.nvim のハンドル。差し替え / 破棄用。
 local preview_active = false
@@ -111,8 +111,11 @@ local function preview_current()
   last_image = img
 end
 
-vim.keymap.set("n", "<leader>dv", preview_current, {
-  buffer = true,
+-- コマンドで叩く前提 (keymap は他プラグインとの衝突を避けるため未登録)。
+--   :Dv                 — プレビューを開く / 再描画 (dbml view)
+--   プレビュー側で `q`  — プレビューを閉じる (以後の自動再描画も停止)
+-- ※ buffer-local なので .dbml バッファ以外では `:Dv` は存在しない。
+vim.api.nvim_buf_create_user_command(0, "Dv", preview_current, {
   desc = "DBML: preview ER diagram (SVG in split)",
 })
 
