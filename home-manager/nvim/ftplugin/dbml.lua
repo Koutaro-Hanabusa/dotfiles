@@ -34,9 +34,12 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 <meta charset="utf-8">
 <title>%s</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%%; background: #1a1a1a; }
+  html, body { margin: 0; padding: 0; height: 100%%; background: #ffffff; }
   body { display: flex; align-items: center; justify-content: center; }
   svg { max-width: 100vw; max-height: 100vh; width: auto; height: auto; }
+  @media (prefers-color-scheme: dark) {
+    html, body { background: #f5f5f5; }
+  }
 </style>
 </head>
 <body>
