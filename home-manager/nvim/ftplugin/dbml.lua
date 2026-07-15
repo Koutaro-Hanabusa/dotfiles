@@ -15,7 +15,8 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 
 	-- 予測可能な path に出す (毎回同じ場所なので Preview.app 側で再読込されやすい)
 	local output = ("/tmp/dbml_%s.svg"):format(vim.fn.expand("%:t:r"))
-	local result = vim.system({ "dbml-language-server", "render", input, "-o", output }, { text = true }):wait()
+	-- dbml-renderer (viz.js ベース) を使用。自作 render より綺麗な SVG を生成
+	local result = vim.system({ "dbml-renderer", "-i", input, "-o", output }, { text = true }):wait()
 	if result.code ~= 0 then
 		vim.notify("dbml render 失敗: " .. (result.stderr or "unknown"), vim.log.levels.ERROR)
 		return

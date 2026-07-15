@@ -18,10 +18,16 @@
       url = "github:Koutaro-Hanabusa/dbml-language-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # DBML Renderer (softwaretechnik-berlin/dbml-renderer の fork。viz.js
+    # ベースで自作 render より綺麗な SVG を吐く。日本語 ident 対応を追加)
+    dbml-renderer = {
+      url = "github:Koutaro-Hanabusa/dbml-renderer";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, home-manager, hunk, nix-claude-code, dbml-language-server, ... }:
+    { nixpkgs, home-manager, hunk, nix-claude-code, dbml-language-server, dbml-renderer, ... }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -49,6 +55,7 @@
             inherit isWork username;
             hunkPkg = hunk.packages.${system}.default;
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
+            dbmlRendererPkg = dbml-renderer.packages.${system}.default;
           };
           modules = [ ./home-manager/home.nix ] ++ extraModules;
         };
