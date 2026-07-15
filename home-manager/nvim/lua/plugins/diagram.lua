@@ -4,6 +4,16 @@ return {
   "3rd/diagram.nvim",
   dependencies = { "3rd/image.nvim" },
   ft = { "markdown", "vimwiki" },
+  -- BufWinEnter 発火漏れ時に手で叩けるようユーザーコマンドを用意。
+  -- diagram.nvim の公開 API は `render()` / `clear()`。
+  init = function()
+    vim.api.nvim_create_user_command("DiagramRender", function()
+      require("diagram").render()
+    end, { desc = "Diagram: 現在バッファを手動再描画" })
+    vim.api.nvim_create_user_command("DiagramClear", function()
+      require("diagram").clear()
+    end, { desc = "Diagram: 現在バッファの描画をクリア" })
+  end,
   -- opts をテーブルリテラルで書くと require が遅延ロード前に走って落ちるので関数化
   opts = function()
     -- nixpkgs の mmdc は Chromium 同梱していないので、既存シェル起動でも
