@@ -73,7 +73,10 @@ cycle_pane_previous = "prefix+shift+tab"       # 前のペインへ巡回
 split_vertical = "prefix+v"                    # 垂直分割
 split_horizontal = "prefix+minus"              # 水平分割
 close_pane = "prefix+x"                         # ペインを閉じる
-zoom = "prefix+z"                              # ペインのズーム（全画面トグル）
+# ペインのズーム（全画面トグル）。ghostty 側の keybind（super+z=text:\x02z）が
+# cmd+z をこのシーケンスに変換して送るため、実際は cmd+z 一発で使える。
+# cmd+b (toggle_sidebar) と同じ理由で "cmd+z" 直バインドは不可。
+zoom = "prefix+z"
 resize_mode = "prefix+r"                       # リサイズモード
 # last_pane = ""                               # 直前のペインへ（デフォルト未割り当て）
 

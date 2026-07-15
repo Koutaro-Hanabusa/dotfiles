@@ -36,3 +36,7 @@ keybind = super+v=paste_from_clipboard
 # herdr 側で "cmd+b" を直接バインドしても届かない。text: 変換なら確実。
 # herdr の toggle_sidebar（prefix+b）がこれで cmd+b 一発になる。
 keybind = super+b=text:\x02b
+
+# cmd+z を herdr の prefix+z（^B → z）にして zoom（全画面トグル）を発火する。
+# ghostty 内の CLI アプリ（nvim 等）で cmd+z は通常使わないため衝突しない。
+keybind = super+z=text:\x02z
