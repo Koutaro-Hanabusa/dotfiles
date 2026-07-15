@@ -13,6 +13,13 @@ return {
       vim.env.PUPPETEER_EXECUTABLE_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
     end
     return {
+      -- TextChanged は 1 キー打つごとに mmdc を叩くため、編集途中のフェンス崩れ
+      -- を拾って毎回 parse error 通知が出る。InsertLeave (編集終了) と
+      -- BufWinEnter (バッファ切替) だけに限定してノイズを止める。
+      events = {
+        render_buffer = { "InsertLeave", "BufWinEnter" },
+        clear_buffer = { "BufLeave" },
+      },
       renderer_options = {
         mermaid = {
           -- diagram.nvim のオプション名は "background" (誤: background_color)
