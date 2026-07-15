@@ -33,11 +33,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784080278,
-        "narHash": "sha256-knoi9RxTxHCmbDuW+VrVqxuDbkMKfq3FrVgR8OAm1os=",
+        "lastModified": 1784084875,
+        "narHash": "sha256-hb48R5XPgBnnb6BlG0AKZ2W8C1JPELu1Cc7rzH2EZfs=",
         "owner": "Koutaro-Hanabusa",
         "repo": "dbml-language-server",
-        "rev": "d8e4ef3f12de92534dcdf0a595dc10e0edb92816",
+        "rev": "199c000d508b69341111a165ef3499827152c4d8",
         "type": "github"
       },
       "original": {
