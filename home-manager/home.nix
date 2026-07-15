@@ -69,6 +69,11 @@ in
     # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
     # レンダするために PATH に必要。
     mermaid-cli
+
+    # tree-sitter CLI。nvim-treesitter main ブランチが parser を install/compile
+    # する際に必須。diagram.nvim は markdown parser で code block を検出するので
+    # これが無いと mermaid ブロックが認識されない。
+    tree-sitter
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
