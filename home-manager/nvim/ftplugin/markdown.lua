@@ -69,8 +69,9 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 	local basename = vim.fn.expand("%:t:r")
 	local paths = {}
 	for i, source in ipairs(blocks) do
-		local src_path = vim.fn.tempname() .. ".mmd"
-		local png_path = vim.fn.tempname() .. "-" .. basename .. "-" .. i .. ".png"
+		-- 予測可能な path (毎回同じ) にすることで Preview.app 側で再読込されやすい
+		local src_path = ("/tmp/mermaid_%s_%d.mmd"):format(basename, i)
+		local png_path = ("/tmp/mermaid_%s_%d.png"):format(basename, i)
 		vim.fn.writefile(vim.split(source, "\n"), src_path)
 		local result = vim.system({ "mmdc", "-i", src_path, "-o", png_path }, { text = true }):wait()
 		if result.code ~= 0 then
@@ -82,5 +83,5 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 
 	if #paths == 0 then return end
 	vim.system({ "open", unpack(paths) }, { detach = true })
-	vim.notify(("mermaid %d block を Preview.app で開きました"):format(#paths), vim.log.levels.INFO)
+	vim.notify(("mermaid %d block を Preview.app で開いた: %s"):format(#paths, table.concat(paths, ", ")), vim.log.levels.INFO)
 end, { desc = "Preview mermaid blocks with Preview.app" })

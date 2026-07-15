@@ -13,7 +13,8 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 		return
 	end
 
-	local output = vim.fn.tempname() .. "-" .. vim.fn.expand("%:t:r") .. ".svg"
+	-- 予測可能な path に出す (毎回同じ場所なので Preview.app 側で再読込されやすい)
+	local output = ("/tmp/dbml_%s.svg"):format(vim.fn.expand("%:t:r"))
 	local result = vim.system({ "dbml-language-server", "render", input, "-o", output }, { text = true }):wait()
 	if result.code ~= 0 then
 		vim.notify("dbml render 失敗: " .. (result.stderr or "unknown"), vim.log.levels.ERROR)
@@ -21,5 +22,5 @@ vim.api.nvim_buf_create_user_command(0, "Er", function()
 	end
 
 	vim.system({ "open", output }, { detach = true })
-	vim.notify("Preview.app で開きました", vim.log.levels.INFO)
+	vim.notify(("Preview.app で開いた: %s"):format(output), vim.log.levels.INFO)
 end, { desc = "DBML: preview ER diagram (open externally)" })
