@@ -56,8 +56,12 @@ in
     herdr
 
     # DBML Language Server（自作 fork。バイナリは graphviz を PATH 注入済み wrap）。
-    # nvim では ftplugin/dbml.lua で LSP 起動 + <leader>dv でプレビュー。
+    # nvim では ftplugin/dbml.lua で LSP 起動 + :Er でプレビュー。
     dbmlLspPkg
+
+    # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
+    # レンダするために PATH に必要。
+    mermaid-cli
   ];
 
   # 設定ファイルのシンボリックリンク（programs.<package> で管理できないもの）
