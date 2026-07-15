@@ -20,6 +20,13 @@ in
 
   home.stateVersion = "25.11";
 
+  # nixpkgs の mermaid-cli は puppeteer で Chrome を起動するが、Chromium を
+  # 同梱していないため実行時に「Could not find Chrome」で落ちる。
+  # macOS 側にインストール済みの Google Chrome を puppeteer に教える。
+  home.sessionVariables = {
+    PUPPETEER_EXECUTABLE_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  };
+
   # CLIツール群（programs.<package> で管理しないもののみ）
   home.packages = with pkgs; [
     # Editor / IDE
