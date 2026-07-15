@@ -73,6 +73,14 @@ return {
         },
       }
 
+      -- DBML (Database Markup Language) — 自作 fork の dbml-language-server
+      vim.lsp.config.dbml_lsp = {
+        cmd = { "dbml-language-server" },
+        filetypes = { "dbml" },
+        root_markers = { ".git" },
+        capabilities = capabilities,
+      }
+
       -- oxlint (JavaScript/TypeScript Linter)
       vim.lsp.config.oxlint = {
         capabilities = capabilities,
@@ -112,7 +120,7 @@ return {
       }
 
       -- Enable LSPs
-      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense", "oxlint", "oxfmt" })
+      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense", "oxlint", "oxfmt", "dbml_lsp" })
 
       -- Key mappings
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
