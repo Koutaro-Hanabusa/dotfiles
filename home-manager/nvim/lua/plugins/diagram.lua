@@ -15,7 +15,8 @@ return {
     return {
       renderer_options = {
         mermaid = {
-          background_color = "transparent",
+          -- diagram.nvim のオプション名は "background" (誤: background_color)
+          background = "transparent",
           theme = "default",
         },
       },
