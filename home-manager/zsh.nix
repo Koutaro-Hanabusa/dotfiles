@@ -94,6 +94,7 @@
         CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 \
         CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
         ENABLE_TOOL_SEARCH=false \
+        CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1 \
         claude --model "$model" "$@"
       }
 
