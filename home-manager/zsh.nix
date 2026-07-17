@@ -79,11 +79,11 @@
         command "$HOME/.nix-profile/bin/codex" "$@"
       }
 
-      # claudex: Claude Code を CLIProxyAPI 経由で OpenAI Codex に接続
+      # claudex: Claude Code を CLIProxyAPI 経由で Claude / Codex に接続
       # ENABLE_TOOL_SEARCH=false / CONCURRENCY=3 は Codex backend の癖対策
       claudex() {
         local model="''${CLAUDEX_MODEL:-gpt-5.6-sol}"
-        if [[ "$1" == gpt-* ]]; then
+        if [[ "$1" == gpt-* || "$1" == claude-* ]]; then
           model="$1"
           shift
         fi
