@@ -45,6 +45,7 @@ brew "cloudflared"                    # Cloudflare Tunnel
 brew "flyctl"                         # Fly.io CLI
 brew "heroku/brew/heroku"             # Heroku CLI
 brew "railway"                        # Railway CLI
+brew "cliproxyapi"                    # claudex alias 用: Claude Code → OpenAI Codex 変換プロキシ (localhost:8317)
 
 # ====================
 # Media / Utilities
