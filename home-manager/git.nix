@@ -22,11 +22,43 @@ let
     echo "📝 $msg" >&2
     git commit -m "$msg"
   '';
+
+  # herdr のカスタムコマンド（prefix+shift+g の popup）から呼ばれる。
+  # リポジトリ内 <repo>/.worktrees/<branch> に git worktree を作成し、
+  # herdr ワークスペースとして開く（herdr 組み込みの worktrees.directory 方式ではなく
+  # リポジトリ内に置きたいので --path で明示する）。
+  herdr-worktree-new = pkgs.writeShellScriptBin "herdr-worktree-new" ''
+    set -eu
+
+    cwd="''${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+    if ! root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null); then
+      echo "❌ git リポジトリではありません: $cwd" >&2
+      read -r _
+      exit 1
+    fi
+
+    printf "🌱 ブランチ名（既存なら checkout、なければ作成）: "
+    read -r branch
+    [ -n "$branch" ] || exit 0
+
+    # ブランチ名の "/" はディレクトリ名として安全な "-" に置換
+    slug=$(printf %s "$branch" | tr '/' '-')
+
+    # .worktrees/ を各リポジトリの .git/info/exclude で無視する
+    # （グローバル gitconfig なし方針のため、リポジトリローカルに追記する）
+    exclude=$(git -C "$root" rev-parse --git-path info/exclude)
+    if ! grep -qxF ".worktrees/" "$exclude" 2>/dev/null; then
+      echo ".worktrees/" >> "$exclude"
+    fi
+
+    herdr worktree create --cwd "$cwd" --branch "$branch" \
+      --path "$root/.worktrees/$slug" --focus
+  '';
 in
 {
   # programs.git はスキップ（グローバル gitconfig なしの現状維持）
 
-  home.packages = [ gac ];
+  home.packages = [ gac herdr-worktree-new ];
 
   programs.lazygit = {
     enable = true;
