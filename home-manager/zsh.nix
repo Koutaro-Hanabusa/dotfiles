@@ -15,6 +15,12 @@
       tree = "eza --tree --icons";
       grep = "rg";
 
+      # claudex: Claude Code ハーネスを OpenAI Codex バックエンドで動かす。
+      # 通常の `claude` は Anthropic 直通のままで別物。CLIPROXY_AUTH_TOKEN は
+      # ~/.zsh_secrets の $CLAUDEX_PROXY_KEY (cliproxyapi.conf の api-keys と一致) を参照。
+      # ENABLE_TOOL_SEARCH=false: deferred tool schema fetch は非 Claude モデルで不安定。
+      # CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3: Codex backend はバースト耐性が低い。
+      claudex = "ANTHROPIC_BASE_URL=http://127.0.0.1:8317 ANTHROPIC_AUTH_TOKEN=$CLAUDEX_PROXY_KEY ANTHROPIC_DEFAULT_HAIKU_MODEL=gpt-5.6-sol CLAUDE_CODE_SUBAGENT_MODEL=gpt-5.6-sol CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 ENABLE_TOOL_SEARCH=false claude --model gpt-5.6-sol";
     };
 
     sessionVariables = {
