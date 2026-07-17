@@ -15,12 +15,6 @@
       tree = "eza --tree --icons";
       grep = "rg";
 
-      # claudex: Claude Code ハーネスを OpenAI Codex バックエンドで動かす。
-      # 通常の `claude` は Anthropic 直通のままで別物。CLIPROXY_AUTH_TOKEN は
-      # ~/.zsh_secrets の $CLAUDEX_PROXY_KEY (cliproxyapi.conf の api-keys と一致) を参照。
-      # ENABLE_TOOL_SEARCH=false: deferred tool schema fetch は非 Claude モデルで不安定。
-      # CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3: Codex backend はバースト耐性が低い。
-      claudex = "ANTHROPIC_BASE_URL=http://127.0.0.1:8317 ANTHROPIC_AUTH_TOKEN=$CLAUDEX_PROXY_KEY ANTHROPIC_DEFAULT_HAIKU_MODEL=gpt-5.6-sol CLAUDE_CODE_SUBAGENT_MODEL=gpt-5.6-sol CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 ENABLE_TOOL_SEARCH=false claude --model gpt-5.6-sol";
     };
 
     sessionVariables = {
@@ -83,6 +77,24 @@
       # `codex` も同様に現在の Home Manager profile 経由で実行する（vp shim をバイパス）
       codex() {
         command "$HOME/.nix-profile/bin/codex" "$@"
+      }
+
+      # claudex: Claude Code を CLIProxyAPI 経由で OpenAI Codex に接続
+      # ENABLE_TOOL_SEARCH=false / CONCURRENCY=3 は Codex backend の癖対策
+      claudex() {
+        local model="''${CLAUDEX_MODEL:-gpt-5.6-sol}"
+        if [[ "$1" == gpt-* ]]; then
+          model="$1"
+          shift
+        fi
+        ANTHROPIC_BASE_URL=http://127.0.0.1:8317 \
+        ANTHROPIC_AUTH_TOKEN=$CLAUDEX_PROXY_KEY \
+        ANTHROPIC_DEFAULT_HAIKU_MODEL=$model \
+        CLAUDE_CODE_SUBAGENT_MODEL=$model \
+        CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 \
+        CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
+        ENABLE_TOOL_SEARCH=false \
+        claude --model "$model" "$@"
       }
 
       # `hunk diff`（ターゲットなし）は unstaged のみ表示で、git add した変更が
