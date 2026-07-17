@@ -40,7 +40,10 @@ toggle_sidebar = "prefix+b"
 # --- ワークスペース ---
 workspace_picker = "prefix+w"                  # ワークスペース選択
 new_workspace = "prefix+shift+n"               # 新規ワークスペース
-new_worktree = "prefix+shift+g"                # 新規 git worktree ワークスペース
+# 組み込みの new_worktree は worktrees.directory（リポジトリ外）に checkout を作るため
+# 無効化する。代わりに末尾の [[keys.command]]（herdr-worktree-new）が prefix+shift+g で
+# <repo>/.worktrees/<branch> にリポジトリ内 worktree を作成する。
+new_worktree = ""                              # 組み込みの新規 worktree（無効化）
 rename_workspace = "prefix+shift+w"            # ワークスペース名変更
 close_workspace = "prefix+shift+d"             # ワークスペースを閉じる
 # 以下はデフォルト未割り当て（例示。使いたければ値を設定する）:
@@ -117,3 +120,15 @@ reveal_hidden_cursor_for_cjk_ime = true
 # 受理される名前: pi, claude, codex, gemini, cursor, devin, cline, opencode,
 #                copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qoder
 cjk_ime_agents = ["claude", "codex"]
+
+# --- カスタムコマンド ---
+# リポジトリ内 <repo>/.worktrees/<branch> に git worktree を作成して
+# herdr ワークスペースとして開く（git.nix の herdr-worktree-new）。
+# 組み込み new_worktree（worktrees.directory 方式）の置き換え。
+# type は popup がドキュメントにあるが、現行バージョンは shell/pane/plugin_action のみ
+# 対応のため pane（一時ズームペイン、コマンド終了で閉じる）を使う。
+[[keys.command]]
+key = "prefix+shift+g"
+type = "pane"
+command = "herdr-worktree-new"
+description = "新規 worktree（repo 内 .worktrees/ に作成）"
