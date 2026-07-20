@@ -2,8 +2,12 @@
 
 let
   bundleId = "net.mtgto.inputmethod.macSKK";
+  containerDir =
+    "${config.home.homeDirectory}/Library/Containers/${bundleId}";
   plistPath =
-    "${config.home.homeDirectory}/Library/Containers/${bundleId}/Data/Library/Preferences/${bundleId}.plist";
+    "${containerDir}/Data/Library/Preferences/${bundleId}.plist";
+  dictDir = "${containerDir}/Data/Documents/Dictionaries";
+  dictUrl = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L";
 in
 {
   # macSKK の設定を宣言的に固定する。
@@ -12,14 +16,27 @@ in
   # 次回の home-manager switch で dotfiles の値が真になる。
   # macSKK.app が一度も起動していない環境では Container が存在しないためスキップする。
   home.activation.macskkSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ -e "${plistPath}" ]; then
-      $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '({enabled=1; encoding=3; filename="SKK-JISYO.L"; saveToUserDict=1; type=traditional;})'
-      $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} kanaRule -string ""
-      $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} directModeBundleIdentifiers -array
-      $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} skkserv '{address="127.0.0.1"; enableCompletion=0; enabled=0; encoding=3; port=1178; requestEncoding=3; responseEncoding=3; saveToUserDict=1;}'
-    else
+    if [ ! -e "${plistPath}" ]; then
       echo "macskk.nix: sandbox container not found at ${plistPath}"
       echo "  → macSKK.app を一度起動してから再度 home-manager switch を実行してください"
+      exit 0
     fi
+
+    # SKK-JISYO.L が無いと macSKK 自身が起動時に enabled=0 に書き戻すので先に用意
+    if [ ! -f "${dictDir}/SKK-JISYO.L" ]; then
+      $DRY_RUN_CMD /bin/mkdir -p "${dictDir}"
+      $DRY_RUN_CMD /usr/bin/curl -fL -o "${dictDir}/SKK-JISYO.L" "${dictUrl}"
+    fi
+
+    # macSKK 起動中は plist を書き戻されるので一度落とす
+    $DRY_RUN_CMD /usr/bin/pkill -f macSKK || true
+    sleep 1
+
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '({enabled=1; encoding=3; filename="SKK-JISYO.L"; saveToUserDict=1; type=traditional;})'
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} kanaRule -string ""
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} directModeBundleIdentifiers -array
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} skkserv '{address="127.0.0.1"; enableCompletion=0; enabled=0; encoding=3; port=1178; requestEncoding=3; responseEncoding=3; saveToUserDict=1;}'
+
+    $DRY_RUN_CMD /usr/bin/open "/Library/Input Methods/macSKK.app"
   '';
 }
