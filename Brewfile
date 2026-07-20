@@ -41,8 +41,6 @@ brew "postgresql@14"
 # Cloud / Deployment Tools
 # ====================
 brew "cloudflared"                    # Cloudflare Tunnel
-brew "flyctl"                         # Fly.io CLI
-brew "railway"                        # Railway CLI
 brew "cliproxyapi"                    # claudex alias 用: Claude Code → OpenAI Codex 変換プロキシ (localhost:8317)
 
 # ====================
