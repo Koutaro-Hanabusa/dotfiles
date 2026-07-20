@@ -7,7 +7,6 @@
 # ====================
 tap "daipeihust/tap"
 tap "xwmx/taps"
-tap "heroku/brew"
 
 # ====================
 # Runtime / Package Managers
@@ -43,7 +42,6 @@ brew "postgresql@14"
 # ====================
 brew "cloudflared"                    # Cloudflare Tunnel
 brew "flyctl"                         # Fly.io CLI
-brew "heroku/brew/heroku"             # Heroku CLI
 brew "railway"                        # Railway CLI
 brew "cliproxyapi"                    # claudex alias 用: Claude Code → OpenAI Codex 変換プロキシ (localhost:8317)
 
