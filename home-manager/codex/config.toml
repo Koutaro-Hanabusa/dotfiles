@@ -1,5 +1,5 @@
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
-model = "gpt-5.6-sol"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 approvals_reviewer = "user"
@@ -62,13 +62,13 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-07-17T00:21:52Z"
-last_revision = "ded0c09c1ff6003a16d52fc28eae33ed55e4eb87"
+last_updated = "2026-07-20T11:03:09Z"
+last_revision = "b0b9f02b0581696da41e20d6c536ec639b44080f"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
 [marketplaces.cloudflare]
-last_updated = "2026-07-14T00:48:28Z"
+last_updated = "2026-07-15T10:34:11Z"
 last_revision = "70215303d44a81a0db3219428f4825b604fc6061"
 source_type = "git"
 source = "https://github.com/cloudflare/skills.git"
@@ -313,3 +313,27 @@ trusted_hash = "sha256:7bba8eb7dcf7b17377e230b00710682526c9b5e2fe4528f5f9d892290
 
 [hooks.state."/Users/hanabusa.kotaro/sen/rebuild-docs/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:b057e4305b0c2741ffc2258d3673a796b81a3c182dabf244a3120cb78f900a9a"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:f1e26280afc0ec966dcb188e3f6f45b1a471a0deec1b98b95d94b752d4396459"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:455eceb190310c300dfca0a97f24ed46d8f589629b07a3aaf63084920b22f67a"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:676511144a2fe67045a7698361d9fe3f296a0afc00bd52ede0a389db609b562d"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:e6f9daa418561e00da7e4487c6f4f8eeedb4d7c7ed54fab27178f3de214a1e2a"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:f86cf4e85fbd9cf37d237d80844aa1b4518bbdc58729adf1457f6044d78b16f3"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:185bab103ecbc5b2ef4f280c36406bae6fe1b0dc2bb4090b4bc85d5f9b7e9284"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:stop:1:0"]
+trusted_hash = "sha256:c707dc06bfa92f23b0bbb36b299ae01cb434174abac5a546c6815fefc129ae7e"
+
+[hooks.state."/Users/1126buri/.codex/hooks.json:stop:2:0"]
+trusted_hash = "sha256:74276e502f90e3a49682dbab5b3c84906ae8e47239d092ae6a5c357845386c6d"
