@@ -35,7 +35,10 @@ in
     $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '({enabled=1; encoding=3; filename="SKK-JISYO.L"; saveToUserDict=1; type=traditional;})'
     $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} kanaRule -string ""
     $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} directModeBundleIdentifiers -array
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} skkserv '{address="127.0.0.1"; enableCompletion=0; enabled=0; encoding=3; port=1178; requestEncoding=3; responseEncoding=3; saveToUserDict=1;}'
+    # skkservClient は macSKK が必須参照するキー (無いと Fatal error で起動しない)。
+    # 旧 macskk.nix が書いていた `skkserv` キーはバージョンアップで廃止されたので消す。
+    $DRY_RUN_CMD /usr/bin/defaults delete ${bundleId} skkserv 2>/dev/null || true
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} skkservClient '{destination={host="127.0.0.1"; port=1178; encoding=3;};}'
 
     $DRY_RUN_CMD /usr/bin/open "/Library/Input Methods/macSKK.app"
   '';
