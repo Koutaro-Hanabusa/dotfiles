@@ -57,6 +57,7 @@ brew "poppler"                        # PDF処理
 # Cask (GUI Apps)
 # ====================
 cask "ghostty"
+cask "macskk"                         # 日本語 SKK 入力メソッド。設定は home-manager/macskk.nix で宣言的に管理
 
 # ====================
 # Fonts

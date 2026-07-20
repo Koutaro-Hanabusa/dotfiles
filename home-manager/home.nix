@@ -13,6 +13,7 @@ in
     ./ghostty.nix
     ./direnv.nix
     ./karabiner.nix
+    ./macskk.nix
   ];
 
   home.username = username;
