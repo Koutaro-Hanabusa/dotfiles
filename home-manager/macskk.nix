@@ -7,7 +7,16 @@ let
   plistPath =
     "${containerDir}/Data/Library/Preferences/${bundleId}.plist";
   dictDir = "${containerDir}/Data/Documents/Dictionaries";
-  dictUrl = "https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L";
+  dictBaseUrl = "https://raw.githubusercontent.com/skk-dev/dict/master";
+  # macSKK の encoding は 1=UTF-8, 3=EUC-JP。
+  # SKK-JISYO.L は EUC-JP、SKK-JISYO.emoji は UTF-8。
+  dicts = [
+    { filename = "SKK-JISYO.L"; encoding = 3; }
+    { filename = "SKK-JISYO.emoji"; encoding = 1; }
+  ];
+  dictEntries = lib.concatMapStringsSep ", " (d:
+    "{enabled=1; encoding=${toString d.encoding}; filename=\"${d.filename}\"; saveToUserDict=1; type=traditional;}"
+  ) dicts;
 in
 {
   # macSKK の設定を宣言的に固定する。
@@ -22,17 +31,19 @@ in
       exit 0
     fi
 
-    # SKK-JISYO.L が無いと macSKK 自身が起動時に enabled=0 に書き戻すので先に用意
-    if [ ! -f "${dictDir}/SKK-JISYO.L" ]; then
-      $DRY_RUN_CMD /bin/mkdir -p "${dictDir}"
-      $DRY_RUN_CMD /usr/bin/curl -fL -o "${dictDir}/SKK-JISYO.L" "${dictUrl}"
-    fi
+    # 辞書ファイルが無いと macSKK 自身が起動時に enabled=0 に書き戻すので先に用意
+    $DRY_RUN_CMD /bin/mkdir -p "${dictDir}"
+    ${lib.concatMapStringsSep "\n" (d: ''
+      if [ ! -f "${dictDir}/${d.filename}" ]; then
+        $DRY_RUN_CMD /usr/bin/curl -fL -o "${dictDir}/${d.filename}" "${dictBaseUrl}/${d.filename}"
+      fi
+    '') dicts}
 
     # macSKK 起動中は plist を書き戻されるので一度落とす
     $DRY_RUN_CMD /usr/bin/pkill -f macSKK || true
     sleep 1
 
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '({enabled=1; encoding=3; filename="SKK-JISYO.L"; saveToUserDict=1; type=traditional;})'
+    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '(${dictEntries})'
     $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} kanaRule -string ""
     $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} directModeBundleIdentifiers -array
     # skkservClient は macSKK が必須参照するキー (無いと Fatal error で起動しない)。
