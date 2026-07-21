@@ -8,15 +8,14 @@ let
     "${containerDir}/Data/Library/Preferences/${bundleId}.plist";
   dictDir = "${containerDir}/Data/Documents/Dictionaries";
   dictBaseUrl = "https://raw.githubusercontent.com/skk-dev/dict/master";
-  # macSKK の encoding は 1=UTF-8, 3=EUC-JP。
-  # SKK-JISYO.L は EUC-JP、SKK-JISYO.emoji は UTF-8。
+  # macSKK の encoding は Swift の String.Encoding rawValue そのもの。
+  # 4 = UTF-8, 3 = EUC-JP。plist に Int で入れないと DictSetting.init が nil を返す。
+  # また `enabled` は Bool 型で入れる必要があるため、値の型指定ができる PlistBuddy を使う
+  # (defaults write の `( { ... } )` 記法は全て string 化してしまい macSKK に無視される)。
   dicts = [
     { filename = "SKK-JISYO.L"; encoding = 3; }
-    { filename = "SKK-JISYO.emoji"; encoding = 1; }
+    { filename = "SKK-JISYO.emoji"; encoding = 4; }
   ];
-  dictEntries = lib.concatMapStringsSep ", " (d:
-    "{enabled=1; encoding=${toString d.encoding}; filename=\"${d.filename}\"; saveToUserDict=1; type=traditional;}"
-  ) dicts;
 in
 {
   # macSKK の設定を宣言的に固定する。
@@ -42,14 +41,43 @@ in
     # macSKK 起動中は plist を書き戻されるので一度落とす
     $DRY_RUN_CMD /usr/bin/pkill -f macSKK || true
     sleep 1
+    # cfprefsd のキャッシュを飛ばしてから plist を直接書く。
+    # (defaults write と PlistBuddy を混ぜると cfprefsd 経由の書き戻しで PlistBuddy の
+    #  変更が上書きされ、値が string 化して macSKK に無視される)
+    $DRY_RUN_CMD /usr/bin/killall cfprefsd || true
+    sleep 1
 
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} dictionaries '(${dictEntries})'
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} kanaRule -string ""
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} directModeBundleIdentifiers -array
+    PB=/usr/libexec/PlistBuddy
+
+    # dictionaries: 型 (Bool/Integer/String) を厳密に指定する必要があるため PlistBuddy で組む
+    $DRY_RUN_CMD $PB -c "Delete :dictionaries" "${plistPath}" 2>/dev/null || true
+    $DRY_RUN_CMD $PB -c "Add :dictionaries array" "${plistPath}"
+    ${lib.concatStringsSep "\n" (lib.imap0 (i: d: ''
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i} dict" "${plistPath}"
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:filename string ${d.filename}" "${plistPath}"
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:enabled bool true" "${plistPath}"
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:encoding integer ${toString d.encoding}" "${plistPath}"
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:type string traditional" "${plistPath}"
+      $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:saveToUserDict bool true" "${plistPath}"
+    '') dicts)}
+
+    # 他のキーも PlistBuddy で書き揃える (defaults write を混ぜない)
+    $DRY_RUN_CMD $PB -c 'Set :kanaRule ""' "${plistPath}" 2>/dev/null \
+      || $DRY_RUN_CMD $PB -c 'Add :kanaRule string ""' "${plistPath}"
+
+    $DRY_RUN_CMD $PB -c "Delete :directModeBundleIdentifiers" "${plistPath}" 2>/dev/null || true
+    $DRY_RUN_CMD $PB -c "Add :directModeBundleIdentifiers array" "${plistPath}"
+
+    # 旧 macskk.nix が書いていた `skkserv` キーはバージョンアップで廃止されたので消す
+    $DRY_RUN_CMD $PB -c "Delete :skkserv" "${plistPath}" 2>/dev/null || true
+
     # skkservClient は macSKK が必須参照するキー (無いと Fatal error で起動しない)。
-    # 旧 macskk.nix が書いていた `skkserv` キーはバージョンアップで廃止されたので消す。
-    $DRY_RUN_CMD /usr/bin/defaults delete ${bundleId} skkserv 2>/dev/null || true
-    $DRY_RUN_CMD /usr/bin/defaults write ${bundleId} skkservClient '{destination={host="127.0.0.1"; port=1178; encoding=3;};}'
+    $DRY_RUN_CMD $PB -c "Delete :skkservClient" "${plistPath}" 2>/dev/null || true
+    $DRY_RUN_CMD $PB -c "Add :skkservClient dict" "${plistPath}"
+    $DRY_RUN_CMD $PB -c "Add :skkservClient:destination dict" "${plistPath}"
+    $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:host string 127.0.0.1" "${plistPath}"
+    $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:port integer 1178" "${plistPath}"
+    $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:encoding integer 3" "${plistPath}"
 
     $DRY_RUN_CMD /usr/bin/open "/Library/Input Methods/macSKK.app"
   '';
