@@ -21,6 +21,7 @@ return {
       { "<leader>g", group = "Git" },
       { "<leader>h", group = "Hunk" },
       { "<leader>l", group = "LSP" },
+      { "<leader>n", group = "nb (notes)" },
       { "<leader>s", group = "Split" },
       { "<leader>t", group = "Terminal" },
       { "<leader>o", group = "Octo (GitHub)" },
