@@ -7,6 +7,11 @@ let
   plistPath =
     "${containerDir}/Data/Library/Preferences/${bundleId}.plist";
   dictDir = "${containerDir}/Data/Documents/Dictionaries";
+  settingsDir = "${containerDir}/Data/Documents/Settings";
+  # カスタムかなルール。サンドボックスアプリは dotfiles への symlink を辿れないため
+  # activation でコピーする。plist の kanaRule にはこのファイル名が入る (Romaji.id = ファイル名)。
+  kanaRuleName = "kana-rule-custom.conf";
+  kanaRuleSrc = ./macskk/kana-rule-custom.conf;
   dictBaseUrl = "https://raw.githubusercontent.com/skk-dev/dict/master";
   # macSKK の encoding は Swift の String.Encoding rawValue そのもの。
   # 4 = UTF-8, 3 = EUC-JP。plist に Int で入れないと DictSetting.init が nil を返す。
@@ -41,11 +46,6 @@ in
     # macSKK 起動中は plist を書き戻されるので一度落とす
     $DRY_RUN_CMD /usr/bin/pkill -f macSKK || true
     sleep 1
-    # cfprefsd のキャッシュを飛ばしてから plist を直接書く。
-    # (defaults write と PlistBuddy を混ぜると cfprefsd 経由の書き戻しで PlistBuddy の
-    #  変更が上書きされ、値が string 化して macSKK に無視される)
-    $DRY_RUN_CMD /usr/bin/killall cfprefsd || true
-    sleep 1
 
     PB=/usr/libexec/PlistBuddy
 
@@ -61,9 +61,14 @@ in
       $DRY_RUN_CMD $PB -c "Add :dictionaries:${toString i}:saveToUserDict bool true" "${plistPath}"
     '') dicts)}
 
+    # カスタムかなルール (全角!?) を Settings に配置し、kanaRule で選択する
+    $DRY_RUN_CMD /bin/mkdir -p "${settingsDir}"
+    $DRY_RUN_CMD /bin/cp -f "${kanaRuleSrc}" "${settingsDir}/${kanaRuleName}"
+    $DRY_RUN_CMD /bin/chmod 644 "${settingsDir}/${kanaRuleName}"
+
     # 他のキーも PlistBuddy で書き揃える (defaults write を混ぜない)
-    $DRY_RUN_CMD $PB -c 'Set :kanaRule ""' "${plistPath}" 2>/dev/null \
-      || $DRY_RUN_CMD $PB -c 'Add :kanaRule string ""' "${plistPath}"
+    $DRY_RUN_CMD $PB -c 'Set :kanaRule ${kanaRuleName}' "${plistPath}" 2>/dev/null \
+      || $DRY_RUN_CMD $PB -c 'Add :kanaRule string ${kanaRuleName}' "${plistPath}"
 
     $DRY_RUN_CMD $PB -c "Delete :directModeBundleIdentifiers" "${plistPath}" 2>/dev/null || true
     $DRY_RUN_CMD $PB -c "Add :directModeBundleIdentifiers array" "${plistPath}"
@@ -78,6 +83,18 @@ in
     $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:host string 127.0.0.1" "${plistPath}"
     $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:port integer 1178" "${plistPath}"
     $DRY_RUN_CMD $PB -c "Add :skkservClient:destination:encoding integer 3" "${plistPath}"
+
+    # PlistBuddy はファイル直接書き込みのため cfprefsd のキャッシュに乗らない。
+    # 書き込み「後」に cfprefsd を落とさないと、次に起動する macSKK が古いキャッシュ
+    # (例: kanaRule="") を読み、起動時ロジックが plist を古い値で書き戻してしまう。
+    $DRY_RUN_CMD /usr/bin/killall cfprefsd || true
+    sleep 1
+
+    # 冒頭の pkill 後、入力フィールドにフォーカスがあると IMK が macSKK を自動再起動する。
+    # その個体は書き込み前の古い設定をメモリに持ち plist を書き戻すため、
+    # 書き込み完了後にもう一度落としてから起動し直す。
+    $DRY_RUN_CMD /usr/bin/pkill -f macSKK || true
+    sleep 1
 
     $DRY_RUN_CMD /usr/bin/open "/Library/Input Methods/macSKK.app"
   '';
