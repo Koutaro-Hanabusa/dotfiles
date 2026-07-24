@@ -194,6 +194,20 @@ approval_mode = "approve"
 [mcp_servers.cheese.tools.get_figma_code_connect]
 approval_mode = "approve"
 
+[mcp_servers.home-memo]
+url = "https://home-memo-mcp.burio16.com/mcp"
+enabled = true
+enabled_tools = ["search_knowledge"]
+env_http_headers = { "CF-Access-Client-Id" = "CF_ACCESS_CLIENT_ID", "CF-Access-Client-Secret" = "CF_ACCESS_CLIENT_SECRET" }
+default_tools_approval_mode = "approve"
+
+[mcp_servers.work-memo]
+url = "https://work-memo-mcp.burio16.com/mcp"
+enabled = true
+enabled_tools = ["search_knowledge"]
+env_http_headers = { "CF-Access-Client-Id" = "CF_ACCESS_CLIENT_ID", "CF-Access-Client-Secret" = "CF_ACCESS_CLIENT_SECRET" }
+default_tools_approval_mode = "approve"
+
 [desktop.open-in-target-preferences]
 global = "ghostty"
 

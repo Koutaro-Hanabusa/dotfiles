@@ -116,6 +116,9 @@ in
     # Claude Code
     ".claude".source = mkLink "claude";
 
+    # Agent Skills（Codex など Agent Skills 標準対応クライアントで共有）
+    ".agents/skills".source = mkLink "agents/skills";
+
     # Claude Code MCP のサーバー定義（source of truth）。
     # 注意: ~/.mcp.json は **project スコープ**で、CWD がホームのときだけ拾われる。
     # 全プロジェクトで効く user スコープは ~/.claude.json の top-level mcpServers
@@ -128,6 +131,8 @@ in
 
     # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
     ".codex/config.toml".source = mkLink "codex/config.toml";
+    ".codex/AGENTS.md".source = mkLink "codex/AGENTS.md";
+    ".codex/agents".source = mkLink "codex/agents";
     ".codex/hooks.json".source = mkLink "codex/hooks.json";
     ".codex/hooks".source = mkLink "codex/hooks";
     ".codex/instructions.md".source = mkLink "codex/instructions.md";
@@ -144,13 +149,16 @@ in
 
   programs.home-manager.enable = true;
 
-  # Hunk の SKILL.md を Claude Code のスキルとして参照可能にする。
-  # `.claude` は mkLink で out-of-store symlink なので、その配下は dotfiles ツリー側に
-  # 実体を置く必要がある。activation で Nix ストア内の skill を指すシンボリックリンクを
-  # 貼り直し、hunk のバージョンアップに追従する。gitignore 済み。
+  # Hunk の SKILL.md を Claude Code / Agent Skills 対応クライアントから参照可能にする。
+  # out-of-store symlink の参照先である dotfiles ツリー側へ、activation で Nix ストア内の
+  # skill を指すシンボリックリンクを貼り直し、hunk のバージョンアップに追従する。
+  # 生成される symlink は gitignore 済み。
   home.activation.linkHunkSkill = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run mkdir -p "$HOME/dotfiles/home-manager/claude/skills"
+    run mkdir -p "$HOME/dotfiles/home-manager/agents/skills"
     run ln -sfn "${hunkPkg}/skills/hunk-review" \
       "$HOME/dotfiles/home-manager/claude/skills/hunk-review"
+    run ln -sfn "${hunkPkg}/skills/hunk-review" \
+      "$HOME/dotfiles/home-manager/agents/skills/hunk-review"
   '';
 }
