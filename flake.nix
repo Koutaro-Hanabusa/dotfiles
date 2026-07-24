@@ -11,6 +11,11 @@
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Herdr はサイドバーのカスタム metadata token を使うため 0.7.5 に固定する。
+    herdr = {
+      url = "github:ogulcancelik/herdr/v0.7.5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Claude Code CLI（Anthropic 公式の pre-built バイナリを毎時追随）
     nix-claude-code.url = "github:ryoppippi/nix-claude-code";
     # DBML Language Server（自作 fork。ER 図プレビュー用 render サブコマンド入り）
@@ -27,14 +32,22 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, hunk, nix-claude-code, dbml-language-server, dbml-renderer, ... }:
+    {
+      nixpkgs,
+      home-manager,
+      hunk,
+      herdr,
+      nix-claude-code,
+      dbml-language-server,
+      dbml-renderer,
+      ...
+    }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit system;
         # claude はソース非公開なので unfree 明示許可（他パッケージには波及させない）
-        config.allowUnfreePredicate =
-          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude" ];
+        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude" ];
         overlays = [
           nix-claude-code.overlays.default
           # Codex CLI（公式 pre-built バイナリのインライン overlay）
@@ -54,6 +67,7 @@
           extraSpecialArgs = {
             inherit isWork username;
             hunkPkg = hunk.packages.${system}.default;
+            herdrPkg = herdr.packages.${system}.default;
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
             dbmlRendererPkg = dbml-renderer.packages.${system}.default;
           };

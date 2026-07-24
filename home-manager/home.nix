@@ -1,4 +1,15 @@
-{ config, pkgs, lib, username, isWork, hunkPkg, dbmlLspPkg, dbmlRendererPkg, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  username,
+  isWork,
+  hunkPkg,
+  herdrPkg,
+  dbmlLspPkg,
+  dbmlRendererPkg,
+  ...
+}:
 
 let
   dotfilesDir = "${config.home.homeDirectory}/dotfiles/home-manager";
@@ -61,7 +72,7 @@ in
     codex-cli
     # Herdr（Agent multiplexer）。config は home-manager/herdr/config.toml で管理済み。
     # zsh.nix の _open_herdr_editor_split が `command -v herdr` で存在チェックしてから使う。
-    herdr
+    herdrPkg
 
     # DBML Language Server（自作 fork。バイナリは graphviz を PATH 注入済み wrap）。
     # nvim では ftplugin/dbml.lua で LSP 起動。
