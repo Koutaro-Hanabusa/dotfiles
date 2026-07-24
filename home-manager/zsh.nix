@@ -168,6 +168,17 @@
         nvim "$@"
       }
 
+      # プロンプト表示時に現在ブランチの PR を Herdr サイドバーへ非同期反映する。
+      # herdr-pr-metadata 側で workspace ごとに1分キャッシュするため、
+      # 通常のプロンプト表示を GitHub API 待ちでブロックしない。
+      _herdr_refresh_pr_metadata() {
+        [[ -n "''${HERDR_WORKSPACE_ID:-}" ]] || return 0
+        command -v herdr-pr-metadata >/dev/null 2>&1 || return 0
+        command herdr-pr-metadata >/dev/null 2>&1 &!
+      }
+      autoload -Uz add-zsh-hook
+      add-zsh-hook precmd _herdr_refresh_pr_metadata
+
       # Git公式のgit-prompt.shを使用してブランチ名を表示（Nix管理のgitパッケージから読み込み）
       source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
 

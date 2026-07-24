@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, herdrPkg, ... }:
 
 let
   # AI コミットメッセージ生成 + commit を一発で行う CLI。
@@ -54,11 +54,77 @@ let
     herdr worktree create --cwd "$cwd" --branch "$branch" \
       --path "$root/.worktrees/$slug" --focus
   '';
+
+  # zsh の precmd から非同期で呼び、現在ブランチの open PR を Herdr の
+  # workspace metadata に反映する。通信失敗時は既存表示を維持する。
+  herdr-pr-metadata = pkgs.writeShellScriptBin "herdr-pr-metadata" ''
+    set -u
+
+    workspace_id="''${HERDR_WORKSPACE_ID:-}"
+    [ -n "$workspace_id" ] || exit 0
+
+    root=$(${pkgs.git}/bin/git rev-parse --show-toplevel 2>/dev/null) || exit 0
+    branch=$(${pkgs.git}/bin/git -C "$root" branch --show-current 2>/dev/null) || exit 0
+
+    if [ -z "$branch" ]; then
+      ${herdrPkg}/bin/herdr workspace report-metadata "$workspace_id" \
+        --source dotfiles:pr-metadata --clear-token pr >/dev/null 2>&1 || true
+      exit 0
+    fi
+
+    state_dir="''${TMPDIR:-/tmp}/herdr-pr-metadata"
+    ${pkgs.coreutils}/bin/mkdir -p "$state_dir"
+    workspace_slug=$(printf '%s' "$workspace_id" | ${pkgs.coreutils}/bin/tr -c 'A-Za-z0-9._-' '_')
+    cache="$state_dir/$workspace_slug"
+    lock="$cache.lock"
+
+    ${pkgs.coreutils}/bin/mkdir "$lock" 2>/dev/null || exit 0
+    trap '${pkgs.coreutils}/bin/rmdir "$lock" 2>/dev/null || true' EXIT
+
+    cached_root=
+    cached_branch=
+    if [ -f "$cache" ]; then
+      {
+        IFS= read -r cached_root || true
+        IFS= read -r cached_branch || true
+      } < "$cache"
+    fi
+    fresh=$(${pkgs.findutils}/bin/find "$cache" -mmin -1 -print -quit 2>/dev/null || true)
+    if [ "$cached_root" = "$root" ] && [ "$cached_branch" = "$branch" ] && [ -n "$fresh" ]; then
+      exit 0
+    fi
+
+    if ! pr_json=$(
+      cd "$root" &&
+        ${pkgs.gh}/bin/gh pr list --head "$branch" --state open --limit 1 \
+          --json number,url 2>/dev/null
+    ); then
+      exit 0
+    fi
+
+    current_branch=$(${pkgs.git}/bin/git -C "$root" branch --show-current 2>/dev/null) || exit 0
+    [ "$current_branch" = "$branch" ] || exit 0
+
+    pr_number=$(printf '%s' "$pr_json" | ${pkgs.jq}/bin/jq -r '.[0].number // empty')
+    if [ -n "$pr_number" ]; then
+      ${herdrPkg}/bin/herdr workspace report-metadata "$workspace_id" \
+        --source dotfiles:pr-metadata --token "pr=PR #$pr_number" >/dev/null 2>&1 || exit 0
+    else
+      ${herdrPkg}/bin/herdr workspace report-metadata "$workspace_id" \
+        --source dotfiles:pr-metadata --clear-token pr >/dev/null 2>&1 || exit 0
+    fi
+
+    printf '%s\n%s\n' "$root" "$branch" > "$cache"
+  '';
 in
 {
   # programs.git はスキップ（グローバル gitconfig なしの現状維持）
 
-  home.packages = [ gac herdr-worktree-new ];
+  home.packages = [
+    gac
+    herdr-worktree-new
+    herdr-pr-metadata
+  ];
 
   programs.lazygit = {
     enable = true;

@@ -89,6 +89,15 @@ resize_mode = "prefix+r"                       # リサイズモード
 # cmux の Inbox 的な体験が欲しいので priority を採用する。
 agent_panel_sort = "priority"
 
+# workspace metadata の $pr が存在するときだけ3行目に PR #番号を表示する。
+# Ctrl+クリック対象はペイン内URLだけなので、PRを開く操作は prefix+shift+o に分ける。
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace"],
+  ["branch", "git_status"],
+  ["$pr"],
+]
+
 # バックグラウンドのポップアップ通知配送。
 # off = 出さない（herdr のデフォルト。これが未設定だと通知は完全に沈黙する）
 # herdr = 画面内トースト
@@ -125,10 +134,15 @@ cjk_ime_agents = ["claude", "codex"]
 # リポジトリ内 <repo>/.worktrees/<branch> に git worktree を作成して
 # herdr ワークスペースとして開く（git.nix の herdr-worktree-new）。
 # 組み込み new_worktree（worktrees.directory 方式）の置き換え。
-# type は popup がドキュメントにあるが、現行バージョンは shell/pane/plugin_action のみ
-# 対応のため pane（一時ズームペイン、コマンド終了で閉じる）を使う。
+# ブランチ名を対話入力するため、終了時に閉じる一時 pane を使う。
 [[keys.command]]
 key = "prefix+shift+g"
 type = "pane"
 command = "herdr-worktree-new"
 description = "新規 worktree（repo 内 .worktrees/ に作成）"
+
+[[keys.command]]
+key = "prefix+shift+o"
+type = "shell"
+command = "gh pr view --web"
+description = "現在ブランチの PR を開く"
