@@ -40,3 +40,6 @@ keybind = super+b=text:\x02b
 # cmd+z を herdr の prefix+z（^B → z）にして zoom（全画面トグル）を発火する。
 # ghostty 内の CLI アプリ（nvim 等）で cmd+z は通常使わないため衝突しない。
 keybind = super+z=text:\x02z
+
+# cmd+o を herdr の prefix+shift+o（^B → O）にして現在ブランチの PR を開く。
+keybind = super+o=text:\x02O
