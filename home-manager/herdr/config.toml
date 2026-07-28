@@ -112,6 +112,12 @@ delay_seconds = 1
 enabled = true
 
 [experimental]
+# pane に画像レイヤ（pane.graphics.set / clear / info）を描画できるようにする。
+# 自作プラグイン koutaro.browser（herdr-browser-rs）が Chromium のスクリーン
+# ショットを PNG で流し込むのに必須。outer terminal が Kitty graphics 対応で
+# ある必要があり、Ghostty は対応済み。
+kitty_graphics = true
+
 # prefix mode に入っている間だけ macOS のキーボード入力ソースを ASCII 系に切り替える。
 # CJK IME（日本語入力）中に prefix+n などが効かなくなる問題への回避策。
 # prefix mode を抜けたら元の入力ソースに自動で戻る。macOS only, best-effort。
@@ -146,3 +152,13 @@ key = "prefix+shift+o"
 type = "shell"
 command = "gh pr view --web"
 description = "現在ブランチの PR を開く"
+
+# 自作プラグイン koutaro.browser（herdr-browser-rs）のブラウザ pane を開く。
+# 本家 herdr-browser の README は prefix+b を例示しているが、こちらでは
+# prefix+b は toggle_sidebar（ghostty の cmd+b 変換先）に使っているので
+# prefix+shift+b に割り当てる。
+[[keys.command]]
+key = "prefix+shift+b"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" plugin pane open --plugin koutaro.browser --entrypoint browser --placement split --direction right --focus'
+description = "ブラウザを右 split で開く"
