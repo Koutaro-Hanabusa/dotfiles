@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+###############################################################################
+# .kbrc
+#
+# Configuration file for `kb`, a fast Markdown knowledge base.
+#
+# Edit this file directly or use `kb set <name> <value>`. Settings are
+# environment variables named KB_<NAME>; `kb settings list` shows every name.
+#
+# This file is sourced, so it can decide things at run time.
+#
+# https://github.com/Koutaro-Hanabusa/kb
+###############################################################################
+
+# Claude Code などの非対話環境ではエディタ起動を防止する。
+# エディタを開くと閉じられないままセッションが止まるため、読み取り専用の cat にする。
+if [[ -n "${CLAUDECODE:-}" ]]; then
+  export KB_EDITOR="cat"
+else
+  export KB_EDITOR="nvim"
+fi

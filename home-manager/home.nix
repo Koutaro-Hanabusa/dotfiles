@@ -101,6 +101,9 @@ in
   home.file = {
     # nb
     ".nbrc".source = mkLink "nbrc";
+    # kb（自作のナレッジ CLI）の設定。nbrc と同じく CLAUDECODE 時はエディタを
+    # 開かないようにしている（kb は .kbrc を source するので条件分岐が効く）。
+    ".kbrc".source = mkLink "kbrc";
 
     # Prettier
     ".prettierrc".source = mkLink "prettierrc";
