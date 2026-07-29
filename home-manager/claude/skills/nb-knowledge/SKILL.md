@@ -47,7 +47,7 @@ Bad: `メモ`, `学び`, `tanstack`（broad）, `20260429153423`（what the reti
 ### 2. Write the note in one command
 
 ```bash
-kb new "<descriptive title>" --content - <<'EOF'
+kb new -t "<descriptive title>" --folder knowledge --content - <<'EOF'
 ## Date: YYYY-MM-DD
 
 ## <Section 1>
@@ -61,8 +61,8 @@ EOF
 
 `kb new` prints the path it wrote. It never overwrites: a colliding title gets a `-2` suffix.
 
-Notes land in `knowledge/` by default. Pass `--dir tech` or `--tag <tag>` when a different
-grouping fits.
+`--folder` is where the note goes; `--tag <tag>` overrides the tag, which otherwise
+comes from the folder name.
 
 ### 3. Sync
 
