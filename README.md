@@ -438,36 +438,48 @@ Claude Code本体は公式ネイティブインストーラーで管理する。
 
 ---
 
-## nb（ナレッジ管理）
+## kb（ナレッジ管理）
 
-[nb](https://github.com/xwmx/nb)でQ&Aや学びをノートブックに蓄積。
+自作の [kb](https://github.com/Koutaro-Hanabusa/kb)（Rust）でQ&Aや学びをノートブックに蓄積。
+
+以前は [nb](https://github.com/xwmx/nb) を使っていたが、27,000行のbashスクリプトで
+ノートごとに `git`/`sed`/`awk` を fork するため検索に18.5秒かかっていた。同じ787ノート
+（13.5MB）に対する実測で置き換え後は **0.09秒**、起動は 0.42秒 → 0.017秒。
 
 ### 基本操作
 
 | コマンド | 動作 |
 |---------|------|
-| `nb list` | ノート一覧 |
-| `nb add` | 新規ノート作成 |
-| `nb edit <id>` | ノートを編集 |
-| `nb search <query>` | ノートを検索 |
-| `nb show <id>` | ノートを表示 |
+| `kb search <pattern>` | 全文検索（正規表現・smart case） |
+| `kb ls` | ノート一覧（更新の新しい順） |
+| `kb tags` | タグと件数 |
+| `kb new <title>` | 新規ノート作成 → `$EDITOR` で開く |
+| `kb open` | fzfでブラウズ → glowで閲覧 |
+| `kb sync` | Markdownをコミットして pull・push |
+| `kb migrate` | frontmatter の一括付与 |
+
+フィルタは共通: `-n <notebook>` / `-t <tag>` / `--since 7d` / `--limit N`。
+`search` は追加で `-l`（パスのみ）・`-F`（リテラル）・`--json` を取る。
 
 ### ノートブック構成
 
-- `home:knowledge/` - 個人PCのナレッジ
-- `work:knowledge/` - 仕事PCのナレッジ（`.is_work_pc`で判定）
+- `~/.nb/home/knowledge/` - 個人PCのナレッジ
+- `~/.nb/work/knowledge/` - 仕事PCのナレッジ（`.is_work_pc`で判定）
 
-Claude Codeとの連携で、Q&Aのやり取りが自動的にナレッジとして蓄積される。
+各ノートは YAML frontmatter（`title` / `tags` / `created` / `updated`）を持つ。
+ノートブックはそれぞれ git リポジトリで、push すると GitHub Actions が R2 へ同期し
+Cloudflare AI Search が再インデックスする（MCP 経由でセマンティック検索できる）。
+
+Claude Code / Codex との連携で、Q&Aのやり取りが自動的にナレッジとして蓄積される。
 
 ### ターミナルでナレッジを閲覧（fzf + glow）
 
 | コマンド | 動作 |
 |---------|------|
-| `nbo` | `home/knowledge` をfzfでブラウズ → glowで閲覧 |
-| `nbo work/knowledge` | workのナレッジをブラウズ |
-| `nbo home/tech` | techフォルダをブラウズ |
-| `nbs "キーワード"` | home + work 両方を全文検索 → glowで閲覧 |
-| `nbe` | fzfでブラウズ → nvimで編集 |
+| `nbo` | 全ノートをfzfでブラウズ → glowで閲覧 |
+| `nbo work` | workノートブックだけをブラウズ |
+| `nbo <query>` | 初期クエリを入れた状態でブラウズ |
+| `kb open --edit` | 選択したノートを `$EDITOR` で開く |
 
 fzfの右ペインにglowプレビューが表示されるので、ノートの中身を見ながら選べる。
 

@@ -249,18 +249,16 @@
         fuck "$@"
       }
 
-      # ── nb ナレッジ（ターミナル完結: fzf + glow/nvim） ──
+      # ── ナレッジ（kb: 自作の Rust 製ナレッジ CLI） ──
 
-      # nbナレッジをfzfでブラウズして閲覧
+      # ナレッジを fzf でブラウズして閲覧。`kb open` が fzf + glow を内包する。
+      # 引数はノートブック名（nbo home / nbo work）またはフリーテキストの初期クエリ。
       nbo() {
-        local file
-        if [[ -n "$1" ]]; then
-          file=$(fd -e md . "$HOME/.nb/$1" | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        else
-          file=$({ fd -e md . "$HOME/.nb/home/knowledge" 2>/dev/null; fd -e md . "$HOME/.nb/work/knowledge" 2>/dev/null; } | fzf --preview "glow -s dark {}" --preview-window=right:60%)
-        fi
-        [[ -z "$file" ]] && return
-        _show_md "$file"
+        case "$1" in
+          home|work) kb open --notebook "$1" ;;
+          "")        kb open ;;
+          *)         kb open "$1" ;;
+        esac
       }
 
     '';

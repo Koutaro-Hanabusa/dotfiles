@@ -8,6 +8,7 @@
   herdrPkg,
   dbmlLspPkg,
   dbmlRendererPkg,
+  kbPkg,
   ...
 }:
 
@@ -81,6 +82,10 @@ in
     # DBML Renderer (自作 fork。viz.js ベースで自作 render より見栄えの良い
     # SVG を生成。日本語 ident 対応済み)。ftplugin/dbml.lua の :Er で使用。
     dbmlRendererPkg
+
+    # kb（自作のナレッジ CLI）。~/.nb/{home,work} の Markdown を検索・作成する。
+    # `kb open` は fzf と glow を PATH から使う（どちらも下で入れている）。
+    kbPkg
 
     # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
     # レンダするために PATH に必要。

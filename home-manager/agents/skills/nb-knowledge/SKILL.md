@@ -1,14 +1,14 @@
 ---
 name: nb-knowledge
 description: >
-  Record non-trivial insights to nb notebooks in the background IMMEDIATELY after generating them:
-  bug root causes, non-obvious API or framework behaviors, architectural tradeoffs, design decisions,
-  counter-intuitive learnings, or corrected misconceptions. Fire during or right after the response
-  that contains the insight — NOT in a later reflection step. Skip: trivial lookups (current time,
-  version numbers), restated facts already in docs, boilerplate confirmations, and responses that
-  merely summarize known information without new findings. Always uses the Write tool with a
-  descriptive kebab-case filename, then commits via direct git commands. Never use `nb add` (it
-  produces timestamp-only filenames and has been observed to hang).
+  Record non-trivial insights to the knowledge base in the background IMMEDIATELY after
+  generating them: bug root causes, non-obvious API or framework behaviors, architectural tradeoffs,
+  design decisions, counter-intuitive learnings, or corrected misconceptions. Fire during or right after
+  the response that contains the insight — NOT in a later reflection step. Skip: trivial lookups (current
+  time, version numbers), restated facts already in docs, boilerplate confirmations, and responses that
+  merely summarize known information without new findings. Always uses `kb new` with a descriptive
+  title, then `kb sync`. Never use `nb` (it is retired: 27,000 lines of bash, 18.5s per search, and
+  `nb add` produced timestamp-only filenames and hung).
 ---
 
 > **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
@@ -16,15 +16,19 @@ description: >
 > echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"nb-knowledge"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
 > ```
 
-This skill manages automatic knowledge recording to nb notebooks throughout every session.
+This skill manages automatic knowledge recording to the knowledge base throughout every session.
 
 ## Recording Rules
 
-- **Always use the Write tool** to create notes. Do NOT use `nb add`.
-- Reasons: `nb add` auto-generates timestamp-only filenames (e.g., `20260429153423.md`) which destroy discoverability, AND `nb add` has been observed to hang leaving zombie processes.
-- Sync to remote via direct git commands (`git add` + `git commit` + `git push`), not via `nb sync`.
+- **Always use `kb new`** to create notes. It generates the frontmatter and picks the notebook, so
+  there is nothing to hand-write and nothing to get wrong.
+- `kb` selects the notebook from the machine — `work` when `~/.is_work_pc` exists, `home` otherwise.
+  Do not pass `--notebook` unless you are deliberately overriding that.
+- Sync with `kb sync`. It stages Markdown only, commits with a generated message, then pulls and pushes.
 - No user confirmation is needed for note creation — always record automatically.
-- `git push` may be blocked by the harness's permission gate; if so, ask the user to push manually.
+- Run recording in the background (`run_in_background: true`) so it never blocks the conversation.
+- `kb sync` may fail to push if the harness blocks network access; if so, tell the user to run
+  `! kb sync` themselves.
 
 ## What to Record
 
@@ -36,59 +40,19 @@ This skill manages automatic knowledge recording to nb notebooks throughout ever
 
 ## How to Record
 
-### 1. Detect work PC vs personal PC
-- Work PC: `~/.is_work_pc` exists → notebook is `work`, path is `~/.nb/work/knowledge/`
-- Personal PC: notebook is `home`, path is `~/.nb/home/knowledge/`
+### 1. Choose a descriptive title
 
-### 2. Choose a descriptive filename (kebab-case)
+The title becomes both the frontmatter `title` and the filename, so search depends on it.
 
-The filename must reflect the content. Search/recall depends on it.
+Good: `TanStack Router の routes を薄く保つ方針`, `OAuth PKCE flow の落とし穴`,
+`postgres jsonb index のトレードオフ`
 
-Good examples:
-- `tanstack-router-philosophy.md`
-- `oauth-pkce-flow-pitfall.md`
-- `react-suspense-fallback-quirk.md`
-- `postgres-jsonb-index-tradeoffs.md`
+Bad: `メモ`, `学び`, `tanstack`（broad）, `20260429153423`（what the retired `nb add` produced）
 
-Bad examples:
-- `20260429153423.md` (timestamp only — `nb add` does this)
-- `notes.md`, `learning.md` (too generic)
-- `tanstack.md` (too broad)
-
-### 3. Create the note via Write tool
-
-```
-# Personal PC
-Write tool → /Users/<user>/.nb/home/knowledge/<kebab-case-title>.md
-
-# Work PC
-Write tool → /Users/<user>/.nb/work/knowledge/<kebab-case-title>.md
-```
-
-Use the Note Format below for the content.
-
-### 4. Commit and push via direct git
+### 2. Write the note in one command
 
 ```bash
-cd ~/.nb/<notebook> && \
-  git add knowledge/<kebab-case-title>.md && \
-  git commit -m "Add <topic-summary>" && \
-  git push
-```
-
-If `git push` is blocked by permission gate, tell the user:
-> push できなかった。手動で `! cd ~/.nb/<notebook> && git push` してくれ
-
-### 5. Updating existing notes
-
-- Use the Edit tool directly on the file (not `nb edit` — it opens nvim and hangs).
-- Then sync with the same git commands as step 4.
-
-## Note Format
-
-```markdown
-# <Topic Title>
-
+kb new "<descriptive title>" --content - <<'EOF'
 ## Date: YYYY-MM-DD
 
 ## <Section 1>
@@ -97,12 +61,62 @@ If `git push` is blocked by permission gate, tell the user:
 
 ## <Section 2>
 ...
+EOF
+```
+
+`kb new` prints the path it wrote. It never overwrites: a colliding title gets a `-2` suffix.
+
+Notes land in `knowledge/` by default. Pass `--dir tech` or `--tag <tag>` when a different
+grouping fits.
+
+### 3. Sync
+
+```bash
+kb sync
+```
+
+### 4. Updating an existing note
+
+Find it, then edit it directly — there is no `kb edit`:
+
+```bash
+kb search "<term>" -l      # paths of matching notes
+kb ls --since 7d           # recently touched notes
+```
+
+Use the Edit tool on the path, then `kb sync`.
+
+## Note Format
+
+`kb new` writes the frontmatter; supply only the body:
+
+```markdown
+## Date: YYYY-MM-DD
+
+## <Section 1>
+- Key point
+
+## <Section 2>
+...
+```
+
+The resulting file looks like:
+
+```markdown
+---
+title: <the title you passed>
+tags: [knowledge]
+created: 2026-07-29T12:14:54+09:00
+updated: 2026-07-29T12:14:54+09:00
+---
+
+## Date: ...
 ```
 
 ## Important
 
-- **Write tool is mandatory; `nb add` is forbidden.** Direct file write is reliable; `nb add` hangs.
-- **Filename = discoverability.** Generic / timestamp filenames are unsearchable later.
+- **`kb new` is mandatory; `nb` is retired.** Do not hand-write frontmatter and do not use raw
+  `git add`/`commit` — `kb sync` exists so that unrelated staged files never get swept into a note commit.
+- **Title = discoverability.** Generic or timestamp titles are unsearchable later.
 - Group related learnings into a single note rather than many tiny files.
-- Verify the file actually exists after Write (do not trust without confirming).
-- The remote sync (push) is a separate concern from creation. Creation can succeed locally even if push fails.
+- Creation and push are separate concerns: a note can be written locally even when push fails.
