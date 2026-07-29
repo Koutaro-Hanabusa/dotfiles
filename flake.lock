@@ -206,11 +206,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785305138,
-        "narHash": "sha256-lI3yb0fILwsxXuZJKIpLNfdv4yTe9verlDiWYfFwM/A=",
+        "lastModified": 1785312272,
+        "narHash": "sha256-25KzyzHLF+NeWrRoZ7LXTojYhzGl93eNh+z4cjsX4E8=",
         "owner": "Koutaro-Hanabusa",
         "repo": "kb",
-        "rev": "182b046e8cdc733c29c99fce52f46b3f5ec34d22",
+        "rev": "0d1d92f6bdb50cc4e293df8d32b5feb4835837c4",
         "type": "github"
       },
       "original": {
