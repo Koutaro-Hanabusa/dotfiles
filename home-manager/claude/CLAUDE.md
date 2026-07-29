@@ -43,7 +43,7 @@ you must: 認証情報（`*_TOKEN` / `*_API_KEY` / `CF_ACCESS_*` / `~/.ssh` 等�
 - At task completion and before session end, always review for missed recordings.
 - Write the note in one command, with `run_in_background: true` (never block the main conversation):
   ```bash
-  kb new "<descriptive title>" --content - <<'EOF'
+  kb new -t "<descriptive title>" --folder knowledge --content - <<'EOF'
   <body>
   EOF
   ```

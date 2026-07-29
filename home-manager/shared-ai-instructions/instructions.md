@@ -14,7 +14,7 @@ Always respond in Japanese. Even when sub-processes return responses in English,
 - At task completion and before session end, always review for missed recordings.
 - Write the note in one command (never block the main conversation):
   ```bash
-  kb new "<descriptive title>" --content - <<'EOF'
+  kb new -t "<descriptive title>" --folder knowledge --content - <<'EOF'
   <body>
   EOF
   ```
