@@ -26,11 +26,18 @@ kindLabel examples: rescue, review, adversarial-review, stop-gate
 ### Always-Active Skills
 
 #### nb-knowledge (Knowledge Recording) — Required Every Session
-- When Q&A, learnings, bug fixes, or design decisions occur during a session, record them via `nb add` in the background.
+- When Q&A, learnings, bug fixes, or design decisions occur during a session, record them via `kb` in the background.
 - At task completion and before session end, always review for missed recordings.
-- Run `nb add home:knowledge/ -c "content"` with `run_in_background: true` (never block the main conversation).
-- For work PCs: use `nb add work:knowledge/ -c "content"` instead.
-- To update existing notes: use the Edit tool directly, then `nb sync`. NEVER use `nb edit` — it opens nvim and hangs in non-interactive environments.
+- Write the note in one command, with `run_in_background: true` (never block the main conversation):
+  ```bash
+  kb new "<descriptive title>" --content - <<'EOF'
+  <body>
+  EOF
+  ```
+- `kb` picks the notebook from the machine — `work` when `~/.is_work_pc` exists, `home` otherwise. Do not pass `--notebook` unless deliberately overriding.
+- Sync with `kb sync`. It stages Markdown only, commits, then pulls and pushes.
+- To update existing notes: find with `kb search <term> -l`, use the Edit tool on the file, then `kb sync`. There is no `kb edit`.
+- NEVER use `nb` — it is retired (27,000 lines of bash, 18.5s per search; `nb add` produced timestamp-only filenames and hung).
 
 #### development-principles (Dev Principles) — Apply to All Decisions
 - Follow the development-principles skill guidelines when writing, designing, reviewing, or proposing code.
@@ -40,7 +47,19 @@ kindLabel examples: rescue, review, adversarial-review, stop-gate
   - **Before implementation**: Read existing code first (Genchi Genbutsu). Never write without reading.
   - **On completion**: Ask yourself if you verified it works (Inspection).
 
-### Documentation with nb
+### Documentation with kb
 
 Follow the nb-knowledge skill (see "Always-Active Skills" above) to record learnings.
-Work PC detection: `~/.is_work_pc` exists → `work:knowledge/`, otherwise `home:knowledge/`.
+
+`kb` is the knowledge CLI (self-authored, Rust). Notes live in `~/.nb/{home,work}/knowledge/`
+as plain Markdown with YAML frontmatter, and each notebook is a git repository that syncs to
+Cloudflare AI Search.
+
+| Command | Purpose |
+| --- | --- |
+| `kb search <pattern>` | Full-text search across both notebooks (regex, smart case) |
+| `kb ls --since 7d` | Recently touched notes |
+| `kb new <title> --content -` | Create a note, body from stdin |
+| `kb sync` | Commit Markdown, then pull and push |
+
+Notebook selection is automatic: `~/.is_work_pc` exists → `work`, otherwise `home`.

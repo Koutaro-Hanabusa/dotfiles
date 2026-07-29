@@ -29,6 +29,12 @@
       url = "github:Koutaro-Hanabusa/dbml-renderer";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # kb（自作のナレッジ CLI。~/.nb の Markdown を検索・作成する。
+    # nb は 27,000 行の bash で検索に 18.5s かかっていたのを 0.09s に置き換えた）
+    kb = {
+      url = "github:Koutaro-Hanabusa/kb";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -40,6 +46,7 @@
       nix-claude-code,
       dbml-language-server,
       dbml-renderer,
+      kb,
       ...
     }:
     let
@@ -70,6 +77,7 @@
             herdrPkg = herdr.packages.${system}.default;
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
             dbmlRendererPkg = dbml-renderer.packages.${system}.default;
+            kbPkg = kb.packages.${system}.default;
           };
           modules = [ ./home-manager/home.nix ] ++ extraModules;
         };
