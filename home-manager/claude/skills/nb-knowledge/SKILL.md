@@ -61,7 +61,7 @@ EOF
 
 `kb new` prints the path it wrote. It never overwrites: a colliding title gets a `-2` suffix.
 
-`--folder` is where the note goes; `--tag <tag>` overrides the tag, which otherwise
+`--folder` is where the note goes; `--tags a,b` overrides the tags, which otherwise
 comes from the folder name.
 
 ### 3. Sync
