@@ -31,8 +31,8 @@ description: >
 
 Koutaro は2つのノートブックに markdown ノートを蓄積している（ローカルの CLI は自作の `kb`）：
 
-- **home** (`~/.nb/home/knowledge/`, 180+本) — 個人の技術学習・設計判断・dotfiles・キャリア・求人リサーチ
-- **work** (`~/.nb/work/knowledge/`, 600+本) — 業務案件の知見（8122 / cameraman / leader、API 認証認可・IDOR 監査、配信基盤、Terraform 等）
+- **home** (`~/.kb/home/knowledge/`, 180+本) — 個人の技術学習・設計判断・dotfiles・キャリア・求人リサーチ
+- **work** (`~/.kb/work/knowledge/`, 600+本) — 業務案件の知見（8122 / cameraman / leader、API 認証認可・IDOR 監査、配信基盤、Terraform 等）
 
 どちらも Cloudflare AI Search でインデックスされ MCP ツールとして公開されている。しかし放っておくと Claude はこの蓄積を忘れて Web 検索や一般知識で答えてしまい、**せっかくのナレッジが活用されない**。このスキルはその防止策であり、かつ「どの検索手段が最適か」を判断するためのもの。
 

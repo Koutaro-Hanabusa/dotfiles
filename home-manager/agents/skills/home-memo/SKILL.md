@@ -3,7 +3,7 @@ name: home-memo
 description: >
   Search Koutaro's personal knowledge notes via the `mcp__home-memo__search_knowledge` tool BEFORE
   answering questions where personal context might exist. The notes are 400+ markdown files in nb's
-  home notebook (~/.nb/home/knowledge/), indexed via Cloudflare AI Search and served by the
+  home notebook (~/.kb/home/knowledge/), indexed via Cloudflare AI Search and served by the
   home-memo-mcp Worker. Trigger eagerly when the user asks about: technical topics that might have
   been researched before (frameworks like TanStack/React/Hono, libraries, patterns, dotfiles, MCP,
   Cloudflare, Nix), past design decisions or architectural notes, career / job-hunting / Findy /
@@ -24,7 +24,7 @@ description: >
 
 ## なぜ存在するか
 
-Koutaro は `~/.nb/home/knowledge/` に 400+ の markdown ノート（技術学習・設計判断・キャリア・求人リサーチ等）を蓄積していて、それを Cloudflare AI Search でインデックスし、`home-memo-mcp` Worker 経由で `mcp__home-memo__search_knowledge` ツールとして公開している。
+Koutaro は `~/.kb/home/knowledge/` に 400+ の markdown ノート（技術学習・設計判断・キャリア・求人リサーチ等）を蓄積していて、それを Cloudflare AI Search でインデックスし、`home-memo-mcp` Worker 経由で `mcp__home-memo__search_knowledge` ツールとして公開している。
 
 しかし放っておくと Codex はこのツールの存在を忘れて Web 検索や一般知識で答えてしまい、**せっかく蓄積したナレッジが活用されない**。このスキルはその防止策。
 
