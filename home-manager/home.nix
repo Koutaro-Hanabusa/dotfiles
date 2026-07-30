@@ -83,7 +83,7 @@ in
     # SVG を生成。日本語 ident 対応済み)。ftplugin/dbml.lua の :Er で使用。
     dbmlRendererPkg
 
-    # kb（自作のナレッジ CLI）。~/.nb/{home,work} の Markdown を検索・作成する。
+    # kb（自作のナレッジ CLI）。~/.kb/{home,work} の Markdown を検索・作成する。
     # `kb open` は fzf と glow を PATH から使う（どちらも下で入れている）。
     kbPkg
 

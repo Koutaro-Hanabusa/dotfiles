@@ -463,8 +463,8 @@ Claude Code本体は公式ネイティブインストーラーで管理する。
 
 ### ノートブック構成
 
-- `~/.nb/home/knowledge/` - 個人PCのナレッジ
-- `~/.nb/work/knowledge/` - 仕事PCのナレッジ（`.is_work_pc`で判定）
+- `~/.kb/home/knowledge/` - 個人PCのナレッジ
+- `~/.kb/work/knowledge/` - 仕事PCのナレッジ（`.is_work_pc`で判定）
 
 各ノートは YAML frontmatter（`title` / `tags` / `created` / `updated`）を持つ。
 ノートブックはそれぞれ git リポジトリで、push すると GitHub Actions が R2 へ同期し
@@ -479,21 +479,9 @@ Claude Code / Codex との連携で、Q&Aのやり取りが自動的にナレッ
 | `nbo` | 全ノートをfzfでブラウズ → glowで閲覧 |
 | `nbo work` | workノートブックだけをブラウズ |
 | `nbo <query>` | 初期クエリを入れた状態でブラウズ |
-| `kb open --edit` | 選択したノートを `$EDITOR` で開く |
+| `kb open knowledge/` | fzfで選んで `$EDITOR` で開く（`peek` は閲覧のみ） |
 
 fzfの右ペインにglowプレビューが表示されるので、ノートの中身を見ながら選べる。
-
-### Obsidian連携
-
-`~/.nb/` のノートブックはObsidian Vault（`~/buri`）からシンボリックリンクで参照されている。
-Obsidianで開けばグラフビューやリンク管理などGUIの機能も使える。
-
-```
-~/buri/
-├── nb-home-knowledge -> ~/.nb/home/knowledge
-├── nb-home-tech      -> ~/.nb/home/tech
-└── nb-work-knowledge -> ~/.nb/work/knowledge
-```
 
 ---
 

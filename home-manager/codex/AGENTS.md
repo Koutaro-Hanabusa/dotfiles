@@ -51,7 +51,7 @@ kindLabel examples: rescue, review, adversarial-review, stop-gate
 
 Follow the nb-knowledge skill (see "Always-Active Skills" above) to record learnings.
 
-`kb` is the knowledge CLI (self-authored, Rust). Notes live in `~/.nb/{home,work}/knowledge/`
+`kb` is the knowledge CLI (self-authored, Rust). Notes live in `~/.kb/{home,work}/knowledge/`
 as plain Markdown with YAML frontmatter, and each notebook is a git repository that syncs to
 Cloudflare AI Search.
 
