@@ -1,12 +1,8 @@
 return {
   {
-    "vhyrro/luarocks.nvim",
-    priority = 1000,
-    config = true,
-  },
-  {
     "3rd/image.nvim",
-    dependencies = { "luarocks.nvim" },
+    -- processor = "magick_cli" なら magick rock が不要なため luarocks ビルドを無効化
+    build = false,
     opts = {
       backend = "kitty",
       processor = "magick_cli",
