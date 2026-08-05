@@ -3,14 +3,22 @@ return {
   version = "*",
   dependencies = "nvim-tree/nvim-web-devicons",
   config = function()
-    require("bufferline").setup({
+    local bufferline = require("bufferline")
+
+    bufferline.setup({
       options = {
-        diagnostics = "nvim_lsp",
+        -- タブの塗り分けをやめて下線だけで現在位置を示す
+        style_preset = bufferline.style_preset.minimal,
+        indicator = { style = "underline" },
+        separator_style = "thin",
+        -- diagnostics は lualine 側に出しているのでタブには重ねない
+        diagnostics = false,
+        show_buffer_close_icons = false,
+        show_close_icon = false,
         offsets = {
           {
             filetype = "NvimTree",
-            text = "File Explorer",
-            text_align = "left",
+            text = "",
             separator = true,
           },
         },

@@ -4,7 +4,7 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        theme = "catppuccin",
+        theme = "gruvbox-material",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         globalstatus = true,
@@ -31,15 +31,15 @@ return {
             },
           },
         },
-        lualine_x = { "encoding", "fileformat", "filetype" },
-        lualine_y = { "progress" },
+        -- encoding / fileformat / progress は普段見ないので出さない
+        lualine_x = { "filetype" },
+        lualine_y = {},
         lualine_z = {
           "location",
           {
             function()
               return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
             end,
-            color = { fg = "#89b4fa" },
           },
         },
       },

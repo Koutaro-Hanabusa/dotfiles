@@ -35,7 +35,7 @@
 
 | プラグイン | 説明 |
 |-----------|------|
-| catppuccin | カラースキーム（mocha） |
+| gruvbox-material | カラースキーム（medium / material） |
 | bufferline | タブ/バッファライン |
 | lualine.nvim | ステータスライン（ブランチ・ディレクトリ表示） |
 | indent-blankline | インデントガイド |
