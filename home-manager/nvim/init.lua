@@ -117,6 +117,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup("plugins", {
+  rocks = {
+    enabled = false, -- luarocks を使うプラグインは無い（image.nvim は magick_cli を使用）
+  },
   checker = {
     enabled = true,
     notify = true,
