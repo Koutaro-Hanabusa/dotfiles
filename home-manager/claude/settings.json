@@ -26,7 +26,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "skillOverrides": {
     "grafana-cloud": "off",
     "empirical-prompt-tuning": "off",
@@ -92,7 +92,7 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "reviewing-skills@sen-marketplace": false,
     "skill-creator@claude-plugins-official": false,
-    "slack@claude-plugins-official": false,
+    "slack@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
   },
