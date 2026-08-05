@@ -3,11 +3,13 @@ return {
   main = "ibl",
   config = function()
     require("ibl").setup({
+      -- 細い罫線にして縦線の主張を弱める
       indent = {
-        char = "│",
+        char = "▏",
       },
+      -- カーソル位置のブロックを強調する scope は IDE 感が強いので切る
       scope = {
-        enabled = true,
+        enabled = false,
       },
     })
   end,
