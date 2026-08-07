@@ -392,11 +392,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786066298,
-        "narHash": "sha256-PKammoAQ849+A3M4d2en6l+VaCrcLZj9/fJakoAs58E=",
+        "lastModified": 1786070198,
+        "narHash": "sha256-kg9DxeOL1BLbEAWB8GvNkF80p73vBEbImYWjOJqVLcU=",
         "owner": "Koutaro-Hanabusa",
         "repo": "wtty",
-        "rev": "0f1f6c5cd6325a866a817bb71a09b96ed33e76e3",
+        "rev": "92d19ef4bf0deff51aa1f65a5f7aaeb66615e797",
         "type": "github"
       },
       "original": {
