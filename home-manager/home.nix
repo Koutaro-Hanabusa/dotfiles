@@ -9,6 +9,7 @@
   dbmlLspPkg,
   dbmlRendererPkg,
   kbPkg,
+  wttyPkg,
   ...
 }:
 
@@ -86,6 +87,11 @@ in
     # kb（自作のナレッジ CLI）。~/.kb/{home,work} の Markdown を検索・作成する。
     # `kb open` は fzf と glow を PATH から使う（どちらも下で入れている）。
     kbPkg
+
+    # wtty（自作の Web ターミナル）。`wtty` で 127.0.0.1:7681 に listen し、
+    # ブラウザから手元の shell を叩ける。PTY はサーバ側が保持するので
+    # タブを閉じてもセッションは生き残る。認証は無いので localhost 限定。
+    wttyPkg
 
     # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
     # レンダするために PATH に必要。
