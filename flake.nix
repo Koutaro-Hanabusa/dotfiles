@@ -35,6 +35,12 @@
       url = "github:Koutaro-Hanabusa/kb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # wtty（自作の Web ターミナル。ブラウザから手元の shell を叩く。
+    # PTY をサーバ側が持つのでタブを閉じてもセッションが生き残る）
+    wtty = {
+      url = "github:Koutaro-Hanabusa/wtty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -47,6 +53,7 @@
       dbml-language-server,
       dbml-renderer,
       kb,
+      wtty,
       ...
     }:
     let
@@ -78,6 +85,7 @@
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
             dbmlRendererPkg = dbml-renderer.packages.${system}.default;
             kbPkg = kb.packages.${system}.default;
+            wttyPkg = wtty.packages.${system}.default;
           };
           modules = [ ./home-manager/home.nix ] ++ extraModules;
         };
