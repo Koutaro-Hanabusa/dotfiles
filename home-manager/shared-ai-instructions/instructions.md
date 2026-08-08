@@ -15,9 +15,20 @@ Always respond in Japanese. Even when sub-processes return responses in English,
 - Write the note in one command (never block the main conversation):
   ```bash
   kb new -t "<descriptive title>" --folder knowledge --content - <<'EOF'
-  <body>
+  ## <Section 1>
+
+  - Key point
+
+  ## <Section 2>
+
+  ...
   EOF
   ```
+- `-t` is mandatory. A positional title is read as *content*, so without `-t` the file is named after
+  the clock (`20260729095853.md`) and no heading is written — the note becomes unsearchable.
+- Body format: no `# H1` (kb inserts `# <title>` itself), no `## Date:` line (frontmatter carries
+  `created`/`updated`), and always two or more `##` sections — never a single prose paragraph.
+- After writing, read the path `kb new` printed. A timestamp filename means `-t` was dropped: `kb delete` it and redo.
 - `kb` picks the notebook from the machine — `work` when `~/.is_work_pc` exists, `home` otherwise. Do not pass `--notebook` unless deliberately overriding.
 - Sync with `kb sync`. It stages Markdown only, commits, then pulls and pushes.
 - To update existing notes: find with `kb search <term> -l`, edit the file directly, then `kb sync`. There is no `kb edit`.
@@ -42,7 +53,7 @@ Cloudflare AI Search.
 | --- | --- |
 | `kb search <pattern>` | Full-text search across both notebooks (regex, smart case) |
 | `kb ls --since 7d` | Recently touched notes |
-| `kb new <title> --content -` | Create a note, body from stdin |
+| `kb new -t "<title>" --content -` | Create a note, body from stdin (`-t` required) |
 | `kb sync` | Commit Markdown, then pull and push |
 
 Notebook selection is automatic: `~/.is_work_pc` exists → `work`, otherwise `home`.
