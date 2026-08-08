@@ -1,6 +1,6 @@
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model_reasoning_effort = "ultra"
 personality = "pragmatic"
 approvals_reviewer = "user"
 
@@ -43,6 +43,15 @@ trust_level = "trusted"
 [projects."/Users/hanabusa.kotaro/sen/idp-front"]
 trust_level = "trusted"
 
+[projects."/Users/1126buri/dev/history"]
+trust_level = "trusted"
+
+[projects."/Users/1126buri/dev/kb"]
+trust_level = "trusted"
+
+[projects."/Users/1126buri"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens", "model", "branch-changes", "context-remaining", "context-used", "five-hour-limit", "task-progress"]
 status_line_use_colors = true
@@ -62,14 +71,14 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-07-20T11:03:09Z"
-last_revision = "b0b9f02b0581696da41e20d6c536ec639b44080f"
+last_updated = "2026-07-30T10:32:11Z"
+last_revision = "cf99fc252a44e3f36763abe1db8744757f1b0297"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
 [marketplaces.cloudflare]
-last_updated = "2026-07-15T10:34:11Z"
-last_revision = "70215303d44a81a0db3219428f4825b604fc6061"
+last_updated = "2026-07-26T02:00:24Z"
+last_revision = "30553f89ae1ef1e3c2917cd09d72dac992bb4e9a"
 source_type = "git"
 source = "https://github.com/cloudflare/skills.git"
 
