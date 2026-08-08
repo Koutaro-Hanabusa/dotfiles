@@ -453,7 +453,7 @@ Claude Code本体は公式ネイティブインストーラーで管理する。
 | `kb search <pattern>` | 全文検索（正規表現・smart case） |
 | `kb ls` | ノート一覧（更新の新しい順） |
 | `kb tags` | タグと件数 |
-| `kb new <title>` | 新規ノート作成 → `$EDITOR` で開く |
+| `kb new -t "<title>"` | 新規ノート作成 → `$EDITOR` で開く（`-t` を省くとファイル名が時刻になる） |
 | `kb open` | fzfでブラウズ → glowで閲覧 |
 | `kb sync` | Markdownをコミットして pull・push |
 | `kb migrate` | frontmatter の一括付与 |
