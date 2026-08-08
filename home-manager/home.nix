@@ -88,9 +88,10 @@ in
     # `kb open` は fzf と glow を PATH から使う（どちらも下で入れている）。
     kbPkg
 
-    # wtty（自作の Web ターミナル）。`wtty` で 127.0.0.1:7681 に listen し、
-    # ブラウザから手元の shell を叩ける。PTY はサーバ側が保持するので
-    # タブを閉じてもセッションは生き残る。認証は無いので localhost 限定。
+    # wtty（自作の Web ターミナル）。`wtty` で 127.0.0.1:7681 に立ち上げ、Chrome
+    # から自分の shell を叩く。描画は ghostty-web（libghostty の VT の WASM）で、
+    # WASM も JS もバイナリに埋め込み済みなので単体で動く。PTY はサーバ側が
+    # 持つため、タブを閉じてもシェルは生き残る。
     wttyPkg
 
     # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
@@ -130,8 +131,20 @@ in
     # Claude Code
     ".claude".source = mkLink "claude";
 
-    # Agent Skills（Codex など Agent Skills 標準対応クライアントで共有）
-    ".agents/skills".source = mkLink "agents/skills";
+    # Agent Skills（Codex など Agent Skills 標準対応クライアントで共有）。
+    # ~/.agents/skills にはユーザーが別途インストールしたスキルも入るため、
+    # ディレクトリ全体ではなく dotfiles 管理分だけを個別にリンクする。
+    ".agents/skills/changeset".source = mkLink "agents/skills/changeset";
+    ".agents/skills/development-principles".source = mkLink "agents/skills/development-principles";
+    ".agents/skills/empirical-prompt-tuning".source = mkLink "agents/skills/empirical-prompt-tuning";
+    ".agents/skills/frontend-design".source = mkLink "agents/skills/frontend-design";
+    ".agents/skills/grafana-cloud".source = mkLink "agents/skills/grafana-cloud";
+    ".agents/skills/home-memo".source = mkLink "agents/skills/home-memo";
+    ".agents/skills/hunk-review".source = mkLink "agents/skills/hunk-review";
+    ".agents/skills/job-hunter".source = mkLink "agents/skills/job-hunter";
+    ".agents/skills/knowledges".source = mkLink "agents/skills/knowledges";
+    ".agents/skills/nb-knowledge".source = mkLink "agents/skills/nb-knowledge";
+    ".agents/skills/nix-dotfiles".source = mkLink "agents/skills/nix-dotfiles";
 
     # Claude Code MCP のサーバー定義（source of truth）。
     # 注意: ~/.mcp.json は **project スコープ**で、CWD がホームのときだけ拾われる。
