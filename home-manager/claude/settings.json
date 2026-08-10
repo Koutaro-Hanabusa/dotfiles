@@ -26,7 +26,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "skillOverrides": {
     "grafana-cloud": "off",
     "empirical-prompt-tuning": "off",
