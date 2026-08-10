@@ -32,7 +32,7 @@ curl -fsSL https://claude.ai/install.sh | bash
 # hanabusa.kotaro の設定で適用
 nix run home-manager -- switch --flake .#hanabusa.kotaro
 
-# work PC 判定ファイルを作成（nb-knowledge の notebook 分岐用）
+# work PC 判定ファイルを作成（kb の notebook 分岐用）
 touch ~/.is_work_pc
 ```
 

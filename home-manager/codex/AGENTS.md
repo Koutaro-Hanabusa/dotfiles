@@ -25,31 +25,6 @@ kindLabel examples: rescue, review, adversarial-review, stop-gate
 
 ### Always-Active Skills
 
-#### nb-knowledge (Knowledge Recording) — Required Every Session
-- When Q&A, learnings, bug fixes, or design decisions occur during a session, record them via `kb` in the background.
-- At task completion and before session end, always review for missed recordings.
-- Write the note in one command, with `run_in_background: true` (never block the main conversation):
-  ```bash
-  kb new -t "<descriptive title>" --folder knowledge --content - <<'EOF'
-  ## <Section 1>
-
-  - Key point
-
-  ## <Section 2>
-
-  ...
-  EOF
-  ```
-- `-t` is mandatory. A positional title is read as *content*, so without `-t` the file is named after
-  the clock (`20260729095853.md`) and no heading is written — the note becomes unsearchable.
-- Body format: no `# H1` (kb inserts `# <title>` itself), no `## Date:` line (frontmatter carries
-  `created`/`updated`), and always two or more `##` sections — never a single prose paragraph.
-- After writing, read the path `kb new` printed. A timestamp filename means `-t` was dropped: `kb delete` it and redo.
-- `kb` picks the notebook from the machine — `work` when `~/.is_work_pc` exists, `home` otherwise. Do not pass `--notebook` unless deliberately overriding.
-- Sync with `kb sync`. It stages Markdown only, commits, then pulls and pushes.
-- To update existing notes: find with `kb search <term> -l`, use the Edit tool on the file, then `kb sync`. There is no `kb edit`.
-- NEVER use `nb` — it is retired (27,000 lines of bash, 18.5s per search; `nb add` produced timestamp-only filenames and hung).
-
 #### development-principles (Dev Principles) — Apply to All Decisions
 - Follow the development-principles skill guidelines when writing, designing, reviewing, or proposing code.
 - Consciously apply these principles in the following situations:
@@ -59,8 +34,6 @@ kindLabel examples: rescue, review, adversarial-review, stop-gate
   - **On completion**: Ask yourself if you verified it works (Inspection).
 
 ### Documentation with kb
-
-Follow the nb-knowledge skill (see "Always-Active Skills" above) to record learnings.
 
 `kb` is the knowledge CLI (self-authored, Rust). Notes live in `~/.kb/{home,work}/knowledge/`
 as plain Markdown with YAML frontmatter, and each notebook is a git repository that syncs to

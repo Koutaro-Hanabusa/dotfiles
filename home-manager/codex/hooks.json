@@ -31,15 +31,6 @@
             "type": "command"
           }
         ]
-      },
-      {
-        "hooks": [
-          {
-            "command": "bash \"$HOME/.codex/hooks/nb-knowledge-session-context.sh\"",
-            "timeout": 5,
-            "type": "command"
-          }
-        ]
       }
     ],
     "Stop": [
@@ -55,14 +46,6 @@
         "hooks": [
           {
             "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; export CMUX_SOCKET_PASSWORD=$(cat \"$HOME/Library/Application Support/cmux/socket-control-password\" 2>/dev/null); cmux claude-hook stop 2>/dev/null || cmux notify --title 'Claude Code' --body '作業が完了しました' 2>/dev/null || true",
-            "type": "command"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "command": "bash ~/.claude/scripts/nb-knowledge-stop-hook.sh",
             "type": "command"
           }
         ]
