@@ -22,7 +22,7 @@ brew "php"                            # nvim PHP: intelephense LSP / pint format
 # ====================
 brew "thefuck"                        # zsh.nix の fuck() 関数で参照
 brew "daipeihust/tap/im-select"       # nvim init.lua の IME 自動切替で使用
-brew "nb"                             # always-active skill nb-knowledge で必須
+brew "nb"                             # 旧ナレッジ CLI（廃止済み。現在は自作の kb を使用）
 brew "fish"                           # サブシェル
 brew "bash"                           # macOS 標準より新しい bash 5.x
 brew "bash-completion@2"

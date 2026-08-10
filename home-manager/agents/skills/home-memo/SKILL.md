@@ -20,7 +20,7 @@ description: >
 > echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"home-memo"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
 > ```
 
-このスキルは、**回答する前に Koutaro の個人ナレッジを検索する**ためのもの。`nb-knowledge` が「書く側」なら、こちらは「読む側」。
+このスキルは、**回答する前に Koutaro の個人ナレッジを検索する**ためのもの（読む専用）。
 
 ## なぜ存在するか
 
@@ -100,11 +100,10 @@ mcp__home-memo__search_knowledge(query="...", max_results=5)
    - 同義語に置き換え / 英訳 ↔ 和訳 / 関連用語に拡張 / 具体化（例: `auth` → `Bearer 認証`）
    - **複数軸を同時に変えても OK**（例: `Hono middleware 認証` → `Hono auth middleware`）。元クエリと意味的につながりが残る範囲で
 3. それでも空なら一般知識・Web 検索にフォールバック
-4. 新規の学びがあれば「ノートに残しますか？」と促すか、`nb-knowledge` 経由で書き残す
+4. 新規の学びがあれば「ノートに残しますか？」と促し、ユーザーが希望したときだけ `kb new` で書き残す（自動記録はしない）
 
 ### 4. 関連スキルとの連携
 
-- **nb-knowledge**: 検索結果が古かったり、新しい学びを得たら nb-knowledge スキルが発火して新規ノートを書く（こちらと書き手側で対）
 - **job-hunter**: 求人系の検索ではこちらと併用。ノートに過去のリサーチ結果があれば再利用してリサーチ重複を避ける
 
 ## 重要
