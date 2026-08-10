@@ -143,7 +143,6 @@ in
     ".agents/skills/hunk-review".source = mkLink "agents/skills/hunk-review";
     ".agents/skills/job-hunter".source = mkLink "agents/skills/job-hunter";
     ".agents/skills/knowledges".source = mkLink "agents/skills/knowledges";
-    ".agents/skills/nb-knowledge".source = mkLink "agents/skills/nb-knowledge";
     ".agents/skills/nix-dotfiles".source = mkLink "agents/skills/nix-dotfiles";
 
     # Claude Code MCP のサーバー定義（source of truth）。
