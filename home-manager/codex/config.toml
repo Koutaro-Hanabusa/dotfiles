@@ -215,6 +215,20 @@ approval_mode = "approve"
 [mcp_servers.cheese.tools.list_icons]
 approval_mode = "approve"
 
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest", "--autoConnect"]
+cwd = "/tmp"
+startup_timeout_sec = 30
+enabled = true
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+cwd = "/tmp"
+startup_timeout_sec = 30
+enabled = true
+
 [mcp_servers.home-memo]
 url = "https://home-memo-mcp.burio16.com/mcp"
 enabled = true
