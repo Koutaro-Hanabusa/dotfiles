@@ -51,6 +51,10 @@
         "CF-Access-Client-Secret": "${CF_ACCESS_CLIENT_SECRET}"
       }
     },
+    "tacos": {
+      "type": "http",
+      "url": "https://tacos.burio16.com/mcp"
+    },
     "backlog": {
       "command": "npx",
       "args": ["-y", "backlog-mcp-server"],

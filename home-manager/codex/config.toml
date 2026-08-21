@@ -229,6 +229,11 @@ enabled_tools = ["search_knowledge"]
 env_http_headers = { "CF-Access-Client-Id" = "CF_ACCESS_CLIENT_ID", "CF-Access-Client-Secret" = "CF_ACCESS_CLIENT_SECRET" }
 default_tools_approval_mode = "approve"
 
+[mcp_servers.tacos]
+url = "https://tacos.burio16.com/mcp"
+enabled = true
+default_tools_approval_mode = "approve"
+
 [desktop.open-in-target-preferences]
 global = "ghostty"
 
