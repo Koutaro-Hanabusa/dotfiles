@@ -61,6 +61,18 @@ trust_level = "trusted"
 [projects."/Users/hanabusa.kotaro/sen/hoisys_note"]
 trust_level = "trusted"
 
+[projects."/Users/hanabusa.kotaro/sen/sen-rebuild"]
+trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/sen/8122-cheese-writing"]
+trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/sen"]
+trust_level = "trusted"
+
+[projects."/Users/hanabusa.kotaro/sen/claude-code-plugins"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "used-tokens", "model", "branch-changes", "context-remaining", "context-used", "five-hour-limit", "task-progress"]
 status_line_use_colors = true
@@ -71,6 +83,9 @@ theme = "monokai-extended"
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
 
+[notice]
+hide_full_access_warning = true
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
@@ -80,8 +95,8 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-08-10T04:10:29Z"
-last_revision = "3da105324a27aa7b1f435a3925f8626092891d4e"
+last_updated = "2026-08-28T08:30:40Z"
+last_revision = "0620a687ddd518871772eefd78573baff2dcb8cb"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
@@ -107,6 +122,12 @@ source = "https://github.com/sen-corporation/claude-code-plugins.git"
 last_updated = "2026-06-15T03:44:55Z"
 source_type = "local"
 source = "/Users/hanabusa.kotaro/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.ponytail]
+last_updated = "2026-08-10T06:31:36Z"
+last_revision = "2ed6c52c9d7e5e56942508591085fd45dea277d3"
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
 
 [plugins."browser@openai-bundled"]
 enabled = true
@@ -168,6 +189,9 @@ enabled = true
 [plugins."php-lsp@claude-plugins-official"]
 enabled = true
 
+[plugins."ponytail@ponytail"]
+enabled = true
+
 [features]
 hooks = true
 js_repl = false
@@ -213,6 +237,9 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [mcp_servers.cheese.tools.list_icons]
+approval_mode = "approve"
+
+[mcp_servers.cheese.tools.list_tokens]
 approval_mode = "approve"
 
 [mcp_servers.chrome-devtools]
@@ -391,3 +418,12 @@ trusted_hash = "sha256:c707dc06bfa92f23b0bbb36b299ae01cb434174abac5a546c6815fefc
 
 [hooks.state."/Users/1126buri/.codex/hooks.json:stop:2:0"]
 trusted_hash = "sha256:74276e502f90e3a49682dbab5b3c84906ae8e47239d092ae6a5c357845386c6d"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:session_start:0:0"]
+trusted_hash = "sha256:5f81d38f47448a1581c08ec877e044d9e04dd6f814dce3f2671f7a8edadd719b"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:6a6f42bc3b58d6262db38bfd74d7f340fcca2b09cdb134aad365063f0bfefca4"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:subagent_start:0:0"]
+trusted_hash = "sha256:1423b56c1322f96c8f74c51c1e7ae9a047b904c1fa43ee9165d462fd7a6e70ef"
