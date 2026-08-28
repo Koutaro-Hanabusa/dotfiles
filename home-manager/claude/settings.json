@@ -94,7 +94,9 @@
     "skill-creator@claude-plugins-official": false,
     "slack@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "eli5@claude-community": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -114,6 +116,18 @@
         "source": "github",
         "repo": "sen-corporation/claude-code-plugins"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
+      }
     }
   },
   "language": "日本語",
@@ -130,6 +144,5 @@
   "agentPushNotifEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754061737891
-  },
-  "model": "opus[1m]"
+  }
 }
