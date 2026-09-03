@@ -16,11 +16,11 @@
 #   3. 下記の version / hash を差し替え
 stdenv.mkDerivation rec {
   pname = "codex-cli";
-  version = "0.144.1";
+  version = "0.153.1";
 
   src = fetchurl {
     url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-aarch64-apple-darwin.tar.gz";
-    hash = "sha256-iOcqyL0wgV99GOYtrDM9wgzjrRy6lL4WSaGXfdm/27g=";
+    hash = "sha256-gY88ZcaXOuVFhrpS+ON8dnPz9bjgnHSFjBniXHRHkiY=";
   };
 
   # tarball 直下にバイナリ 1 本のみ入っている（ディレクトリを噛まない）
