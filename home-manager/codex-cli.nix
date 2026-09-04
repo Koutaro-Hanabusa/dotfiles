@@ -4,31 +4,32 @@
   fetchurl,
 }:
 
-# OpenAI Codex CLI の公式 pre-built バイナリを Nix 化するインライン derivation。
+# OpenAI Codex CLI の公式 package を Nix 化するインライン derivation。
 #
 # ryoppippi/nix-claude-code を参考にした最小版：flake は aarch64-darwin 固定なので
 # platform 分岐は入れず、必要になったら sources 表を増やす。
 #
 # バージョン更新手順:
 #   1. https://github.com/openai/codex/releases から新しい rust-vX.Y.Z を選ぶ
-#   2. `nix-prefetch-url --type sha256 <tar.gz URL> | xargs nix hash convert --hash-algo sha256 --to sri`
+#   2. `nix-prefetch-url --type sha256 <codex-package tar.gz URL> | xargs nix hash convert --hash-algo sha256 --to sri`
 #      で SRI 形式のハッシュを取得
 #   3. 下記の version / hash を差し替え
 stdenv.mkDerivation rec {
   pname = "codex-cli";
-  version = "0.153.1";
+  version = "0.153.2";
 
   src = fetchurl {
-    url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-aarch64-apple-darwin.tar.gz";
-    hash = "sha256-gY88ZcaXOuVFhrpS+ON8dnPz9bjgnHSFjBniXHRHkiY=";
+    url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-package-aarch64-apple-darwin.tar.gz";
+    hash = "sha256-KH4t0Km7+1hYGwqRUDmUWLTwlOpCyvAoYPHoy1ogKgs=";
   };
 
-  # tarball 直下にバイナリ 1 本のみ入っている（ディレクトリを噛まない）
+  # package の bin / resources / metadata は tarball 直下にある。
   sourceRoot = ".";
 
   installPhase = ''
     runHook preInstall
-    install -Dm755 codex-aarch64-apple-darwin $out/bin/codex
+    mkdir -p $out
+    cp -R bin codex-package.json codex-path codex-resources $out/
     runHook postInstall
   '';
 
