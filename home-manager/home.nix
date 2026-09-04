@@ -161,7 +161,7 @@ in
     ".codex/agents".source = mkLink "codex/agents";
     ".codex/hooks.json".source = mkLink "codex/hooks.json";
     ".codex/hooks".source = mkLink "codex/hooks";
-    ".codex/instructions.md".source = mkLink "codex/instructions.md";
+    ".codex/AGENTS.md".source = mkLink "codex/AGENTS.md";
 
     # Herdr（config.toml のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
     ".config/herdr/config.toml".source = mkLink "herdr/config.toml";
