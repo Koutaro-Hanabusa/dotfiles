@@ -16,11 +16,11 @@
 #   3. 下記の version / hash を差し替え
 stdenv.mkDerivation rec {
   pname = "codex-cli";
-  version = "0.153.2";
+  version = "0.153.4";
 
   src = fetchurl {
     url = "https://github.com/openai/codex/releases/download/rust-v${version}/codex-package-aarch64-apple-darwin.tar.gz";
-    hash = "sha256-KH4t0Km7+1hYGwqRUDmUWLTwlOpCyvAoYPHoy1ogKgs=";
+    hash = "sha256-NUONofv3ptt92zvOyERI+mAVuhiEYUcql9nR2n2cQ1M=";
   };
 
   # package の bin / resources / metadata は tarball 直下にある。
