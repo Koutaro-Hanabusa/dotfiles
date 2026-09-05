@@ -10,11 +10,6 @@ description: >
 
 # Job Hunter — 転職支援スキル
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"job-hunter"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
-> ```
-
 ## 最初にやること（必須）
 
 **Web 検索より先に、蓄積済みナレッジを引く。** 候補企業も面接対策も既に大量に書かれている。

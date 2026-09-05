@@ -106,7 +106,6 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 - `.config/ghostty` — Ghostty（macOSでNixパッケージ未対応のため）
 - `.config/karabiner` — Karabiner
 - `.claude` — Claude Code
-- `.config/claude-otel-monitoring` — Claude OTel Monitoring
 - `.config/gh-dash` — gh-dash
 - `.config/herdr/config.toml` — Herdr
 - `.nbrc`, `.prettierrc`, `.textlintrc.json` 等

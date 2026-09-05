@@ -143,7 +143,6 @@ in
     ".agents/skills/hunk-review".source = mkLink "agents/skills/hunk-review";
     ".agents/skills/job-hunter".source = mkLink "agents/skills/job-hunter";
     ".agents/skills/knowledges".source = mkLink "agents/skills/knowledges";
-    ".agents/skills/nb-knowledge".source = mkLink "agents/skills/nb-knowledge";
     ".agents/skills/nix-dotfiles".source = mkLink "agents/skills/nix-dotfiles";
 
     # Claude Code MCP のサーバー定義（source of truth）。
@@ -166,9 +165,6 @@ in
     # Herdr（設定と音源のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
     ".config/herdr/config.toml".source = mkLink "herdr/config.toml";
     ".config/herdr/sounds".source = mkLink "herdr/sounds";
-
-    # Claude OTel Monitoring
-    ".config/claude-otel-monitoring".source = mkLink "claude-otel-monitoring";
 
     # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
     ".config/gh-dash/config.yml".source = ./gh-dash/config.yml;

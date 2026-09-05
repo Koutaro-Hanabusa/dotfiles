@@ -23,12 +23,6 @@
       GIT_PS1_SHOWUNTRACKEDFILES = "1";
       GIT_PS1_SHOWSTASHSTATE = "1";
 
-      # Claude Code OpenTelemetry モニタリング (→ Grafana Cloud)
-      CLAUDE_CODE_ENABLE_TELEMETRY = "1";
-      OTEL_METRICS_EXPORTER = "otlp";
-      OTEL_LOGS_EXPORTER = "otlp";
-      OTEL_EXPORTER_OTLP_PROTOCOL = "grpc";
-      OTEL_EXPORTER_OTLP_ENDPOINT = "http://localhost:4317";
     };
 
     profileExtra = ''

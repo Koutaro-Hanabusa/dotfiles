@@ -20,11 +20,6 @@ description: >
   ユーザーが明示的に「最新/外部情報だけ欲しい」と言っている場合。
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"knowledges"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
-> ```
-
 このスキルは、**回答する前に Koutaro の蓄積ナレッジを検索する**ためのもの（読む専用）。home / work 両ノートブックを扱い、MCP セマンティック検索とローカルの `kb search` を**状況に応じて使い分ける**。
 
 ## なぜ存在するか

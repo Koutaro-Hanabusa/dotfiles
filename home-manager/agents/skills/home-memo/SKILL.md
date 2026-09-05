@@ -15,11 +15,6 @@ description: >
   source is more direct, or when the user explicitly says they want fresh / external info only.
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"home-memo"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
-> ```
-
 このスキルは、**回答する前に Koutaro の個人ナレッジを検索する**ためのもの（読む専用）。
 
 ## なぜ存在するか
