@@ -6,11 +6,6 @@ description: >
   errors, or performance. Manually invoke with /grafana.
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"grafana-cloud"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
-> ```
-
 # Grafana Cloud Usage Analytics
 
 CodexのOTelメトリクス・ログをGrafana Cloudから取得し、使用状況を分析するスキル。

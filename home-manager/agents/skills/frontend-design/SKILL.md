@@ -3,11 +3,6 @@ name: frontend-design
 description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, applications, or implement a Figma DevMode design. Generates creative, polished code that avoids generic AI aesthetics.
 ---
 
-> **[Skill Log]** このスキルが発動したら、最初に以下のBashコマンドを `run_in_background: true` で実行せよ:
-> ```
-> echo '{"timestamp":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","tool_name":"Skill","skill":"frontend-design"}' >> ~/.config/Codex-otel-monitoring/logs/Codex-hooks.log
-> ```
-
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 Use this skill when implementing a design through Figma DevMode MCP as well.
 
