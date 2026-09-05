@@ -22,17 +22,6 @@
         "matcher": "Task|Skill|mcp__.*"
       }
     ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash '/Users/hanabusa.kotaro/.codex/herdr-agent-state.sh' session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
