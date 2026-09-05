@@ -1,5 +1,5 @@
 notify = ["/Users/hanabusa.kotaro/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
-model = "gpt-5.6-sol"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "max"
 personality = "pragmatic"
 approvals_reviewer = "user"
@@ -95,8 +95,8 @@ source_type = "local"
 source = "/Users/hanabusa.kotaro/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.claude-plugins-official]
-last_updated = "2026-08-28T08:30:40Z"
-last_revision = "0620a687ddd518871772eefd78573baff2dcb8cb"
+last_updated = "2026-09-02T15:15:03Z"
+last_revision = "0120fb83da5d7cdaa52dd11979690f2dc5f76052"
 source_type = "git"
 source = "https://github.com/anthropics/claude-plugins-official.git"
 
@@ -249,12 +249,30 @@ cwd = "/tmp"
 startup_timeout_sec = 30
 enabled = true
 
+[mcp_servers.chrome-devtools.tools.navigate_page]
+approval_mode = "approve"
+
+[mcp_servers.chrome-devtools.tools.new_page]
+approval_mode = "approve"
+
+[mcp_servers.chrome-devtools.tools.take_snapshot]
+approval_mode = "approve"
+
+[mcp_servers.chrome-devtools.tools.click]
+approval_mode = "approve"
+
+[mcp_servers.chrome-devtools.tools.evaluate_script]
+approval_mode = "approve"
+
 [mcp_servers.playwright]
 command = "npx"
 args = ["-y", "@playwright/mcp@latest"]
 cwd = "/tmp"
 startup_timeout_sec = 30
 enabled = true
+
+[mcp_servers.playwright.tools.browser_tabs]
+approval_mode = "approve"
 
 [mcp_servers.home-memo]
 url = "https://home-memo-mcp.burio16.com/mcp"
