@@ -107,9 +107,10 @@ rows = [
 delivery = "system"
 delay_seconds = 1
 
-# 背景ワークスペースのエージェント状態変化で音を鳴らす。デフォルト true だが明示しておく。
+# 通知音は短く控えめな音にする。
 [ui.sound]
 enabled = true
+path = "sounds/notification.mp3"
 
 [experimental]
 # pane に画像レイヤ（pane.graphics.set / clear / info）を描画できるようにする。

@@ -163,8 +163,9 @@ in
     ".codex/hooks".source = mkLink "codex/hooks";
     ".codex/AGENTS.md".source = mkLink "codex/AGENTS.md";
 
-    # Herdr（config.toml のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
+    # Herdr（設定と音源のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
     ".config/herdr/config.toml".source = mkLink "herdr/config.toml";
+    ".config/herdr/sounds".source = mkLink "herdr/sounds";
 
     # Claude OTel Monitoring
     ".config/claude-otel-monitoring".source = mkLink "claude-otel-monitoring";
