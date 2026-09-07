@@ -69,3 +69,6 @@ home-manager/claude/remote-settings.json
 
 # macOS Finder metadata
 .DS_Store
+
+# Codex が自動更新するユーザー状態（共有設定は home-manager/codex/config.toml）
+home-manager/codex/state.toml
