@@ -20,6 +20,10 @@ nix run home-manager -- switch --flake .
 # 2回目以降は home-manager が PATH に入るので直接実行可能
 home-manager switch --flake .
 
+# Codex の共有設定を system 層へ接続（初回のみ）
+sudo mkdir -p /etc/codex
+sudo ln -sfn "$HOME/dotfiles/home-manager/codex/config.toml" /etc/codex/config.toml
+
 # Claude Code は公式ネイティブインストーラーで管理
 curl -fsSL https://claude.ai/install.sh | bash
 ```

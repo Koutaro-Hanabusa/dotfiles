@@ -155,8 +155,8 @@ in
     #   done
     ".mcp.json".source = mkLink "mcp.json";
 
-    # Codex CLI（個別ファイルのみ。~/.codex/ にはランタイムファイルがあるため丸ごと symlink しない）
-    ".codex/config.toml".source = mkLink "codex/config.toml";
+    # Codex（共有設定は /etc/codex/config.toml、ここは自動更新されるローカル状態のみ）
+    ".codex/config.toml".source = mkLink "codex/state.toml";
     ".codex/agents".source = mkLink "codex/agents";
     ".codex/hooks.json".source = mkLink "codex/hooks.json";
     ".codex/hooks".source = mkLink "codex/hooks";
