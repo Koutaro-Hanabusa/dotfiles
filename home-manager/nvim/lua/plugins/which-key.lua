@@ -16,6 +16,7 @@ return {
       separator = "→",
     },
     spec = {
+      { "<leader>a", group = "Agentic" },
       { "<leader>b", group = "Buffer" },
       { "<leader>f", group = "Find (Telescope)" },
       { "<leader>g", group = "Git" },

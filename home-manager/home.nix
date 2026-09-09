@@ -15,6 +15,7 @@
 
 let
   dotfilesDir = "${config.home.homeDirectory}/dotfiles/home-manager";
+  codex-acp = pkgs.callPackage ./codex-acp.nix { };
   # ~/dotfiles/home-manager/<rel> への out-of-store symlink を作る（編集が即時反映される）
   mkLink = rel: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${rel}";
 in
@@ -72,6 +73,7 @@ in
     # vp shim (~/.vite-plus/bin/codex) が PATH で先勝ちするため、
     # zsh.nix の codex() ラッパーで Nix ストア実体を直接叩く。
     codex-cli
+    codex-acp
     # Herdr（Agent multiplexer）。config は home-manager/herdr/config.toml で管理済み。
     # zsh.nix の _open_herdr_editor_split が `command -v herdr` で存在チェックしてから使う。
     herdrPkg
