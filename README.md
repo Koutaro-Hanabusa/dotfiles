@@ -130,6 +130,17 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 | `nvim` | nvimを起動（herdr内では右側が空いていれば 30% 幅の shell split を開き、終了時に閉じる） |
 | `vim` | nvimを起動（herdr内では右側が空いていれば 30% 幅の shell split を開き、終了時に閉じる） |
 
+### Agentic.nvim（Codex）
+
+Neovim 内のチャットは Agentic.nvim から `codex-acp` を介して Codex に接続する。
+
+| キー | 動作 |
+|------|------|
+| `Space` `aa` | チャットを開閉 |
+| `Space` `as` | 現在のファイルまたは選択範囲をコンテキストに追加 |
+| `Space` `an` | 新しいセッションを開始 |
+| `Space` `ar` | 既存セッションを復元 |
+
 ## Git関連ツール
 
 ### Diffview（差分表示）
