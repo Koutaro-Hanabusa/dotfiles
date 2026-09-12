@@ -112,7 +112,7 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 - `.claude` — Claude Code
 - `.config/gh-dash` — gh-dash
 - `.config/herdr/config.toml` — Herdr
-- `.nbrc`, `.prettierrc`, `.textlintrc.json` 等
+- `.nbrc`, `.prettierrc` 等
 
 ---
 
@@ -280,72 +280,6 @@ Mason経由で自動インストール。
 | `gr` | 参照を検索 |
 | `Space` `rn` | シンボルをリネーム |
 | `Space` `ca` | コードアクション |
-
----
-
-## textlint（日本語校正）
-
-[textlint](https://textlint.github.io/)で日本語の文章をチェック。
-
-### インストール
-
-```bash
-npm install -g textlint \
-  textlint-rule-preset-ja-technical-writing \
-  textlint-rule-preset-japanese \
-  @textlint-ja/textlint-rule-preset-ai-writing \
-  textlint-plugin-jsx
-```
-
-### 対象ファイル
-
-| ファイルタイプ | 拡張子 |
-|---------------|--------|
-| Markdown | `.md` |
-| Text | `.txt` |
-| JSX | `.jsx` |
-| TSX | `.tsx` |
-
-### Neovimでの使い方
-
-#### 自動実行
-
-ファイルを開いた時、保存時、Insert離脱時に自動でlint実行。
-
-#### キーバインド
-
-| キー | 動作 |
-|------|------|
-| `<Space>ll` | 現在のファイルをlint |
-| `<Space>lf` | 現在のファイルを自動修正 |
-| `<Space>la` | リポジトリ全体の`.md`をチェック（quickfix） |
-
-#### エラー確認
-
-- `:copen` - quickfixウィンドウを開く
-- `:cnext` / `:cprev` - 次/前のエラーへ移動
-- `:Trouble quickfix` - Troubleでエラー一覧表示
-
-### CLIでの使い方
-
-```bash
-# ファイルをチェック
-textlint README.md
-
-# 自動修正
-textlint --fix README.md
-
-# 複数ファイル
-textlint "docs/**/*.md"
-```
-
-### 適用ルール
-
-| ルール | 説明 |
-|--------|------|
-| `preset-ja-technical-writing` | 技術文書向け（文長、句読点など） |
-| `preset-japanese` | 一般的な日本語ルール |
-| `@textlint-ja/preset-ai-writing` | AI生成テキストの癖を検出 |
 
 ---
 
@@ -629,7 +563,6 @@ lazy.nvimで管理。1日1回バックグラウンドで更新チェックし、
 | nvim-autopairs | 括弧の自動補完 |
 | Comment.nvim | コメントトグル（`gc`） |
 | conform.nvim | 自動フォーマット |
-| nvim-lint | Linter統合（textlint等） |
 
 ### Git
 

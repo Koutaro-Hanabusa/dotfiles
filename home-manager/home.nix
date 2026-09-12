@@ -117,11 +117,6 @@ in
     # Prettier
     ".prettierrc".source = mkLink "prettierrc";
 
-    # textlint
-    ".textlintrc.json".source = mkLink "textlintrc.json";
-    ".textlintignore".source = mkLink "textlintignore";
-    ".textlint-rules".source = mkLink "textlint-rules";
-
     # Neovim
     ".config/nvim".source = mkLink "nvim";
 
