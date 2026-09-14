@@ -47,28 +47,54 @@ let
     set -eu
 
     cwd="''${HERDR_ACTIVE_PANE_CWD:-$PWD}"
-    if ! root=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null); then
+    if ! git -C "$cwd" rev-parse --show-toplevel >/dev/null 2>&1; then
       echo "❌ git リポジトリではありません: $cwd" >&2
       read -r _
       exit 1
     fi
+    worktree_list=$(herdr worktree list --cwd "$cwd" --json)
+    root=$(printf '%s' "$worktree_list" | ${pkgs.jq}/bin/jq -er \
+      '.result.source.source_checkout_path // .result.source.repo_root')
+    source_cwd="$root"
 
-    printf "🌱 ブランチ名（既存なら checkout、なければ作成）: "
-    read -r branch
+    fzf_status=0
+    choice=$(
+      cd "$root"
+      ${pkgs.git}/bin/git for-each-ref --format='%(refname:short)' refs/heads |
+        ${pkgs.fzf}/bin/fzf --print-query \
+          --prompt='🌱 ブランチ名（既存なら checkout、なければ作成）: ' \
+          --preview='${pkgs.git}/bin/git log --oneline --decorate -10 refs/heads/{} --'
+    ) || fzf_status=$?
+    if [ "$fzf_status" -ne 0 ] && [ "$fzf_status" -ne 1 ]; then
+      exit 0
+    fi
+    query=$(printf '%s\n' "$choice" | sed -n '1p')
+    selected=$(printf '%s\n' "$choice" | sed -n '2p')
+    branch="''${selected:-$query}"
     [ -n "$branch" ] || exit 0
 
-    # ブランチ名の "/" はディレクトリ名として安全な "-" に置換
-    slug=$(printf %s "$branch" | tr '/' '-')
+    existing_path=$(printf '%s' "$worktree_list" |
+      ${pkgs.jq}/bin/jq -r --arg branch "$branch" \
+        '.result.worktrees | map(select(.branch == $branch))[0].path // empty')
+    if [ -n "$existing_path" ]; then
+      worktree_json=$(herdr worktree open --cwd "$source_cwd" --path "$existing_path" --focus --json)
+      if printf '%s' "$worktree_json" | ${pkgs.jq}/bin/jq -e '.result.already_open == true' >/dev/null; then
+        exit 0
+      fi
+    else
+      # ブランチ名の "/" はディレクトリ名として安全な "-" に置換
+      slug=$(printf %s "$branch" | tr '/' '-')
 
-    # .worktrees/ を各リポジトリの .git/info/exclude で無視する
-    # （グローバル gitconfig なし方針のため、リポジトリローカルに追記する）
-    exclude=$(git -C "$root" rev-parse --git-path info/exclude)
-    if ! grep -qxF ".worktrees/" "$exclude" 2>/dev/null; then
-      echo ".worktrees/" >> "$exclude"
+      # .worktrees/ を各リポジトリの .git/info/exclude で無視する
+      # （グローバル gitconfig なし方針のため、リポジトリローカルに追記する）
+      exclude=$(git -C "$root" rev-parse --git-path info/exclude)
+      if ! grep -qxF ".worktrees/" "$exclude" 2>/dev/null; then
+        echo ".worktrees/" >> "$exclude"
+      fi
+
+      worktree_json=$(herdr worktree create --cwd "$source_cwd" --branch "$branch" \
+        --path "$root/.worktrees/$slug" --focus --json)
     fi
-
-    worktree_json=$(herdr worktree create --cwd "$cwd" --branch "$branch" \
-      --path "$root/.worktrees/$slug" --focus --json)
 
     if pane_id=$(printf '%s' "$worktree_json" | ${pkgs.jq}/bin/jq -er '.result.root_pane.pane_id'); then
       herdr pane run "$pane_id" vim >/dev/null 2>&1 || \
