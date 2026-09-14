@@ -67,8 +67,15 @@ let
       echo ".worktrees/" >> "$exclude"
     fi
 
-    herdr worktree create --cwd "$cwd" --branch "$branch" \
-      --path "$root/.worktrees/$slug" --focus
+    worktree_json=$(herdr worktree create --cwd "$cwd" --branch "$branch" \
+      --path "$root/.worktrees/$slug" --focus --json)
+
+    if pane_id=$(printf '%s' "$worktree_json" | ${pkgs.jq}/bin/jq -er '.result.root_pane.pane_id'); then
+      herdr pane run "$pane_id" vim >/dev/null 2>&1 || \
+        echo "⚠️ worktree は作成しましたが、vim を起動できませんでした" >&2
+    else
+      echo "⚠️ worktree は作成しましたが、主 pane を特定できませんでした" >&2
+    fi
   '';
 
   # zsh の precmd から非同期で呼び、現在ブランチの open PR を Herdr の
