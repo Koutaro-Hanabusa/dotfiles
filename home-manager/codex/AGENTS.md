@@ -21,8 +21,6 @@
 Codex に由来する出力（rescue、review、adversarial-review、stop-gate、または Codex ジョブの結果）を提示するときは、内容全体を装飾したヘッダー行付きの blockquote で囲む。形式:
 
 > **from codex** | `{kindLabel}` | {status_emoji} {status}
->
-> （Codex の出力内容をすべてこの blockquote 内に入れる）
 
 ステータス絵文字の対応: completed=✅、running=⏳、failed=❌、cancelled=🚫
 `kindLabel` の例: rescue、review、adversarial-review、stop-gate
