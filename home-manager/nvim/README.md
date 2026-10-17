@@ -180,6 +180,8 @@ Leader key: `<Space>`
 
 **対応言語:** JavaScript, TypeScript, JSON, CSS, HTML, Markdown, Lua, Python, Go, PHP
 
+Web 系はプロジェクトが宣言・導入した Vite+、Oxfmt、Biome、Prettier をこの順で使います。該当ツールが無い場合は整形せず、PHP の Pint もプロジェクト内の実行ファイルがある場合だけ使います。
+
 ### コメント (Comment.nvim)
 
 | キー | 説明 |
