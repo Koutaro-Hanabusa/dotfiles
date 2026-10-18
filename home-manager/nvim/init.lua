@@ -16,7 +16,7 @@ vim.filetype.add({
 vim.opt.number = true
 vim.opt.autoread = true
 vim.opt.clipboard = "unnamedplus"  -- yank時にシステムクリップボードにもコピー
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
@@ -33,6 +33,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.opt.fixendofline = true  -- ファイル末尾に改行を保証
+require("column_ruler").setup()
 
 -- Leader key
 vim.g.mapleader = " "
