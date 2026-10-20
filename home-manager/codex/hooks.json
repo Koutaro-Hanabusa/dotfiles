@@ -27,6 +27,14 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "python3 ~/.codex/hooks/kb-save.py",
+            "type": "command"
+          }
+        ]
       }
     ]
   }
