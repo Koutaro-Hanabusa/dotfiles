@@ -73,6 +73,12 @@ return {
         },
       }
 
+      -- mise の未設定 shim を避け、Nix 管理の Buf LSP を使う。
+      vim.lsp.config.buf_ls = {
+        cmd = { vim.fn.expand("~/.nix-profile/bin/buf"), "lsp", "serve", "--log-format=text" },
+        capabilities = capabilities,
+      }
+
       -- DBML (Database Markup Language) — 自作 fork の dbml-language-server
       vim.lsp.config.dbml_lsp = {
         cmd = { "dbml-language-server" },
@@ -120,7 +126,7 @@ return {
       }
 
       -- Enable LSPs
-      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "intelephense", "oxlint", "oxfmt", "dbml_lsp" })
+      vim.lsp.enable({ "lua_ls", "ts_ls", "pyright", "gopls", "buf_ls", "intelephense", "oxlint", "oxfmt", "dbml_lsp" })
 
       -- Key mappings
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
