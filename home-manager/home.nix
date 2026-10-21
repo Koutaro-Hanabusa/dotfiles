@@ -58,6 +58,7 @@ in
     # Development Languages / Runtimes
     go
     go-task
+    buf
 
     # Network / Utilities
     curl
