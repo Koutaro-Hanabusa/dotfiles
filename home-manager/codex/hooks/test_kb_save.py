@@ -9,7 +9,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import urllib.error
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 from unittest.mock import patch
 
 
@@ -91,6 +91,7 @@ class KbSaveTest(unittest.TestCase):
                     patch.object(kb_save.Path, "home", return_value=self.cache), \
                     patch.object(kb_save, "search_chunks", return_value=[]), \
                     patch.object(kb_save, "save_probability", return_value=probability), \
+                    patch.object(kb_save.subprocess, "run") as notify, \
                     patch.object(kb_save, "save_in_background", return_value=("skipped", [])) as save:
                 output = io.StringIO()
                 with redirect_stdout(output):
@@ -100,6 +101,28 @@ class KbSaveTest(unittest.TestCase):
                                  f"{result} / 保存確率={probability} / 閾値=0.8")
                 self.assertEqual(set(response), {"systemMessage"})
                 self.assertEqual(save.call_count, int(probability >= 0.8))
+                notify.assert_called_once_with(
+                    [str(self.cache / ".nix-profile/bin/herdr"), "notification", "show", "Codex: KB保存判定",
+                     "--body", response["systemMessage"], "--sound", "none"],
+                    stdin=kb_save.subprocess.DEVNULL, stdout=kb_save.subprocess.DEVNULL,
+                    stderr=kb_save.subprocess.DEVNULL, check=True, timeout=5,
+                )
+
+    def test_notification_failure_preserves_decision_without_exposing_details(self):
+        decision = {"systemMessage": "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.8"}
+        for error in (FileNotFoundError("secret"), kb_save.subprocess.CalledProcessError(1, "secret"),
+                      kb_save.subprocess.TimeoutExpired("secret", 5)):
+            with self.subTest(error=type(error).__name__), patch.dict(os.environ, {
+                    "CODEX_KB_AUTO_SAVE": "1", "CLOUDFLARE_ACCOUNT_ID": "a" * 32,
+                    "CLOUDFLARE_API_TOKEN": "test-token", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
+                    patch.object(kb_save.sys, "stdin", io.StringIO(json.dumps(self.event))), \
+                    patch.object(kb_save, "handle", return_value=decision), \
+                    patch.object(kb_save.subprocess, "run", side_effect=error):
+                output, errors = io.StringIO(), io.StringIO()
+                with redirect_stdout(output), redirect_stderr(errors):
+                    kb_save.main()
+                self.assertEqual(json.loads(output.getvalue()), decision)
+                self.assertEqual(errors.getvalue(), f"KB通知失敗: {type(error).__name__}\n")
 
     def test_failed_call_can_retry(self):
         with patch.object(kb_save, "search_chunks", return_value=[]), \
@@ -305,6 +328,7 @@ class KbSaveTest(unittest.TestCase):
                                          "CLOUDFLARE_API_TOKEN": "test-token", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
                     patch.object(kb_save.sys, "stdin", io.StringIO(json.dumps(self.event))), \
                     patch.object(kb_save.Path, "home", return_value=self.cache), \
+                    patch.object(kb_save.subprocess, "run"), \
                     patch.object(kb_save.urllib.request, "build_opener", return_value=Opener(error)):
                 output = io.StringIO()
                 with redirect_stdout(output):
@@ -319,6 +343,7 @@ class KbSaveTest(unittest.TestCase):
                                      "CLOUDFLARE_API_TOKEN": "private-value", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
                 patch.object(kb_save.sys, "stdin", io.StringIO(json.dumps(self.event))), \
                 patch.object(kb_save.Path, "home", return_value=self.cache), \
+                patch.object(kb_save.subprocess, "run"), \
                 patch.object(kb_save, "search_chunks", side_effect=OSError(secret)):
             output = io.StringIO()
             with redirect_stdout(output):
@@ -380,6 +405,7 @@ class KbSaveTest(unittest.TestCase):
                     "CLOUDFLARE_API_TOKEN": "test-token", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
                     patch.object(kb_save.sys, "stdin", io.StringIO(json.dumps(self.event))), \
                     patch.object(kb_save.Path, "home", return_value=self.cache), \
+                    patch.object(kb_save.subprocess, "run") as notify, \
                     patch.object(kb_save.urllib.request, "build_opener", return_value=opener):
                 output = io.StringIO()
                 with redirect_stdout(output):
@@ -388,6 +414,8 @@ class KbSaveTest(unittest.TestCase):
                 self.assertEqual(message, "KB保存判定: 保存結果を確認できず (JSONDecodeError)" if data == b"not json"
                                  else "KB保存判定: AI Search失敗・不正応答 / 保存依頼なし")
                 self.assertEqual(opener.calls, 1)
+                notify.assert_called_once()
+                self.assertEqual(notify.call_args.args[0][5], message)
         key = hashlib.sha256(json.dumps(["home", "session", "turn"]).encode()).hexdigest()
         self.assertFalse((self.cache / ".cache/codex-kb-save" / key).exists())
 

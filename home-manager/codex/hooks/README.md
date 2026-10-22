@@ -2,6 +2,8 @@
 
 Codex の Stop 時に、最終回答に再利用可能な確認済み知見があるかを Cloudflare Clef に判定させます。この hook は非同期で実行され、確率が 0.8 以上のときだけ、`~/.kb/home` または `~/.kb/work` で専用の `codex exec` に既存の kb を検索・記録させます。対象 notebook のディレクトリと Nix profile の `codex` が必要です。0.8 は実データで校正していない暫定値です。
 
+判定・保存結果は Nix profile の `herdr notification show` で macOS にも通知します。Herdr の稼働と `ui.toast.delivery = "system"`、macOS 側の通知許可が必要です。通知は次の会話入力を待たずに送信し、通知失敗時も判定結果の JSON 出力は維持します。通知には結果・確率・保存先の相対パスが含まれます。
+
 既定では無効です。有効化には `CODEX_KB_AUTO_SAVE=1`、32 文字の16進数の `CLOUDFLARE_ACCOUNT_ID`、`CLOUDFLARE_API_TOKEN`、対象を明示する `CODEX_KB_NOTEBOOK=home` または `work` が必要です。`CF_ACCESS_CLIENT_ID` と `CF_ACCESS_CLIENT_SECRET` は MCP 向けの Access 認証情報であり、この API token の代わりにはなりません。
 
 後から有効化する手順:
