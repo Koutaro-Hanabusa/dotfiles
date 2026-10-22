@@ -2,6 +2,8 @@
 
 Codex の Stop 時に、最終回答に再利用可能な確認済み知見があるかを Cloudflare Clef に判定させます。この hook は非同期で実行され、確率が 0.8 以上のときだけ、`~/.kb/home` または `~/.kb/work` で専用の `codex exec` に既存の kb を検索・記録させます。対象 notebook のディレクトリと Nix profile の `codex` が必要です。0.8 は実データで校正していない暫定値です。
 
+世間で既知の一般的な説明も、ユーザーが後で見返して再利用できるなら保存判定の対象です。
+
 既定では無効です。有効化には `CODEX_KB_AUTO_SAVE=1`、32 文字の16進数の `CLOUDFLARE_ACCOUNT_ID`、`CLOUDFLARE_API_TOKEN`、対象を明示する `CODEX_KB_NOTEBOOK=home` または `work` が必要です。`CF_ACCESS_CLIENT_ID` と `CF_ACCESS_CLIENT_SECRET` は MCP 向けの Access 認証情報であり、この API token の代わりにはなりません。
 
 後から有効化する手順:
@@ -21,7 +23,9 @@ Codex の Stop 時に、最終回答に再利用可能な確認済み知見が�
    python3 -c 'import os; print("Account ID:", bool(os.getenv("CLOUDFLARE_ACCOUNT_ID")), "API token:", bool(os.getenv("CLOUDFLARE_API_TOKEN")))'
    ```
 
-5. 初回は新しい CLI プロセスで `CODEX_KB_AUTO_SAVE=1 CODEX_KB_NOTEBOOK=home codex --no-daemon` を実行します。work を対象にする場合は `home` を `work` に変えます。`--no-daemon` は共有のバックグラウンドサーバーを使わずに起動します。起動済みの GUI や daemon へ環境変数が反映される前提にはしません。新規・変更された hook は [Codex の手順](https://learn.chatgpt.com/docs/hooks#review-and-trust-hooks) に従い `/hooks` から内容を確認し、信頼する場合だけ許可してください。判定後は確率・閾値と、保存完了した Markdown の相対パス、保存なし、または結果未確認を表示します。非同期 hook の表示は次の安全なタイミングに届き、会話が待機中なら次の入力時になる場合があります。セッション終了時は通知が取り消される場合があります。無効化・入力不足・再帰や判定済みターンでは出力しません。
+5. 初回は新しい CLI プロセスで `CODEX_KB_AUTO_SAVE=1 CODEX_KB_NOTEBOOK=home codex --no-daemon` を実行します。work を対象にする場合は `home` を `work` に変えます。`--no-daemon` は共有のバックグラウンドサーバーを使わずに起動します。起動済みの GUI や daemon へ環境変数が反映される前提にはしません。新規・変更された hook は [Codex の手順](https://learn.chatgpt.com/docs/hooks#review-and-trust-hooks) に従い `/hooks` から内容を確認し、信頼する場合だけ許可してください。判定後は確率・閾値と、保存完了した Markdown の相対パス、保存なし、または結果未確認を Herdr 経由の通知と Codex の hook 警告に表示します。非同期 hook の警告は次の安全なタイミングに届き、会話が待機中なら次の入力時になる場合があります。セッション終了時は未完の判定が取り消される場合があります。無効化・入力不足・再帰や判定済みターンでは出力しません。
+
+Herdr の system 配送は `terminal-notifier` で macOS 通知を表示します。Ghostty は現在フォーカス中の画面へのターミナル通知を抑止するため、system 配送を使います。通知タイトルにはセッション ID 末尾8文字と Codex のセッション名を表示し、名前が取得できない場合は作業ディレクトリ名を表示します。通知本文の末尾には `codex resume` に使える完全なセッション ID を表示します。
 
 最終回答の先頭 2,000 文字を選択した notebook の [AI Search](https://developers.cloudflare.com/ai-search/api/search/rest-api/) に送り、R2 の Markdown と Vectorize に基づく既存候補を最大 3 件取得します。クエリ書換は無効です。成功して 0 件なら空の候補で判定し、検索失敗なら Clef を呼ばず終了します。各候補本文は先頭 4,000 文字まで Clef へ渡します。[Clef](https://developers.cloudflare.com/workers-ai/models/clef/) には最終回答の先頭 2 万文字、既存候補、notebook 名を送ります。会話ログ、会話中のツール入出力、システム指示は直接読みません。最終回答に書かれていない知見や長文の末尾は判定できません。R2/AI Search とローカル kb の同期には遅延があり得るため、保存を依頼された Codex が最新のローカル本文を再確認します。
 
