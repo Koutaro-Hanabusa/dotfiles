@@ -1,6 +1,8 @@
 { ... }:
 
 {
+  programs.nh.enable = true;
+
   programs.bat = {
     enable = true;
   };
