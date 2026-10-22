@@ -16,6 +16,7 @@ from unittest.mock import patch
 SPEC = importlib.util.spec_from_file_location("kb_save", Path(__file__).with_name("kb-save.py"))
 kb_save = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(kb_save)
+notify = kb_save.notify
 
 
 class KbSaveTest(unittest.TestCase):
@@ -29,6 +30,9 @@ class KbSaveTest(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.cache = Path(self.temp.name)
+        notification = patch.object(kb_save, "notify")
+        self.notify = notification.start()
+        self.addCleanup(notification.stop)
 
     def test_disabled_reads_nothing(self):
         with patch.dict(os.environ, {"CODEX_KB_AUTO_SAVE": "0"}), \
@@ -81,8 +85,10 @@ class KbSaveTest(unittest.TestCase):
             save.assert_not_called()
 
     def test_main_displays_unrounded_probability_and_result(self):
-        for probability, result in ((0.0269, "KB保存判定（home）: 保存依頼なし"),
-                                    (0.8, "保存なし（home、既存記録済み等）")):
+        for probability, result, saved in (
+                (0.0269, "KB保存判定（home）: 保存依頼なし", ("skipped", [])),
+                (0.8, "保存なし（home、既存記録済み等）", ("skipped", [])),
+                (0.9, "KB保存完了（home）: knowledge/fix.md", ("saved", ["knowledge/fix.md"]))):
             event = {**self.event, "turn_id": str(probability)}
             with self.subTest(probability=probability), patch.dict(os.environ, {
                     "CODEX_KB_AUTO_SAVE": "1", "CLOUDFLARE_ACCOUNT_ID": "a" * 32,
@@ -91,7 +97,7 @@ class KbSaveTest(unittest.TestCase):
                     patch.object(kb_save.Path, "home", return_value=self.cache), \
                     patch.object(kb_save, "search_chunks", return_value=[]), \
                     patch.object(kb_save, "save_probability", return_value=probability), \
-                    patch.object(kb_save, "save_in_background", return_value=("skipped", [])) as save:
+                    patch.object(kb_save, "save_in_background", return_value=saved) as save:
                 output = io.StringIO()
                 with redirect_stdout(output):
                     kb_save.main()
@@ -99,7 +105,97 @@ class KbSaveTest(unittest.TestCase):
                 self.assertEqual(response["systemMessage"],
                                  f"{result} / 保存確率={probability} / 閾値=0.8")
                 self.assertEqual(set(response), {"systemMessage"})
+                self.notify.assert_called_with(response["systemMessage"], event)
                 self.assertEqual(save.call_count, int(probability >= 0.8))
+                self.notify.reset_mock()
+
+    def test_notification_passes_special_characters_as_argument_and_ignores_failure(self):
+        message = 'KB保存完了: a"; --sound done.md / 保存確率=0.9'
+        event = {"session_id": "session-12345678", "cwd": '/tmp/mySlides"; --sound done'}
+        for failure in (OSError("unavailable"), kb_save.subprocess.CalledProcessError(1, "herdr"),
+                        kb_save.subprocess.TimeoutExpired("herdr", 5)):
+            with self.subTest(failure=type(failure).__name__), \
+                    patch.dict(os.environ, {"CODEX_HOME": str(self.cache)}), \
+                    patch.object(kb_save.subprocess, "run", side_effect=failure) as run:
+                notify(message, event)
+            self.assertEqual(run.call_args.args[0], [str(Path.home() / ".nix-profile/bin/herdr"),
+                                                      "notification", "show", 'Codex KB判定 [12345678] mySlides"; --sound done',
+                                                      "--body", message + "\nsession: session-12345678",
+                                                      "--sound", "none"])
+            self.assertEqual(run.call_args.kwargs["timeout"], 5)
+            self.assertTrue(run.call_args.kwargs["check"])
+            self.assertEqual(run.call_args.kwargs["stderr"], kb_save.subprocess.DEVNULL)
+
+    def test_notification_identifies_cwd_and_session(self):
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.cache)}), \
+                patch.object(kb_save.subprocess, "run") as run:
+            notify("result", {"session_id": "session-aaaaaaaa", "cwd": "/tmp/dev"})
+            notify("result", {"session_id": "session-bbbbbbbb", "cwd": "/tmp/mySlides"})
+            notify("result", {"session_id": 1, "cwd": []})
+        calls = [call.args[0] for call in run.call_args_list]
+        self.assertEqual([argv[3] for argv in calls],
+                         ["Codex KB判定 [aaaaaaaa] dev", "Codex KB判定 [bbbbbbbb] mySlides", "Codex KB判定"])
+        self.assertEqual([argv[5] for argv in calls],
+                         ["result\nsession: session-aaaaaaaa", "result\nsession: session-bbbbbbbb", "result"])
+
+    def test_notification_uses_latest_matching_session_name(self):
+        index = self.cache / "session_index.jsonl"
+        index.write_text("\n".join((
+            json.dumps({"id": "session-12345678", "thread_name": "古い名前"}),
+            json.dumps({"id": "other", "thread_name": "別セッション"}),
+            "invalid json",
+            json.dumps({"id": "session-12345678", "thread_name": " "}),
+            json.dumps({"id": "session-12345678", "thread_name": "新しい\n名前"}),
+        )))
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.cache)}), \
+                patch.object(kb_save.subprocess, "run") as run:
+            notify("result", {"session_id": "session-12345678", "cwd": "/tmp/dev"})
+        argv = run.call_args.args[0]
+        self.assertEqual(argv[3], "Codex KB判定 [12345678] 新しい 名前")
+        self.assertEqual(argv[5], "result\nsession: session-12345678")
+
+    def test_notification_falls_back_for_missing_or_unreadable_index(self):
+        index = self.cache / "session_index.jsonl"
+        with patch.dict(os.environ, {"CODEX_HOME": str(self.cache)}), \
+                patch.object(kb_save.subprocess, "run") as run:
+            notify("result", {"session_id": "session-12345678", "cwd": "/tmp/dev"})
+            index.write_text("not json\n" + json.dumps({"id": "session-12345678", "thread_name": 42}))
+            notify("result", {"session_id": "session-12345678", "cwd": "/tmp/dev"})
+            index.unlink()
+            index.mkdir()
+            notify("result", {"session_id": "session-12345678", "cwd": "/tmp/dev"})
+        self.assertEqual([call.args[0][3] for call in run.call_args_list],
+                         ["Codex KB判定 [12345678] dev"] * 3)
+
+    def test_notification_failure_keeps_json_result(self):
+        for event_input, expected in ((json.dumps(self.event),
+                                       "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.8"),
+                                      ("not json", "KB保存判定: 保存結果を確認できず (JSONDecodeError)")):
+            with self.subTest(event_input=event_input[:8]), \
+                    patch.dict(os.environ, {"CODEX_KB_AUTO_SAVE": "1", "CLOUDFLARE_ACCOUNT_ID": "a" * 32,
+                                         "CLOUDFLARE_API_TOKEN": "test-token", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
+                    patch.object(kb_save.sys, "stdin", io.StringIO(event_input)), \
+                    patch.object(kb_save.Path, "home", return_value=self.cache), \
+                    patch.object(kb_save, "search_chunks", return_value=[]), \
+                    patch.object(kb_save, "save_probability", return_value=0.2), \
+                    patch.object(kb_save, "notify", notify), \
+                    patch.object(kb_save.subprocess, "run", side_effect=kb_save.subprocess.CalledProcessError(1, "herdr")):
+                with redirect_stdout(io.StringIO()) as output:
+                    kb_save.main()
+            self.assertEqual(json.loads(output.getvalue()), {"systemMessage": expected})
+
+    def test_duplicate_turn_does_not_notify(self):
+        with patch.object(kb_save, "search_chunks", return_value=[]), \
+                patch.object(kb_save, "save_probability", return_value=0.2):
+            kb_save.handle(self.event, "a" * 32, "test-token", "home", self.cache / ".cache/codex-kb-save")
+        with patch.dict(os.environ, {"CODEX_KB_AUTO_SAVE": "1", "CLOUDFLARE_ACCOUNT_ID": "a" * 32,
+                                     "CLOUDFLARE_API_TOKEN": "test-token", "CODEX_KB_NOTEBOOK": "home"}, clear=True), \
+                patch.object(kb_save.sys, "stdin", io.StringIO(json.dumps(self.event))), \
+                patch.object(kb_save.Path, "home", return_value=self.cache):
+            with redirect_stdout(io.StringIO()) as output:
+                kb_save.main()
+        self.assertEqual(output.getvalue(), "")
+        self.notify.assert_not_called()
 
     def test_failed_call_can_retry(self):
         with patch.object(kb_save, "search_chunks", return_value=[]), \
@@ -311,6 +407,9 @@ class KbSaveTest(unittest.TestCase):
                     self.assertIsNone(kb_save.main())
                 self.assertEqual(json.loads(output.getvalue()),
                                  {"systemMessage": f"KB保存判定: 保存結果を確認できず ({type(error).__name__})"})
+                self.notify.assert_called_with(f"KB保存判定: 保存結果を確認できず ({type(error).__name__})",
+                                               self.event)
+                self.notify.reset_mock()
                 self.assertFalse((self.cache / ".cache/codex-kb-save" / key).exists())
 
     def test_error_message_does_not_expose_exception_details(self):
