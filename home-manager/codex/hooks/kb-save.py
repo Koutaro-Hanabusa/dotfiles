@@ -218,11 +218,20 @@ def main():
     try:
         event = json.loads(sys.stdin.read(131073))
         decision = handle(event, account_id, token, notebook, Path.home() / ".cache/codex-kb-save")
-        if decision:
-            print(json.dumps(decision, ensure_ascii=False))
     except (OSError, ValueError, TypeError, KeyError, AttributeError, OverflowError,
             http.client.HTTPException, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
-        print(json.dumps({"systemMessage": f"KB保存判定: 保存結果を確認できず ({type(error).__name__})"}, ensure_ascii=False))
+        decision = {"systemMessage": f"KB保存判定: 保存結果を確認できず ({type(error).__name__})"}
+    if decision:
+        print(json.dumps(decision, ensure_ascii=False), flush=True)
+        try:
+            subprocess.run(
+                [str(Path.home() / ".nix-profile/bin/herdr"), "notification", "show", "Codex: KB保存判定",
+                 "--body", decision["systemMessage"], "--sound", "none"],
+                stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                check=True, timeout=5,
+            )
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+            print(f"KB通知失敗: {type(error).__name__}", file=sys.stderr)
 
 
 if __name__ == "__main__":
