@@ -15,7 +15,7 @@
       {
         "hooks": [
           {
-            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; afplay /Users/hanabusa.kotaro/Downloads/dorakue-reberuatsupuyin.mp3",
+            "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; afplay \"$HOME/.config/herdr/sounds/notification.mp3\"",
             "type": "command"
           }
         ]
