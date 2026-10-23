@@ -134,6 +134,7 @@ in
     # ~/.agents/skills にはユーザーが別途インストールしたスキルも入るため、
     # ディレクトリ全体ではなく dotfiles 管理分だけを個別にリンクする。
     ".agents/skills/changeset".source = mkLink "agents/skills/changeset";
+    ".agents/skills/codex-self-improvement".source = mkLink "agents/skills/codex-self-improvement";
     ".agents/skills/development-principles".source = mkLink "agents/skills/development-principles";
     ".agents/skills/empirical-prompt-tuning".source = mkLink "agents/skills/empirical-prompt-tuning";
     ".agents/skills/frontend-design".source = mkLink "agents/skills/frontend-design";
