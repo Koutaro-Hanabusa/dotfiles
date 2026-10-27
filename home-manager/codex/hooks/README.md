@@ -1,6 +1,6 @@
 # KB 保存判断 hook
 
-Codex の Stop 時に、最終回答に再利用可能な確認済み知見があるかを Cloudflare Clef に判定させます。この hook は非同期で実行され、確率が 0.8 以上のときだけ、`~/.kb/home` または `~/.kb/work` で専用の `codex exec` に既存の kb を検索・記録させます。対象 notebook のディレクトリと Nix profile の `codex` が必要です。0.8 は実データで校正していない暫定値です。
+Codex の Stop 時に、最終回答に再利用可能な確認済み知見があるかを Cloudflare Clef に判定させます。この hook は非同期で実行され、確率が 0.7 以上のときだけ、`~/.kb/home` または `~/.kb/work` で専用の `codex exec` に既存の kb を検索・記録させます。対象 notebook のディレクトリと Nix profile の `codex` が必要です。0.7 は実データで校正していない暫定値です。
 
 世間で既知の一般的な説明も、ユーザーが後で見返して再利用できるなら保存判定の対象です。
 

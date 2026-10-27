@@ -198,14 +198,14 @@ def handle(event, account_id, token, notebook, cache_dir):
                                         "notebook": notebook}, account_id, token)
         if probability is None:
             return {"systemMessage": "KB保存判定: Clef失敗・不正応答 / 保存依頼なし"}
-        if probability >= 0.8:
+        if probability >= 0.7:
             status, files = save_in_background(message, notebook)
             outcome = (f"KB保存完了（{notebook}）: " + ", ".join(files) if status == "saved"
                        else f"保存なし（{notebook}、既存記録済み等）")
         else:
             outcome = f"KB保存判定（{notebook}）: 保存依頼なし"
         marker.touch(mode=0o600)
-        return {"systemMessage": f"{outcome} / 保存確率={probability} / 閾値=0.8"}
+        return {"systemMessage": f"{outcome} / 保存確率={probability} / 閾値=0.7"}
 
 
 def session_name(session_id):
