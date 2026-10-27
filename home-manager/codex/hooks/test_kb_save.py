@@ -69,7 +69,7 @@ class KbSaveTest(unittest.TestCase):
                 patch.object(kb_save, "save_probability", return_value=0.9) as decide, \
                 patch.object(kb_save, "save_in_background", return_value=("saved", ["knowledge/fix.md"])) as save:
             answer = kb_save.handle(self.event, "a" * 32, "token", "home", self.cache)
-            self.assertEqual(answer, {"systemMessage": "KB保存完了（home）: knowledge/fix.md / 保存確率=0.9 / 閾値=0.8"})
+            self.assertEqual(answer, {"systemMessage": "KB保存完了（home）: knowledge/fix.md / 保存確率=0.9 / 閾値=0.7"})
             self.assertIsNone(kb_save.handle(self.event, "a" * 32, "token", "home", self.cache))
             decide.assert_called_once()
             save.assert_called_once_with("確認済みの知見", "home")
@@ -79,7 +79,7 @@ class KbSaveTest(unittest.TestCase):
                 patch.object(kb_save, "save_probability", return_value=0.2) as decide, \
                 patch.object(kb_save, "save_in_background") as save:
             self.assertEqual(kb_save.handle(self.event, "a" * 32, "token", "home", self.cache),
-                             {"systemMessage": "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.8"})
+                             {"systemMessage": "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.7"})
             self.assertIsNone(kb_save.handle(self.event, "a" * 32, "token", "home", self.cache))
             decide.assert_called_once()
             save.assert_not_called()
@@ -87,7 +87,8 @@ class KbSaveTest(unittest.TestCase):
     def test_main_displays_unrounded_probability_and_result(self):
         for probability, result, saved in (
                 (0.0269, "KB保存判定（home）: 保存依頼なし", ("skipped", [])),
-                (0.8, "保存なし（home、既存記録済み等）", ("skipped", [])),
+                (0.6999, "KB保存判定（home）: 保存依頼なし", ("skipped", [])),
+                (0.7, "保存なし（home、既存記録済み等）", ("skipped", [])),
                 (0.9, "KB保存完了（home）: knowledge/fix.md", ("saved", ["knowledge/fix.md"]))):
             event = {**self.event, "turn_id": str(probability)}
             with self.subTest(probability=probability), patch.dict(os.environ, {
@@ -103,10 +104,10 @@ class KbSaveTest(unittest.TestCase):
                     kb_save.main()
                 response = json.loads(output.getvalue())
                 self.assertEqual(response["systemMessage"],
-                                 f"{result} / 保存確率={probability} / 閾値=0.8")
+                                 f"{result} / 保存確率={probability} / 閾値=0.7")
                 self.assertEqual(set(response), {"systemMessage"})
                 self.notify.assert_called_with(response["systemMessage"], event)
-                self.assertEqual(save.call_count, int(probability >= 0.8))
+                self.assertEqual(save.call_count, int(probability >= 0.7))
                 self.notify.reset_mock()
 
     def test_notification_passes_special_characters_as_argument_and_ignores_failure(self):
@@ -172,7 +173,7 @@ class KbSaveTest(unittest.TestCase):
 
     def test_notification_failure_keeps_json_result(self):
         for event_input, expected in ((json.dumps(self.event),
-                                       "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.8"),
+                                       "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.7"),
                                       ("not json", "KB保存判定: 保存結果を確認できず (JSONDecodeError)")):
             with self.subTest(event_input=event_input[:8]), \
                     patch.dict(os.environ, {"CODEX_KB_AUTO_SAVE": "1", "CLOUDFLARE_ACCOUNT_ID": "a" * 32,
@@ -239,7 +240,7 @@ class KbSaveTest(unittest.TestCase):
                 patch.object(kb_save, "search_chunks", return_value=[]), \
                 patch.object(kb_save, "save_probability", return_value=0.9):
             answer = kb_save.handle(self.event, "a" * 32, "private-token", "home", self.cache / "markers")
-        self.assertEqual(answer, {"systemMessage": "KB保存完了（home）: knowledge/fix.md / 保存確率=0.9 / 閾値=0.8"})
+        self.assertEqual(answer, {"systemMessage": "KB保存完了（home）: knowledge/fix.md / 保存確率=0.9 / 閾値=0.7"})
         run.assert_called_once()
         self.assertEqual(captured["argv"], [str(self.cache / ".nix-profile/bin/codex"), "-a", "never",
                                             "exec", "--ephemeral", "--sandbox", "workspace-write",
@@ -283,7 +284,7 @@ class KbSaveTest(unittest.TestCase):
             self.assertFalse((marker_dir / key).exists())
             run.side_effect = succeed
             self.assertEqual(kb_save.handle(self.event, "a" * 32, "token", "home", marker_dir),
-                             {"systemMessage": "保存なし（home、既存記録済み等） / 保存確率=0.9 / 閾値=0.8"})
+                             {"systemMessage": "保存なし（home、既存記録済み等） / 保存確率=0.9 / 閾値=0.7"})
             self.assertTrue((marker_dir / key).exists())
             self.assertEqual(run.call_count, 2)
 
@@ -442,7 +443,7 @@ class KbSaveTest(unittest.TestCase):
                 self.assertIsNone(kb_save.handle(self.event, "a" * 32, "token", "home", self.cache))
                 decide.assert_not_called()
                 self.assertEqual(kb_save.handle({**self.event, "turn_id": "other"}, "a" * 32, "token", "home", self.cache),
-                                 {"systemMessage": "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.8"})
+                                 {"systemMessage": "KB保存判定（home）: 保存依頼なし / 保存確率=0.2 / 閾値=0.7"})
                 decide.assert_called_once()
 
     def test_home_and_work_use_separate_searches_and_markers(self):
@@ -512,7 +513,7 @@ class KbSaveTest(unittest.TestCase):
             result = kb_save.handle(self.event, "a" * 32, "token", "work", self.cache)
         self.assertEqual(decide.call_args.args[0], {
             "candidate_final_answer": "確認済みの知見", "existing_knowledge_chunks": [chunk], "notebook": "work"})
-        self.assertEqual(result, {"systemMessage": "保存なし（work、既存記録済み等） / 保存確率=0.9 / 閾値=0.8"})
+        self.assertEqual(result, {"systemMessage": "保存なし（work、既存記録済み等） / 保存確率=0.9 / 閾値=0.7"})
         save.assert_called_once_with("確認済みの知見", "work")
 
     def test_request_uses_only_truncated_final_answer(self):
@@ -545,7 +546,7 @@ class KbSaveTest(unittest.TestCase):
         with patch.object(kb_save.urllib.request, "build_opener", return_value=opener), \
                 patch.object(kb_save, "save_in_background", return_value=("skipped", [])) as save:
             self.assertEqual(kb_save.handle(self.event, "a" * 32, "token", "home", self.cache),
-                             {"systemMessage": "保存なし（home、既存記録済み等） / 保存確率=0.9 / 閾値=0.8"})
+                             {"systemMessage": "保存なし（home、既存記録済み等） / 保存確率=0.9 / 閾値=0.7"})
             save.assert_called_once_with("A" * 20000, "home")
 
     def test_invalid_probabilities_and_envelopes_do_not_block(self):
