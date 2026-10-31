@@ -112,7 +112,7 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 - `.claude` — Claude Code
 - `.config/gh-dash` — gh-dash
 - `.config/herdr/config.toml` — Herdr
-- `.nbrc`, `.prettierrc` 等
+- `.kbrc`, `.prettierrc` 等
 
 ---
 

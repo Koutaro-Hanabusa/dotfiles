@@ -29,7 +29,7 @@
       url = "github:Koutaro-Hanabusa/dbml-renderer";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # kb（自作のナレッジ CLI。~/.nb の Markdown を検索・作成する。
+    # kb（自作のナレッジ CLI。~/.kb の Markdown を検索・作成する。
     # nb は 27,000 行の bash で検索に 18.5s かかっていたのを 0.09s に置き換えた）
     kb = {
       url = "github:Koutaro-Hanabusa/kb";
