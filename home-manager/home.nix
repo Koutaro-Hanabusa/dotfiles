@@ -3,7 +3,6 @@
   pkgs,
   lib,
   username,
-  isWork,
   hunkPkg,
   herdrPkg,
   dbmlLspPkg,

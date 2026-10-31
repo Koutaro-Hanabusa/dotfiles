@@ -199,15 +199,6 @@
       zle -N ghq-fzf
       bindkey '^G' ghq-fzf
 
-      # マークダウン表示（glow > less）
-      _show_md() {
-        if command -v glow &> /dev/null; then
-          glow -p "$1"
-        else
-          less "$1"
-        fi
-      }
-
       # fzf でブランチをファジー検索して切り替え
       gco() {
         local branch
