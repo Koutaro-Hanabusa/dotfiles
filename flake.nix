@@ -72,15 +72,11 @@
         ];
       };
       mkHome =
-        {
-          username,
-          isWork ? false,
-          extraModules ? [ ],
-        }:
+        { username }:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit isWork username;
+            inherit username;
             hunkPkg = hunk.packages.${system}.default;
             herdrPkg = herdr.packages.${system}.default;
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
@@ -88,7 +84,7 @@
             kbPkg = kb.packages.${system}.default;
             wttyPkg = wtty.packages.${system}.default;
           };
-          modules = [ ./home-manager/home.nix ] ++ extraModules;
+          modules = [ ./home-manager/home.nix ];
         };
     in
     {
@@ -101,8 +97,6 @@
 
       homeConfigurations."hanabusa.kotaro" = mkHome {
         username = "hanabusa.kotaro";
-        isWork = true;
-        extraModules = [ ./home-manager/work.nix ];
       };
     };
 }
