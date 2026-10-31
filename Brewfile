@@ -6,7 +6,6 @@
 # Taps
 # ====================
 tap "daipeihust/tap"
-tap "xwmx/taps"
 
 # ====================
 # Runtime / Package Managers
@@ -22,26 +21,16 @@ brew "php"                            # nvim PHP: intelephense LSP / pint format
 # ====================
 brew "thefuck"                        # zsh.nix の fuck() 関数で参照
 brew "daipeihust/tap/im-select"       # nvim init.lua の IME 自動切替で使用
-brew "nb"                             # 旧ナレッジ CLI（廃止済み。現在は自作の kb を使用）
-brew "fish"                           # サブシェル
 brew "bash"                           # macOS 標準より新しい bash 5.x
 brew "bash-completion@2"
 brew "tmux"                           # ターミナルマルチプレクサ
 brew "tree"                           # ディレクトリツリー表示
 brew "presenterm"                     # ターミナルプレゼンツール
-brew "chezmoi"                        # dotfiles 管理（Nix と併用）
-
-# ====================
-# Database / Infra
-# ====================
-brew "mysql"
-brew "postgresql@14"
 
 # ====================
 # Cloud / Deployment Tools
 # ====================
 brew "cloudflared"                    # Cloudflare Tunnel
-brew "cliproxyapi"                    # claudex alias 用: Claude Code → OpenAI Codex 変換プロキシ (localhost:8317)
 
 # ====================
 # Media / Utilities
