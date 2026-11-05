@@ -64,6 +64,7 @@ in
     nmap
     pandoc
     jq # claude/scripts・grafana-cloud skill 等のフック/スクリプトが依存
+    chafa # show-image skill がエージェントの隣の herdr ペインへ画像を描画する
 
     # AI CLI
     # Anthropic 公式の pre-built バイナリ（overlay は flake.nix で適用）。
@@ -141,6 +142,7 @@ in
     ".agents/skills/job-hunter".source = mkLink "agents/skills/job-hunter";
     ".agents/skills/knowledges".source = mkLink "agents/skills/knowledges";
     ".agents/skills/nix-dotfiles".source = mkLink "agents/skills/nix-dotfiles";
+    ".agents/skills/show-image".source = mkLink "agents/skills/show-image";
 
     # Claude Code MCP のサーバー定義（source of truth）。
     # 注意: ~/.mcp.json は **project スコープ**で、CWD がホームのときだけ拾われる。
