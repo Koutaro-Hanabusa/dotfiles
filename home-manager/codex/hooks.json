@@ -36,6 +36,37 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
       }
     ]
   }

@@ -98,6 +98,19 @@ rows = [
   ["$pr"],
 ]
 
+# 並列エージェントが今何をしているかを、エージェント欄の下に1エージェント1行で出す。
+# $doing1..4 は agent-doing.py（Claude / Codex の hooks から呼ぶ）が pane metadata に送る。
+# 空のトークン行は表示されないので、動いているエージェントの数だけ行が出る。
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "workspace", "tab"],
+  ["agent"],
+  [{ token = "$doing1", dim = true }],
+  [{ token = "$doing2", dim = true }],
+  [{ token = "$doing3", dim = true }],
+  [{ token = "$doing4", dim = true }],
+]
+
 # バックグラウンドのポップアップ通知配送。
 # off = 出さない（herdr のデフォルト。これが未設定だと通知は完全に沈黙する）
 # herdr = 画面内トースト

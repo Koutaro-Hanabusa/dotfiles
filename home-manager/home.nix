@@ -164,6 +164,8 @@ in
     # Herdr（設定と音源のみ管理。~/.config/herdr/ にはログ・ソケット等のランタイムファイルがあるため丸ごと symlink しない）
     ".config/herdr/config.toml".source = mkLink "herdr/config.toml";
     ".config/herdr/sounds".source = mkLink "herdr/sounds";
+    # Claude Code / Codex の hooks から呼び、各エージェントの作業をサイドバーに出す
+    ".config/herdr/agent-doing.py".source = mkLink "herdr/agent-doing.py";
 
     # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
     ".config/gh-dash/config.yml".source = ./gh-dash/config.yml;
