@@ -76,6 +76,40 @@
             "command": "input=$(cat); if [ \"$(printf '%s' \"$input\" | jq -r '.stop_hook_active // false')\" = \"true\" ]; then exit 0; fi; herdr notification show 'Claude Code' --body '作業が完了しました' --sound done 2>/dev/null || true"
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.config/herdr/agent-doing.py || true",
+            "timeout": 5
+          }
+        ]
       }
     ]
   },
