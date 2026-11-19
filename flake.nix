@@ -68,6 +68,8 @@
           # Codex CLI（公式 pre-built バイナリのインライン overlay）
           (_final: prev: {
             codex-cli = prev.callPackage ./home-manager/codex-cli.nix { };
+            # 日本語文書の推敲診断 CLI（公式 pre-built バイナリ）
+            suiko = prev.callPackage ./home-manager/suiko.nix { };
           })
         ];
       };

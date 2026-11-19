@@ -75,6 +75,8 @@ in
     # zsh.nix の codex() ラッパーで Nix ストア実体を直接叩く。
     codex-cli
     codex-acp
+    # 日本語文書の推敲診断（./suiko.nix の inline overlay）
+    suiko
     # Herdr（Agent multiplexer）。config は home-manager/herdr/config.toml で管理済み。
     # zsh.nix の _open_herdr_editor_split が `command -v herdr` で存在チェックしてから使う。
     herdrPkg
