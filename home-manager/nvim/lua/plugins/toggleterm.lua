@@ -8,7 +8,6 @@ return {
     { "<leader>th", desc = "Horizontal terminal" },
     { "<leader>tv", desc = "Vertical terminal" },
     { "<leader>tf", desc = "Float terminal" },
-    { "<leader>gh", desc = "Open gh-dash" },
     { "<leader>hd", desc = "Review working tree with Hunk" },
     { "<leader>hp", desc = "Review pull request with Hunk" },
     { "<leader>hn", desc = "Hunk: navigate to cursor" },
@@ -57,28 +56,7 @@ return {
     keymap("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", opts)
     keymap("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", opts)
 
-    -- gh-dash用のカスタムターミナル
     local Terminal = require("toggleterm.terminal").Terminal
-    local ghdash = Terminal:new({
-      cmd = "gh dash",
-      dir = "git_dir",
-      direction = "float",
-      float_opts = {
-        border = "curved",
-      },
-      on_open = function(term)
-        vim.cmd("startinsert!")
-        vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-      end,
-      on_close = function(_)
-      end,
-    })
-
-    local function ghdash_toggle()
-      ghdash:toggle()
-    end
-
-    keymap("n", "<leader>gh", ghdash_toggle, { desc = "Open gh-dash" })
 
     local function notify_hunk_controls()
       vim.notify("Hunk: ? = 操作一覧, q = 終了", vim.log.levels.INFO)

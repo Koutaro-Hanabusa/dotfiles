@@ -60,7 +60,7 @@ in
 
     # Network / Utilities
     curl
-    jq # claude/scripts・grafana-cloud skill 等のフック/スクリプトが依存
+    jq # Claude/Codex の hook・statusLine、grafana-cloud skill 等が依存
     chafa # show-image skill がエージェントの隣の herdr ペインへ画像を描画する
 
     # AI CLI

@@ -110,7 +110,6 @@ Leader key: `<Space>`
 | `<leader>gf` | LazyGit ファイル履歴フィルター |
 | `<leader>gc` | LazyGit 現在ファイルのコミット |
 | `<leader>gb` | Git Blameトグル |
-| `<leader>gh` | gh-dashを開く |
 
 ### Diffview（コンフリクト解消）
 
