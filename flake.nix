@@ -35,13 +35,6 @@
       url = "github:Koutaro-Hanabusa/kb";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # wtty（自作の Web ターミナル。Chrome から 127.0.0.1 経由でローカルの shell を
-    # 叩く。描画は libghostty の VT を WASM 化した ghostty-web。PTY はサーバが
-    # 持つので、タブを閉じてもシェルは生き残る）
-    wtty = {
-      url = "github:Koutaro-Hanabusa/wtty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -54,7 +47,6 @@
       dbml-language-server,
       dbml-renderer,
       kb,
-      wtty,
       ...
     }:
     let
@@ -84,7 +76,6 @@
             dbmlLspPkg = dbml-language-server.packages.${system}.default;
             dbmlRendererPkg = dbml-renderer.packages.${system}.default;
             kbPkg = kb.packages.${system}.default;
-            wttyPkg = wtty.packages.${system}.default;
           };
           modules = [ ./home-manager/home.nix ];
         };

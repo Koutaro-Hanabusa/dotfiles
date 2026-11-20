@@ -293,8 +293,7 @@
         "hunk": "hunk",
         "kb": "kb",
         "nix-claude-code": "nix-claude-code",
-        "nixpkgs": "nixpkgs_2",
-        "wtty": "wtty"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "rust-overlay": {
@@ -382,26 +381,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "wtty": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786197644,
-        "narHash": "sha256-VntbjYdZSqyBe5pjsck/ElQGPYXmus2KRSbg8u11JNg=",
-        "owner": "Koutaro-Hanabusa",
-        "repo": "wtty",
-        "rev": "946b4bebda88f47b348970dd7753744090a7e7a9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Koutaro-Hanabusa",
-        "repo": "wtty",
         "type": "github"
       }
     }

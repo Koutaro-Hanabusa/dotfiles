@@ -8,7 +8,6 @@
   dbmlLspPkg,
   dbmlRendererPkg,
   kbPkg,
-  wttyPkg,
   ...
 }:
 
@@ -61,8 +60,6 @@ in
 
     # Network / Utilities
     curl
-    nmap
-    pandoc
     jq # claude/scripts・grafana-cloud skill 等のフック/スクリプトが依存
     chafa # show-image skill がエージェントの隣の herdr ペインへ画像を描画する
 
@@ -94,19 +91,12 @@ in
     # `kb open` は fzf と glow を PATH から使う（どちらも下で入れている）。
     kbPkg
 
-    # wtty（自作の Web ターミナル）。`wtty` で 127.0.0.1:7681 に立ち上げ、Chrome
-    # から自分の shell を叩く。描画は ghostty-web（libghostty の VT の WASM）で、
-    # WASM も JS もバイナリに埋め込み済みなので単体で動く。PTY はサーバ側が
-    # 持つため、タブを閉じてもシェルは生き残る。
-    wttyPkg
-
-    # Mermaid CLI (mmdc)。nvim の diagram.nvim が markdown 内 mermaid ブロックを
-    # レンダするために PATH に必要。
+    # Mermaid CLI (mmdc)。nvim の ftplugin/markdown.lua の :Er が markdown 内の
+    # mermaid ブロックを PNG 化するために PATH に必要。
     mermaid-cli
 
     # tree-sitter CLI。nvim-treesitter main ブランチが parser を install/compile
-    # する際に必須。diagram.nvim は markdown parser で code block を検出するので
-    # これが無いと mermaid ブロックが認識されない。
+    # する際に必須。:Er も markdown parser で mermaid ブロックを検出する。
     tree-sitter
   ];
 
@@ -170,9 +160,6 @@ in
     ".config/herdr/agent-doing.py".source = mkLink "herdr/agent-doing.py";
     # エージェントの状態でペインの背景色を変える常駐スクリプト（下の launchd.agents で起動）
     ".config/herdr/agent-tint.py".source = mkLink "herdr/agent-tint.py";
-
-    # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
-    ".config/gh-dash/config.yml".source = ./gh-dash/config.yml;
   };
 
   programs.home-manager.enable = true;

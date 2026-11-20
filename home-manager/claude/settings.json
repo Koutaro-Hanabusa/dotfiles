@@ -44,17 +44,6 @@
         ]
       }
     ],
-    "PostToolUse": [
-      {
-        "matcher": "EnterWorktree|ExitWorktree",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/scripts/worktree-sync.sh"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "*",

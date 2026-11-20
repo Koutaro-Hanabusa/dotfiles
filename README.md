@@ -2,7 +2,7 @@
 
 Nix Home Manager で管理している dotfiles
 
-> 📦 元々は chezmoi で管理していたが Nix Home Manager へ移行済み。現在は Nix が唯一の信頼できる情報源（single source of truth）。`docs/archive/` 配下の旧計画書や `dot_` プレフィックス・`chezmoi apply` への言及は歴史的経緯として残しているだけで、現行の手順ではない。
+> 📦 元々は chezmoi で管理していたが Nix Home Manager へ移行済み。現在は Nix が唯一の信頼できる情報源（single source of truth）。`dot_` プレフィックス・`chezmoi apply` への言及は歴史的経緯として残しているだけで、現行の手順ではない。
 
 ## セットアップ
 
@@ -23,9 +23,6 @@ home-manager switch --flake .
 # Codex の共有設定を system 層へ接続（初回のみ）
 sudo mkdir -p /etc/codex
 sudo ln -sfn "$HOME/dotfiles/home-manager/codex/config.toml" /etc/codex/config.toml
-
-# Claude Code は公式ネイティブインストーラーで管理
-curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 ### 仕事用PCの場合
@@ -99,7 +96,7 @@ git add -A && git commit -m "update zsh config" && git push
 
 設定ファイルが不要なツールは `home.packages` でインストールのみ管理。
 
-neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
+neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl
 
 ### home.file で管理している設定
 
@@ -110,7 +107,6 @@ neovim, neovim-remote, stylua, fd, ghq, glow, go, go-task, curl, nmap, pandoc
 - `.config/ghostty` — Ghostty（macOSでNixパッケージ未対応のため）
 - `.config/karabiner` — Karabiner
 - `.claude` — Claude Code
-- `.config/gh-dash` — gh-dash
 - `.config/herdr/config.toml` — Herdr
 - `.kbrc`, `.prettierrc` 等
 
@@ -337,8 +333,8 @@ Mason経由で自動インストール。
 
 `.claude/` ディレクトリでClaude Codeをカスタマイズ。
 
-Claude Code本体は公式ネイティブインストーラーで管理する。
-バイナリは `~/.local/bin/claude` に入るため、`home-manager/zshenv` で `~/.local/bin` を PATH に追加している。
+Claude Code 本体は Nix（`nix-claude-code` overlay）で管理する。
+`zsh.nix` の `claude()` ラッパーが `~/.nix-profile/bin/claude` に `--mcp-config ~/.mcp.json` を付けて起動する。
 
 ### カスタムエージェント
 
