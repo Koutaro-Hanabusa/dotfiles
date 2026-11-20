@@ -168,12 +168,29 @@ in
     ".config/herdr/sounds".source = mkLink "herdr/sounds";
     # Claude Code / Codex の hooks から呼び、各エージェントの作業をサイドバーに出す
     ".config/herdr/agent-doing.py".source = mkLink "herdr/agent-doing.py";
+    # エージェントの状態でペインの背景色を変える常駐スクリプト（下の launchd.agents で起動）
+    ".config/herdr/agent-tint.py".source = mkLink "herdr/agent-tint.py";
 
     # gh-dash（config.yml のみ管理。Nixストア経由で読み取り専用にし、ランタイム状態の書き戻しを防止）
     ".config/gh-dash/config.yml".source = ./gh-dash/config.yml;
   };
 
   programs.home-manager.enable = true;
+
+  # herdr のエージェント状態（作業中=緑 / 停止=赤）をペインの背景色に出す常駐プロセス。
+  # herdr が止まると終了し、KeepAlive で起動し直す。スクリプトを編集したら
+  # `launchctl kickstart -k gui/$(id -u)/org.nix-community.home.herdr-agent-tint` で反映する。
+  launchd.agents.herdr-agent-tint = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "${pkgs.python3}/bin/python3"
+        "${config.home.homeDirectory}/.config/herdr/agent-tint.py"
+      ];
+      KeepAlive = true;
+      RunAtLoad = true;
+    };
+  };
 
   # Hunk の SKILL.md を Claude Code / Agent Skills 対応クライアントから参照可能にする。
   # out-of-store symlink の参照先である dotfiles ツリー側へ、activation で Nix ストア内の
