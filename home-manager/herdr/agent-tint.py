@@ -3,6 +3,8 @@
 
 作業中は緑、止まった（完了・中断・許可待ち）のにまだ見ていないペインは赤。
 フォーカスして（見て）赤を消し、エージェントがいなくなったら元に戻す。
+herdr サイドバーのエージェント行にも、印（🔄/❗）と同じ色の文字を pane metadata の
+$tint_mark / $tint_<色キー>_label で出す（config.toml）。
 状態は herdr 自身の検出（サイドバーのアイコンと同じ）を session.snapshot で読むので、
 Claude / Codex のどちらでも動き、hooks は要らない。色はペインの tty に OSC 11 を書いて変える。
 イベント購読だと取りこぼした変化で色が残るので、毎秒のスナップショットで常に今の状態に合わせる。
@@ -23,6 +25,9 @@ COLORS = {"working": "#2A5232", "stopped": "#5A2328"}
 POLL = 1.0  # スナップショットを読む間隔（秒）
 HOLD = 1.5  # working から外れても、herdr の検出の一瞬の揺れで点滅しないようにこの秒数だけ待つ
 UNKNOWN = "?"  # 起動直後のペイン。前のプロセスが付けた色が残っているかもしれないので必ず書き直す
+# サイドバーの印（絵文字）と、エージェント名の横に出す文字。文字の色は config.toml 側で付ける。
+MARKS = {"working": "🔄", "stopped": "❗"}  # 並ぶと色だけでは見分けにくいので形も変える
+LABELS = {"working": "作業中", "stopped": "未確認"}
 TERMINAL = "com.mitchellh.ghostty"  # herdr を映しているターミナルの bundle id
 SOCK = os.environ.get("HERDR_SOCKET_PATH") or os.path.expanduser("~/.config/herdr/herdr.sock")
 
@@ -91,6 +96,14 @@ def paint(path: str, key: str | None) -> None:
         os.close(fd)
 
 
+def report(pane_id: str, key: str | None) -> None:
+    """サイドバー用の印と文字。色キーに対応する文字のトークンだけに値を入れ、他は None で消す。"""
+    tokens = {"tint_mark": MARKS.get(key)}
+    for k in COLORS:
+        tokens[f"tint_{k}_label"] = LABELS[k] if k == key else None
+    request("pane.report_metadata", {"pane_id": pane_id, "source": "dotfiles:agent-tint", "tokens": tokens})
+
+
 def main() -> None:
     shown: dict = {}
     target: dict = {}
@@ -103,6 +116,9 @@ def main() -> None:
         while True:
             snap = request("session.snapshot", {})["snapshot"]
             agents = {a["pane_id"]: a for a in snap["agents"]}
+            if first:
+                # 起動前に止まったものは見たかどうか分からない。全部赤にすると本当の未確認が埋もれるので、見た扱いにする。
+                seen.update({p: a.get("state_change_seq") for p, a in agents.items() if a.get("agent_status") != "working"})
             front = functools.cache(terminal_in_front)  # 必要になった周回だけ、1回だけ調べる
             panes = {pane["pane_id"]: want(agents.get(pane["pane_id"]), seen, front) for pane in snap["panes"]}
             now = time.monotonic()
@@ -122,6 +138,7 @@ def main() -> None:
                     if not ttys[p]:
                         raise OSError(f"{p} の tty が見つからない")
                     paint(ttys[p], key)
+                    report(p, key)
                 except (OSError, KeyError, ValueError):
                     ttys.pop(p, None)
                     continue  # shown を更新せず、書けるまで次の周回でやり直す（ペインが閉じれば止む）
@@ -133,7 +150,8 @@ def main() -> None:
             if key in COLORS and ttys.get(p):
                 try:
                     paint(ttys[p], None)
-                except OSError:
+                    report(p, None)
+                except (OSError, KeyError, ValueError):
                     pass
 
 

@@ -101,10 +101,19 @@ rows = [
 # 並列エージェントが今何をしているかを、エージェント欄の下に1エージェント1行で出す。
 # $doing1..4 は agent-doing.py（Claude / Codex の hooks から呼ぶ）が pane metadata に送る。
 # 空のトークン行は表示されないので、動いているエージェントの数だけ行が出る。
+# $tint_mark（先頭の 🔄/❗）と *_label（エージェント名の横の「作業中」「未確認」）は
+# agent-tint.py がペイン背景色と同時に出す（作業中=緑、止まってまだ見ていない=赤）。
+# サイドバーは行の背景や枠の色を変えられず、トークン値の ANSI シーケンスも消されるので、絵文字と文字色で出す。
 [ui.sidebar.agents]
 rows = [
-  ["state_icon", "workspace", "tab"],
-  ["agent"],
+  [
+    "$tint_mark", "state_icon", "workspace", "tab",
+  ],
+  [
+    "agent",
+    { token = "$tint_working_label", fg = "#87A987", bold = true },
+    { token = "$tint_stopped_label", fg = "#E46876", bold = true },
+  ],
   [{ token = "$doing1", dim = true }],
   [{ token = "$doing2", dim = true }],
   [{ token = "$doing3", dim = true }],
