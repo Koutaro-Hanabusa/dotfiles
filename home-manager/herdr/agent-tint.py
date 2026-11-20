@@ -105,12 +105,26 @@ def report(pane_id: str, key: str | None) -> None:
 
 
 def main() -> None:
+    # 背景色（shown）とサイドバーの印（marked）は別々に失敗しうるので、実際に書けた状態を別々に持つ。
     shown: dict = {}
+    marked: dict = {}
     target: dict = {}
     since: dict = {}
     ttys: dict = {}
     seen: dict = {}
     first = True
+
+    def tint(p: str, key: str | None) -> None:
+        try:
+            ttys[p] = ttys.get(p) or find_tty(p)
+            if not ttys[p]:
+                raise OSError(f"{p} の tty が見つからない")
+            paint(ttys[p], key)
+        except OSError:
+            ttys.pop(p, None)  # 次は tty を引き直す
+            raise
+
+    outputs = ((shown, tint), (marked, report))
     signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))  # finally で色を戻してから終わる
     try:
         while True:
@@ -124,35 +138,31 @@ def main() -> None:
             now = time.monotonic()
             for p in list(target):
                 if p not in panes:  # 閉じたペイン。pane id が再利用されても古い tty に書かない
-                    for d in (shown, target, since, ttys, seen):
+                    for d in (shown, marked, target, since, ttys, seen):
                         d.pop(p, None)
             for p, t in panes.items():
                 if first:
-                    shown[p] = UNKNOWN
+                    shown[p] = marked[p] = UNKNOWN
                 if target.get(p, UNKNOWN) != t:
                     target[p], since[p] = t, now
             first = False
-            for p, key in due(shown, target, since, now).items():
-                try:
-                    ttys[p] = ttys.get(p) or find_tty(p)
-                    if not ttys[p]:
-                        raise OSError(f"{p} の tty が見つからない")
-                    paint(ttys[p], key)
-                    report(p, key)
-                except (OSError, KeyError, ValueError):
-                    ttys.pop(p, None)
-                    continue  # shown を更新せず、書けるまで次の周回でやり直す（ペインが閉じれば止む）
-                shown[p] = key
+            for state, write in outputs:
+                for p, key in due(state, target, since, now).items():
+                    try:
+                        write(p, key)
+                    except (OSError, KeyError, ValueError):
+                        continue  # その出力だけ、書けるまで次の周回でやり直す（ペインが閉じれば止む）
+                    state[p] = key
             time.sleep(POLL)
     finally:
         # launchctl での停止や設定から外したときに、付けた色を残さない。
-        for p, key in shown.items():
-            if key in COLORS and ttys.get(p):
-                try:
-                    paint(ttys[p], None)
-                    report(p, None)
-                except (OSError, KeyError, ValueError):
-                    pass
+        for state, write in outputs:
+            for p, key in state.items():
+                if key in COLORS:
+                    try:
+                        write(p, None)
+                    except (OSError, KeyError, ValueError):
+                        pass
 
 
 if __name__ == "__main__":
