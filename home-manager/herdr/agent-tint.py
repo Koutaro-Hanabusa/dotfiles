@@ -124,8 +124,7 @@ def main() -> None:
                     paint(ttys[p], key)
                 except (OSError, KeyError, ValueError):
                     ttys.pop(p, None)
-                    if key is not None or shown.get(p) != UNKNOWN:
-                        continue  # 書けるまで次の周回でやり直す（起動直後の掃除だけは諦める）
+                    continue  # shown を更新せず、書けるまで次の周回でやり直す（ペインが閉じれば止む）
                 shown[p] = key
             time.sleep(POLL)
     finally:
