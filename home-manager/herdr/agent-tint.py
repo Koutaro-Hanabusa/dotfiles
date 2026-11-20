@@ -2,15 +2,17 @@
 """herdr のエージェント状態に合わせて、ペインの背景色を変える常駐プロセス（launchd から起動）。
 
 作業中は緑、止まった（完了・中断・許可待ち）のにまだ見ていないペインは赤。
-フォーカスしたら（見たら）赤を消し、エージェントがいなくなったら元に戻す。
-状態は herdr 自身の検出（サイドバーのアイコンと同じ）を pane.list で読むので、
+フォーカスして（見て）赤を消し、エージェントがいなくなったら元に戻す。
+状態は herdr 自身の検出（サイドバーのアイコンと同じ）を session.snapshot で読むので、
 Claude / Codex のどちらでも動き、hooks は要らない。色はペインの tty に OSC 11 を書いて変える。
-イベント購読だと取りこぼした変化で色が残るので、毎秒の一覧読みで常に今の状態に合わせる。
+イベント購読だと取りこぼした変化で色が残るので、毎秒のスナップショットで常に今の状態に合わせる。
 herdr が止まると例外で終了し、launchd（KeepAlive）が起動し直す。
 """
 
+import functools
 import json
 import os
+import signal
 import socket
 import subprocess
 import sys
@@ -18,23 +20,34 @@ import time
 
 # Dragon の背景 #181616 から一目で分かり、文字も読める濃さ。好みで調整する。
 COLORS = {"working": "#2A5232", "stopped": "#5A2328"}
-POLL = 1.0  # pane.list を読む間隔（秒）
+POLL = 1.0  # スナップショットを読む間隔（秒）
 HOLD = 1.5  # working から外れても、herdr の検出の一瞬の揺れで点滅しないようにこの秒数だけ待つ
 UNKNOWN = "?"  # 起動直後のペイン。前のプロセスが付けた色が残っているかもしれないので必ず書き直す
+TERMINAL = "com.mitchellh.ghostty"  # herdr を映しているターミナルの bundle id
 SOCK = os.environ.get("HERDR_SOCKET_PATH") or os.path.expanduser("~/.config/herdr/herdr.sock")
 
 
-def want(pane: dict, seen: set) -> str | None:
-    """ペインに付けたい色のキー。None は元の色。seen は止まってからフォーカスされたペイン。"""
-    p = pane["pane_id"]
-    if not pane.get("agent"):
+def terminal_in_front() -> bool:
+    """herdr を映すターミナルが最前面か。別アプリを見ている間の herdr 上のフォーカスは「見た」に数えない。"""
+    asn = subprocess.run(["lsappinfo", "front"], capture_output=True, text=True).stdout.strip()
+    info = subprocess.run(["lsappinfo", "info", "-only", "bundleid", asn], capture_output=True, text=True).stdout
+    return f'"{TERMINAL}"' in info
+
+
+def want(agent: dict | None, seen: dict, front) -> str | None:
+    """ペインに付けたい色のキー。None は元の色。agent は snapshot の agents の要素（いなければ None）。
+
+    seen は「止まってから見た」ときの state_change_seq。毎秒の読みが短い作業を取りこぼしても、
+    seq が進んでいれば新しい停止なので、また見るまで赤にする。
+    """
+    if not agent:
         return None
-    if pane.get("agent_status") == "working":
-        seen.discard(p)  # 次に止まったら、また見るまで赤
+    if agent.get("agent_status") == "working":
         return "working"
-    if pane.get("focused"):
-        seen.add(p)
-    return None if p in seen else "stopped"
+    p, seq = agent["pane_id"], agent.get("state_change_seq")
+    if seen.get(p, UNKNOWN) != seq and agent.get("focused") and front():
+        seen[p] = seq
+    return None if seen.get(p, UNKNOWN) == seq else "stopped"
 
 
 def due(shown: dict, target: dict, since: dict, now: float) -> dict:
@@ -83,52 +96,70 @@ def main() -> None:
     target: dict = {}
     since: dict = {}
     ttys: dict = {}
-    seen: set = set()
+    seen: dict = {}
     first = True
-    while True:
-        panes = {pane["pane_id"]: want(pane, seen) for pane in request("pane.list", {})["panes"]}
-        now = time.monotonic()
-        for p in list(target):
-            if p not in panes:  # 閉じたペイン。pane id が再利用されても古い tty に書かない
-                for d in (shown, target, since, ttys):
-                    d.pop(p, None)
-                seen.discard(p)
-        for p, t in panes.items():
-            if first:
-                shown[p] = UNKNOWN
-            if target.get(p, UNKNOWN) != t:
-                target[p], since[p] = t, now
-        first = False
-        for p, key in due(shown, target, since, now).items():
-            try:
-                ttys[p] = ttys.get(p) or find_tty(p)
-                if ttys[p]:
+    signal.signal(signal.SIGTERM, lambda *_: sys.exit(0))  # finally で色を戻してから終わる
+    try:
+        while True:
+            snap = request("session.snapshot", {})["snapshot"]
+            agents = {a["pane_id"]: a for a in snap["agents"]}
+            front = functools.cache(terminal_in_front)  # 必要になった周回だけ、1回だけ調べる
+            panes = {pane["pane_id"]: want(agents.get(pane["pane_id"]), seen, front) for pane in snap["panes"]}
+            now = time.monotonic()
+            for p in list(target):
+                if p not in panes:  # 閉じたペイン。pane id が再利用されても古い tty に書かない
+                    for d in (shown, target, since, ttys, seen):
+                        d.pop(p, None)
+            for p, t in panes.items():
+                if first:
+                    shown[p] = UNKNOWN
+                if target.get(p, UNKNOWN) != t:
+                    target[p], since[p] = t, now
+            first = False
+            for p, key in due(shown, target, since, now).items():
+                try:
+                    ttys[p] = ttys.get(p) or find_tty(p)
+                    if not ttys[p]:
+                        raise OSError(f"{p} の tty が見つからない")
                     paint(ttys[p], key)
-                elif key:
-                    continue  # tty がまだ引けない。次の周回でやり直す
-            except (OSError, KeyError, ValueError):
-                ttys.pop(p, None)
-                continue  # 書けなかったので shown を更新せず、次の周回でやり直す
-            shown[p] = key
-        time.sleep(POLL)
+                except (OSError, KeyError, ValueError):
+                    ttys.pop(p, None)
+                    if key is not None or shown.get(p) != UNKNOWN:
+                        continue  # 書けるまで次の周回でやり直す（起動直後の掃除だけは諦める）
+                shown[p] = key
+            time.sleep(POLL)
+    finally:
+        # launchctl での停止や設定から外したときに、付けた色を残さない。
+        for p, key in shown.items():
+            if key in COLORS and ttys.get(p):
+                try:
+                    paint(ttys[p], None)
+                except OSError:
+                    pass
 
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["--test"]:
-        seen: set = set()
-        assert want({"pane_id": "x", "agent": "codex", "agent_status": "working"}, seen) == "working"
-        assert want({"pane_id": "x", "agent": "claude", "agent_status": "idle"}, seen) == "stopped"
-        assert want({"pane_id": "x", "agent": "claude", "agent_status": "idle", "focused": True}, seen) is None
-        assert want({"pane_id": "x", "agent": "claude", "agent_status": "done"}, seen) is None  # 見た後は離れても赤にしない
-        assert want({"pane_id": "x", "agent": "claude", "agent_status": "working"}, seen) == "working"
-        assert want({"pane_id": "x", "agent": "claude", "agent_status": "idle"}, seen) == "stopped"  # 次の停止はまた赤
-        assert want({"pane_id": "y", "agent": None, "agent_status": "unknown"}, seen) is None
+        seen: dict = {}
+        yes, no = (lambda: True), (lambda: False)
+
+        def a(status: str, seq: int, focused: bool = False) -> dict:
+            return {"pane_id": "x", "agent": "claude", "agent_status": status, "state_change_seq": seq, "focused": focused}
+
+        assert want(a("working", 1), seen, yes) == "working"
+        assert want(a("idle", 2), seen, yes) == "stopped"  # フォーカスなし
+        assert want(a("idle", 2, focused=True), seen, no) == "stopped"  # 別アプリを見ている
+        assert want(a("idle", 2, focused=True), seen, yes) is None  # 見た
+        assert want(a("idle", 2), seen, yes) is None  # 見た後は離れても赤にしない
+        assert want(a("idle", 4), seen, yes) == "stopped"  # 読み逃した短い作業の後の停止はまた赤
+        assert want(None, seen, yes) is None
         shown, since = {"a": "working"}, {"a": 10.0, "b": 10.0, "c": 10.0}
         target = {"a": "stopped", "b": None, "c": "working"}
         assert due(shown, target, since, 10.5) == {"c": "working"}  # 揺れの間は赤にしない、素のシェルには書かない
         assert due(shown, target, since, 12.0) == {"a": "stopped", "c": "working"}
         assert due({"a": "stopped"}, {"a": None}, {"a": 10.0}, 10.0) == {"a": None}  # エージェント終了で即リセット
         assert due({"a": UNKNOWN}, {"a": None}, {"a": 10.0}, 10.0) == {"a": None}  # 起動直後は残った色を消す
+        assert terminal_in_front() in (True, False)
         print("ok")
         sys.exit(0)
     main()
