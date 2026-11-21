@@ -212,7 +212,7 @@ nvim内でGitHubのPR/Issueを操作。
 fzfでブランチをファジー検索して切り替え。
 
 ```bash
-gco cheese    # → sen/work-cheese にマッチして切り替え
+gco feat    # → feature/xxx にマッチして切り替え
 ```
 
 ### ブランチ名規約チェック
