@@ -70,3 +70,5 @@ home-manager/claude/remote-settings.json
 
 # Codex が自動更新するユーザー状態（共有設定は home-manager/codex/config.toml）
 home-manager/codex/state.toml
+# 社内 repo を指すリンクは各 PC でだけ置く
+home-manager/claude/skills/idor-and-webvuln-scan-*
